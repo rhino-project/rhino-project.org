@@ -36,7 +36,7 @@ const config = {
   markdown: {
     mermaid: true,
   },
-  themes: ["@docusaurus/theme-mermaid"],
+  themes: ["@docusaurus/theme-mermaid", "@easyops-cn/docusaurus-search-local"],
 
   presets: [
     [
