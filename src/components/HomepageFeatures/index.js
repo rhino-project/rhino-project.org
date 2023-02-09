@@ -4,11 +4,21 @@ import styles from "./styles.module.css";
 
 const FeatureList = [
   {
-    title: "Powered by Rails & React",
-    Svg: require("@site/static/img/undraw_docusaurus_react.svg").default,
+    title: "Deploy in Minutes",
+    Svg: require("@site/static/img/undraw_in_no_time_-6-igu.svg").default,
+    description: <>Be up and running in just a few short minutes</>,
+  },
+  {
+    title: "Real Code",
+    Svg: require("@site/static/img/undraw_programmer_re_owql.svg").default,
     description: (
       <>Build a powerful backend in Rails and a customized front end in React</>
     ),
+  },
+  {
+    title: "Solid foundation",
+    Svg: require("@site/static/img/undraw_secure_server_re_8wsq.svg").default,
+    description: <>Best practicues for testing and deployment.</>,
   },
 ];
 
