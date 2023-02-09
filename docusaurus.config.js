@@ -20,7 +20,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: "rhino-project", // Usually your GitHub org/user name.
-  projectName: "rhino-project.org2", // Usually your repo name.
+  projectName: "rhino-project.org", // Usually your repo name.
 
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
@@ -48,7 +48,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            "https://github.com/rhino-project/rhino-project.org2/tree/main/",
+            "https://github.com/rhino-project/rhino-project.org/tree/main/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
