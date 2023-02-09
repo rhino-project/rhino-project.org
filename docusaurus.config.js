@@ -1,0 +1,106 @@
+// @ts-check
+// Note: type annotations allow type checking and IDEs autocompletion
+
+const lightCodeTheme = require("prism-react-renderer/themes/github");
+const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+
+/** @type {import('@docusaurus/types').Config} */
+const config = {
+  title: "Rhino Project",
+  tagline:
+    "The powerful and flexible real code platform to build complete full stack applications",
+  favicon: "img/favicon.ico",
+
+  // Set the production url of your site here
+  url: "https://your-docusaurus-test-site.com",
+  // Set the /<baseUrl>/ pathname under which your site is served
+  // For GitHub pages deployment, it is often '/<projectName>/'
+  baseUrl: "/",
+
+  // GitHub pages deployment config.
+  // If you aren't using GitHub pages, you don't need these.
+  organizationName: "rhino-project", // Usually your GitHub org/user name.
+  projectName: "rhino-project.org2", // Usually your repo name.
+
+  onBrokenLinks: "throw",
+  onBrokenMarkdownLinks: "warn",
+
+  // Even if you don't use internalization, you can use this field to set useful
+  // metadata like html lang. For example, if your site is Chinese, you may want
+  // to replace "en" with "zh-Hans".
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en"],
+  },
+
+  presets: [
+    [
+      "classic",
+      /** @type {import('@docusaurus/preset-classic').Options} */
+      ({
+        docs: {
+          sidebarPath: require.resolve("./sidebars.js"),
+          // Please change this to your repo.
+          // Remove this to remove the "edit this page" links.
+          editUrl:
+            "https://github.com/rhino-project/rhino-project.org2/tree/main/",
+        },
+        theme: {
+          customCss: require.resolve("./src/css/custom.css"),
+        },
+      }),
+    ],
+  ],
+
+  themeConfig:
+    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+    ({
+      navbar: {
+        title: "Rhino Project",
+        logo: {
+          alt: "Rhino Project Logo",
+          src: "img/rhino-red.svg",
+        },
+        items: [
+          {
+            type: "doc",
+            docId: "index",
+            position: "left",
+            label: "Docs",
+          },
+          {
+            href: "https://api.rhino-project.org",
+            label: "API",
+            position: "left",
+          },
+          {
+            href: "https://github.com/rhino-project",
+            label: "GitHub",
+            position: "right",
+          },
+        ],
+      },
+      footer: {
+        style: "dark",
+        links: [
+          {
+            title: "Docs",
+            items: [
+              {
+                label: "Tutorial",
+                to: "/docs/tutorial",
+              },
+            ],
+          },
+        ],
+        copyright: `Copyright © ${new Date().getFullYear()} Nubinary, Inc. Built with Docusaurus.`,
+      },
+      prism: {
+        theme: lightCodeTheme,
+        darkTheme: darkCodeTheme,
+        additionalLanguages: ["ruby", "erb"],
+      },
+    }),
+};
+
+module.exports = config;
