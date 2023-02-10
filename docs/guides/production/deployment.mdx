@@ -4,7 +4,7 @@ This guide is an introduction to deploying Rhino
 
 ## General considerations
 
-Rhino uses server side cookies for auth, so you must have [domains that meet the auth rules](../core/auth)
+Rhino uses server side cookies for auth, so you must have [domains that meet the auth rules](/docs/concepts/auth)
 
 ## Heroku
 
@@ -19,7 +19,7 @@ The server needs the `heroku/ruby` buildpack. Along with the following add-ons:
     papertrail:choklad
     rollbar:free
 
-Redis is required only for [rhino_jobs](../extensions/jobs) support and rollbar is required for [error trapping](error_reporting).
+Redis is required only for [rhino_jobs](/docs/guides/jobs) support and rollbar is required for [error trapping](error_reporting).
 
 The server requires the following environment variables to be set:
 
