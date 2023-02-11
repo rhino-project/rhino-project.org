@@ -1,12 +1,12 @@
-# Tutorial: Organization
+# Adding organizations and roles
 
-This guide will walk you through adding organization support to your application with users and roles.
+This tutorial will walk you through adding organization support to your application with users and roles.
 
 ## Prerequisites
 
-Ensure you have completed the [Tutorial: Advanced](./advanced)
+Ensure you have completed the [Advanced Features Tutorial](./advanced)
 
-## Data Model
+## Data model
 
 The following data model will be used for this tutorial.
 
@@ -18,6 +18,7 @@ erDiagram
     Organization ||--o{ Blog : ""
     User ||--o{ Blog : author
     Blog ||--o{ BlogPost : ""
+    Blog ||--o| Attachment : ""
     Blog {
         string title
         datetime published_at
@@ -32,58 +33,90 @@ erDiagram
         string name
     }
     BlogPost ||--o{ OgMetaTag : ""
+    BlogPost ||--o{ Tag : ""
     OgMetaTag {
         string tag_name
         string value
     }
 ```
 
-Every blog has a category and a series of blog posts.
+Every blog has a category and a series of blog posts. Each blog post can have a series of OpenGraph (og) tags.
 
 :::info
 The user, users role, role and organization models are provided by Rhino.
 :::
 
-Every blog has a category and a series of blog posts. Each blog post can have a series of OpenGraph (og) tags.
+## Install the organizations module
 
-## Extend the Data Model
+Rhino provides a module to add organization support to your application. Drop the current sample data and install the module with the following commands:
 
-- Creating roles and organizations and update user `rails rhino_organizations:install`
+```bash
+rails db:reset
+rails rhino_organizations:install
+```
 
-- Update `app/models/blog.rb` as follows
+:::caution
+`rails db:reset` will drop the current database and rebuild it from the schema. This will remove any data you have added to the database. We could write a more complex migration to add the new tables but this is a tutorial and we want to keep it simple.
+:::
 
-```ruby
+## Update the data model
 
+Add an organization reference to the blog model with the following commands
+
+```bash
+rails g migration add_organization_to_blog organization:references
+rails db:migrate
+```
+
+Update the Blog model to use the new organization reference and add a new author reference as highlighted below.
+
+```diff title="app/models/blog.rb"
 class Blog < ApplicationRecord
-  belongs_to :organization
-  belongs_to :author, default: -> { Rhino::Current.user }, class_name: 'User', foreign_key: :user_id
+  # highlight-next-line
+- belongs_to :user
+  # highlight-next-line
++ belongs_to :organization
+  # highlight-next-line
++ belongs_to :author, default: -> { Rhino::Current.user }, class_name: 'User', foreign_key: :user_id
 
   belongs_to :category, optional: true
   has_many :blog_posts, dependent: :destroy
 
   has_one_attached :banner
 
+  # Rhino specific code
   rhino_owner_base
-  rhino_references %i[author organization category banner_attachment blog_posts]
-  rhino_properties_write except: :author
+  # highlight-next-line
+- rhino_references [:user, :category, :banner_attachment]
+  # highlight-next-line
++ rhino_references [:organization, :author, :category, :banner_attachment]
+  # highlight-next-line
++ rhino_properties_write except: :author
   rhino_search [:title]
 
   validates :title, presence: true
 end
-
-
 ```
 
-- Have blogs owned by the organization
+:::info
+[`rhino_properties_write`](https://api.rhino-project.org/classes/Rhino/Resource/Properties.html#method-i-rhino_properties_write) restricts which properties of the model are writeable via the API.
+:::
 
-```bash
-$ rails g migration add_organization_to_blog organization:references
-```
+:::info
+`Rhino::Current.user` provides the authenticated user accessing the API. Here it is used as the default value for the author reference.
+:::
 
-- Use seed data to add organizations
-  Add below to `db/seeds.rb`
+## Seed the database
 
-```ruby
+Create two users and several organizations along with sample to use in the blog and a user to login with.
+
+```ruby title="db/seeds.rb"
+# Generate sample categories
+3.times do
+  Category.create!(name: FFaker::Book.unique.genre)
+end
+
+# Function to generate sample blogs and blog posts
 def generate_blogs(user, org)
   5.times do
     blog = Blog.create!(user_id: user.id, organization: org, title: FFaker::Book.unique.author, category_id: Category.ids.sample)
@@ -93,74 +126,53 @@ def generate_blogs(user, org)
   end
 end
 
-if Rails.env.development?
-  AdminUser.destroy_all
-  Blog.destroy_all
-  User.destroy_all
-  Organization.destroy_all
-  Role.destroy_all
+# Create two sample users
+user = User.create!(email: 'test@example.com', password: 'password', password_confirmation: 'password')
+user_other = User.create!(email: 'other@example.com', password: 'password', password_confirmation: 'password')
 
-  AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
-
-  user = User.create!(email: 'test@example.com', password: 'password', password_confirmation: 'password')
-  user2 = User.create!(email: 'other@example.com', password: 'password', password_confirmation: 'password')
-
-  org = []
-  org << Organization.create!(name: "Single User Org")
-  org << Organization.create!(name: "Multi User Owner Org")
-  org << Organization.create!(name: "Viewer Org")
-  org << Organization.create!(name: "Editor Org")
-  org << Organization.create!(name: "Author Org")
-
-  role = Role.find_or_create_by!(name: "admin")
-  ur = UsersRole.create!(user: user, organization: org[0], role: role)
-
-  role = Role.find_or_create_by!(name: "admin")
-  ur = UsersRole.create!(user: user, organization: org[1], role: role)
-
-  role = Role.find_or_create_by!(name: "viewer")
-  ur = UsersRole.create!(user: user, organization: org[2], role: role)
-  role = Role.find_or_create_by!(name: "admin")
-  ur = UsersRole.create!(user: user2, organization: org[2], role: role)
-
-  role = Role.find_or_create_by!(name: "editor")
-  ur = UsersRole.create!(user: user, organization: org[3], role: role)
-  role = Role.find_or_create_by!(name: "admin")
-  ur = UsersRole.create!(user: user2, organization: org[3], role: role)
-
-  role = Role.find_or_create_by!(name: "author")
-  ur = UsersRole.create!(user: user, organization: org[4], role: role)
-  role = Role.find_or_create_by!(name: "admin")
-  ur = UsersRole.create!(user: user2, organization: org[4], role: role)
-
-  3.times do
-    Category.create!(name: FFaker::Book.unique.genre)
-  end
-
-  org.each do |o|
-    generate_blogs(user, o)
-  end
-
-  org[2..].each do |o|
-    generate_blogs(user2, o)
-  end
+# Create sample organizations
+org = %w["Single User Org" "Multi User Org" "Viewer Org" "Editor Org"].map do |name|
+  Organization.create!(name:)
 end
+
+role_admin = Role.create!(name: "admin")
+role_viewer = Role.create!(name: "viewer")
+role_editor = Role.create!(name: "editor")
+
+# The test@example.com user is the only user and admin of the "Single User Org" organization
+UsersRole.create!(user: user, organization: org[0], role: role_admin)
+# Only test@example.com authors blogs in the "MuSinglelti User Org" organization
+generate_blogs(user, org[0])
+
+# The test@example.com and other@example.com are both users and admins of the "Multi User Org" organization
+UsersRole.create!(user: user, organization: org[1], role: role_admin)
+# Both users author blogs in the "Multi User Org" organization
+generate_blogs(user, org[1])
+generate_blogs(user_other, org[1])
+
+# The test@example.com is a viewer and other@example.com is an admin of the "Viewer Org" organization
+UsersRole.create!(user: user, organization: org[2], role: role_viewer)
+UsersRole.create!(user: user_other, organization: org[2], role: role_admin)
+# Only other@example.com authors blogs in the "Viewer Org" organization
+generate_blogs(user_other, org[3])
+
+# The test@example.com is an editor and other@example.com is an admin of the "Editor Org" organization
+UsersRole.create!(user: user, organization: org[3], role: role_editor)
+UsersRole.create!(user: user_other, organization: org[3], role: role_admin)
+# Only other@example.com authors blogs in the "Editor Org" organization
+generate_blogs(user_other, org[3])
 ```
 
-- Then reset the database and seed data:
+And add the seed data to the database
+
+## Restart the application
+
+Run the server and client
 
 ```bash
-$ rails db:reset
+rails s
 ```
 
-- Add created models to db
-
 ```bash
-$ rails db:migrate
-```
-
-- Run the server to check the results
-
-```bash
-$ rails s
+npm start
 ```

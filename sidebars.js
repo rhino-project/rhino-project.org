@@ -25,9 +25,12 @@ const sidebars = {
         type: "doc",
         id: "tutorials/index",
       },
-      items: ["tutorials/advanced"],
+      items: [
+        "tutorials/advanced",
+        "tutorials/organization",
+        "tutorials/custom_role",
+      ],
     },
-    "tutorials/organization",
   ],
 
   guide: [
