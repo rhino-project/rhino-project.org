@@ -20,6 +20,8 @@ const sidebars = {
   tutorialSidebar: [
     "index",
     "tutorial",
+    "tutorial_advanced",
+    "tutorial_organization",
     {
       "Core Concepts": {
         Resources: ["core/resources/index", "core/resources/attributes"],
