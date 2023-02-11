@@ -71,7 +71,19 @@ const config = {
             type: "doc",
             docId: "index",
             position: "left",
-            label: "Docs",
+            label: "Tutorials",
+          },
+          {
+            type: "docSidebar",
+            position: "left",
+            sidebarId: "guide",
+            label: "Guides",
+          },
+          {
+            type: "docSidebar",
+            position: "left",
+            sidebarId: "concept",
+            label: "Concepts",
           },
           {
             href: "https://api.rhino-project.org",
@@ -93,7 +105,7 @@ const config = {
             items: [
               {
                 label: "Tutorial",
-                to: "/docs/tutorial",
+                to: "/docs/tutorials/index",
               },
             ],
           },
