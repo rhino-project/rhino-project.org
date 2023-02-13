@@ -27,6 +27,7 @@ const sidebars = {
       },
       items: [
         "tutorials/advanced",
+        "tutorials/nested_resources",
         "tutorials/organization",
         "tutorials/custom_role",
       ],
