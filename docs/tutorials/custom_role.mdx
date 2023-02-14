@@ -1,3 +1,151 @@
-# Adding a custom role
+# Creating a custom role
 
 This tutorial will walk you through adding a custom author role to your application.
+
+## Prerequisites
+
+Ensure you have completed the [Organization and Roles Tutorial](./organization)
+
+## Data model
+
+The data model for this tutorial is the same as the [Organization and Roles Tutorial](./organization)
+
+## Generate a new policy
+
+```bash
+rails generate rhino:policy Author
+```
+
+:::info
+`rails generate` is a built in Rails command that will run a generator for you. In this case we are generating a new policy called "author". There are a number of generators available in Rails & Rhino. You can see a list of them by running `rails generate` without any arguments.
+:::
+
+There will now be a new files, `app/policies/author_policy.rb` with the skeleton of a policy and `test/policies/author_policy_test.rb` with the skeleton of a policy test.
+
+## Edit the policy
+
+```ruby title="app/policies/author_policy.rb"
+class AuthorPolicy < ::Rhino::ViewerPolicy
+  def check_author
+    return false unless auth_owner
+
+    # Check if the user is the author of the blog
+    record.class.where(id: record.id).joins(record.joins_for(:blog)).exists?("blogs.user_id": auth_owner.id)
+  end
+
+  # Can always create (for themselves)
+  def create?
+    authorize_action(true)
+  end
+
+  # Can only update if they are the author
+  def update?
+    authorize_action(check_author)
+  end
+
+  # Can only destroy if they are the author
+  def destroy?
+    authorize_action(check_author)
+  end
+
+  class Scope < ::Rhino::ViewerPolicy::Scope
+  end
+end
+```
+
+## Seed the database
+
+Create an additional organization and role for testing.
+
+```diff title="db/seeds.rb"
+# Generate sample categories
+3.times do
+  Category.create!(name: FFaker::Book.unique.genre)
+end
+
+# Function to generate sample blogs and blog posts
+def generate_blogs(user, org)
+  5.times do
+    blog = Blog.create!(user_id: user.id, organization: org, title: FFaker::Book.unique.author, category_id: Category.ids.sample)
+    20.times do
+      BlogPost.create!(blog_id: blog.id, title: FFaker::Book.unique.title, body: FFaker::Book.unique.description, published: [true, false].sample)
+    end
+  end
+end
+
+# Create two sample users
+user = User.create!(email: 'test@example.com', password: 'password', password_confirmation: 'password')
+user_other = User.create!(email: 'other@example.com', password: 'password', password_confirmation: 'password')
+
+# Create sample organizations
+# highlight-next-line
+-org = ["Single User Org", "Multi User Org", "Viewer Org", "Editor Org"].map do |name|
+# highlight-next-line
++org = ["Single User Org", "Multi User Org", "Viewer Org", "Editor Org", "Author Org"].map do |name|
+  Organization.create!(name:)
+end
+
+role_admin = Role.create!(name: "admin")
+role_viewer = Role.create!(name: "viewer")
+role_editor = Role.create!(name: "editor")
+# highlight-next-line
++role_author = Role.create!(name: "author")
+
+# The test@example.com user is the only user and admin of the "Single User Org" organization
+UsersRole.create!(user: user, organization: org[0], role: role_admin)
+# Only test@example.com authors blogs in the "MuSinglelti User Org" organization
+generate_blogs(user, org[0])
+
+# The test@example.com and other@example.com are both users and admins of the "Multi User Org" organization
+UsersRole.create!(user: user, organization: org[1], role: role_admin)
+# Both users author blogs in the "Multi User Org" organization
+generate_blogs(user, org[1])
+generate_blogs(user_other, org[1])
+
+# The test@example.com is a viewer and other@example.com is an admin of the "Viewer Org" organization
+UsersRole.create!(user: user, organization: org[2], role: role_viewer)
+UsersRole.create!(user: user_other, organization: org[2], role: role_admin)
+# Only other@example.com authors blogs in the "Viewer Org" organization
+generate_blogs(user_other, org[3])
+
+# The test@example.com is an editor and other@example.com is an admin of the "Editor Org" organization
+UsersRole.create!(user: user, organization: org[3], role: role_editor)
+UsersRole.create!(user: user_other, organization: org[3], role: role_admin)
+# Only other@example.com authors blogs in the "Editor Org" organization
+generate_blogs(user_other, org[3])
+
+# highlight-next-line
++# The test@example.com is an author and other@example.com is an admin of the "Author Org" organization
+# highlight-next-line
++UsersRole.create!(user: user, organization: org[4], role: role_author)
+# highlight-next-line
++UsersRole.create!(user: user_other, organization: org[4], role: role_admin)
+# highlight-next-line
++# Only other@example.com authors blogs in the "Editor Org" organization
+# highlight-next-line
++generate_blogs(user, org[4])
+# highlight-next-line
++generate_blogs(user_other, org[4])
+```
+
+And add the seed data to the database
+
+```bash
+rails db:seed
+```
+
+## Restart the server
+
+```bash
+rails s
+```
+
+## Try the Author Org
+
+Login to the application with `test@example.com` and `password` and switch to the "Author Org" organization. Viewing the blogs where the author is `test@example.com` will allow editing and deleting:
+
+![](/img/tutorial_custom_role_author.png)
+
+While blogs where the author is not `test@example.com` will not:
+
+![](/img/tutorial_custom_role_non_author.png)

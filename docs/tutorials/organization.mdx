@@ -131,7 +131,7 @@ user = User.create!(email: 'test@example.com', password: 'password', password_co
 user_other = User.create!(email: 'other@example.com', password: 'password', password_confirmation: 'password')
 
 # Create sample organizations
-org = %w["Single User Org" "Multi User Org" "Viewer Org" "Editor Org"].map do |name|
+org = ["Single User Org", "Multi User Org", "Viewer Org", "Editor Org"].map do |name|
   Organization.create!(name:)
 end
 
@@ -165,14 +165,26 @@ generate_blogs(user_other, org[3])
 
 And add the seed data to the database
 
-## Restart the application
+```bash
+rails db:seed
+```
 
-Run the server and client
+## Restart the server
 
 ```bash
 rails s
 ```
 
-```bash
-npm start
-```
+## Explore multiple organizations
+
+Login to the application with `test@example.com` and `password` or `other@example.com` and `password`. All organizations with be accessible with the switcher in the top right corner of the screen.
+
+![](/img/tutorial_organization_switcher.png)
+
+The ability to edit the data in the "Viewer Org" for example is restricted to `other@example.com`:
+
+![](/img/tutorial_organization_viewer_other.png)
+
+While `test@example.com` can only look:
+
+![](/img/tutorial_organization_viewer.png)
