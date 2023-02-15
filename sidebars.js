@@ -66,7 +66,13 @@ const sidebars = {
     "guides/jobs",
     "guides/notifications",
     "guides/subscription",
-    "guides/scraping",
+    {
+      "Importing data": [
+        "guides/importing/importing_google_sheets",
+        "guides/importing/importing_excel_csv",
+        "guides/importing/importing_scraping",
+      ],
+    },
   ],
 
   concept: [
