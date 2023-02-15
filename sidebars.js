@@ -68,7 +68,16 @@ const sidebars = {
     "guides/notifications",
     "guides/subscription",
     {
-      "Importing data": [
+      type: "category",
+      label: "Importing data",
+      link: {
+        type: "generated-index",
+        title: "Importing Data",
+        description: "Learn more about importing data",
+        slug: "/guides/importing",
+        keywords: ["guides", "importing"],
+      },
+      items: [
         "guides/importing/importing_google_sheets",
         "guides/importing/importing_excel_csv",
         "guides/importing/importing_scraping",
