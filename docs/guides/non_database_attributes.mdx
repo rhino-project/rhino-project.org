@@ -1,0 +1,76 @@
+# Non Database Attributes
+
+At times you may need to "synthesize" and attribute that is not stored in the database. This is useful for attributes that are derived from other attributes or attributes that are not stored in the database but are needed for display or other purposes.
+
+## Attributes method
+
+Because Rhino introspects the attributes for an [ActiveRecord](https://guides.rubyonrails.org/active_record_basics.html) model in order to provide API responses, standard Rails techniques can be used to define synthetic attributes. For example, the following model defines a `fahrenheit` attribute that is derived from the `celsius` attribute which is stored in the database.
+
+```ruby
+class Temperature < ApplicationRecord
+  attribute :farhenheit, :float
+
+  rhino_owner_global
+
+  # Convert the celsius attribute to fahrenheit
+  def fahrenheit
+    celsius * 9 / 5 + 32
+  end
+
+  # Convert the passed in fahrenheit value to celsius and store it in the celsius attribute
+  def fahrenheit=
+    celsius = (fahrenheit - 32) * 5 / 9
+  end
+
+  validates :celsius, presence: true
+end
+```
+
+### Read only attributes
+
+Its more common to have read only attributes of this type. The built in [attr_readonly](https://api.rubyonrails.org/classes/ActiveRecord/ReadonlyAttributes/ClassMethods.html#method-i-attr_readonly) method can be used to mark the attribute as read only. This prevents the attribute from being updated or being set during creation.
+
+```ruby
+class Temperature < ApplicationRecord
+  attribute :farhenheit, :float
+
+ # highlight-next-line
+  attr_readonly :fahrenheit
+
+  rhino_owner_global
+
+  def fahrenheit
+    celsius * 9 / 5 + 32
+  end
+
+  validates :celsius, presence: true
+end
+```
+
+### Property manipulations
+
+All normal manipulations of properties are supported.
+
+```ruby
+class Temperature < ApplicationRecord
+  attribute :farhenheit, :float
+
+  rhino_owner_global
+  # highlight-next-line
+  # Only only fahrenheit to be set on update, not create
+  # highlight-next-line
+  rhino_properties_create except: :fahrenheit
+
+  # Convert the celsius attribute to fahrenheit
+  def fahrenheit
+    celsius * 9 / 5 + 32
+  end
+
+  # Convert the passed in fahrenheit value to celsius and store it in the celsius attribute
+  def fahrenheit=
+    celsius = (fahrenheit - 32) * 5 / 9
+  end
+
+  validates :celsius, presence: true
+end
+```

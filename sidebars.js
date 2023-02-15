@@ -63,6 +63,7 @@ const sidebars = {
     {
       UI: ["guides/ui/api_hooks", "guides/ui/overrides"],
     },
+    "guides/non_database_attributes",
     "guides/jobs",
     "guides/notifications",
     "guides/subscription",
