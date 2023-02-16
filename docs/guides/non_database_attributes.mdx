@@ -1,6 +1,6 @@
 # Non Database Attributes
 
-At times you may need to "synthesize" and attribute that is not stored in the database. This is useful for attributes that are derived from other attributes or attributes that are not stored in the database but are needed for display or other purposes.
+At times you may need to "synthesize" an attribute that is not stored in the database. This is useful for attributes that are derived from other attributes or attributes that are not stored in the database but are needed for display or other purposes.
 
 ## Attributes method
 
@@ -57,7 +57,7 @@ class Temperature < ApplicationRecord
 
   rhino_owner_global
   # highlight-next-line
-  # Only only fahrenheit to be set on update, not create
+  # Only fahrenheit to be set on update, not create
   # highlight-next-line
   rhino_properties_create except: :fahrenheit
 
