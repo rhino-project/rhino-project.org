@@ -147,7 +147,7 @@ and in additon to the [[useMutation](https://react-query.tanstack.com/reference/
 ```jsx
 const { mutate } = useModelCreate("blog_post");
 
-const handleCreate = () => mutate({name "test"}, {onSuccess: (data) => console.log("Created id", data?.data?.id)})
+const handleCreate = () => mutate({name "test"}, {onSuccess: (blogPost) => console.log("Created id", blogPost.id)})
 ```
 
 ### useModelUpdate
@@ -183,7 +183,7 @@ the object passed to mutate _must_ contain and id field.
 ```jsx
 const { mutate } = useModelUpdate("blog_post");
 
-const handleSave = () => mutate({id: 4, name "test"}, {onSuccess: (data) => console.log("Updated name to", data?.data?.name)})
+const handleSave = () => mutate({id: 4, name "test"}, {onSuccess: (blogPost) => console.log("Updated name to", blogPost.name)})
 ```
 
 ### useModelDestroy
@@ -223,8 +223,8 @@ const handleDelete = () =>
   mutate(
     { id: 4 },
     {
-      onSuccess: (data) =>
-        console.log("Destroyed object with name", data?.data?.name),
+      onSuccess: (blogPost) =>
+        console.log("Destroyed object with name", blogPost.name),
     }
   );
 ```
