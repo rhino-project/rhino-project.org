@@ -54,6 +54,11 @@ const { resources } = useModelIndex(model, options);
 
 - `model` a string for the model name or an already existing model object (from useModel or getModel)
 - `options`
+  - `search` a string for full text search (of fields configured server side)
+  - `filter` an object representing a set of filters See [Rest API Filtering](../../concepts/rest_api/filtering)
+  - `order` a string resprenting the sort order
+  - `limit` a number representing the maximum number of results
+  - `offset` a number representing the start of the results
   - `networkOptions` a set of options passed to axios
   - `queryOptions` a set of options pased to useQuery (for instance to set the `enabled` option)
 
@@ -66,18 +71,17 @@ and in additon to the [useQuery](https://react-query.tanstack.com/reference/useQ
 
 #### Recipes
 
-##### Passing Filters
+##### Passing query modifiers
 
 ```jsx
 const { resources } = useModelIndex(model, {
-  networkOptions: {
-    params: {
-      filter: {
-        published: true,
-      },
-      order: "name",
-    },
+  search: 'Test'
+  filter: {
+    published: true,
   },
+  order: 'name',
+  limit: 10,
+  offset: 10
 });
 ```
 
@@ -236,12 +240,8 @@ The built in CRUD hooks themselves are composed of several lower level hooks, al
 ```jsx
 export const usePublishedBlogPosts = () => {
   return useModelIndex("blog_post", {
-    networkOptions: {
-      params: {
-        filter: {
-          published: true,
-        },
-      },
+    filter: {
+      published: true,
     },
   });
 };
