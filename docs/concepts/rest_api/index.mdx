@@ -1,19 +1,13 @@
-# Overview
+# REST API
 
-This guide is an introduction to Rhino API
-
----
-
-## Rhino REST API
-
-The Rhino REST API is based on OpenAPI (Swagger), but is not fully compliant.
+The Rhino REST API is generated from the [resource](../resources) definitions in the application.
 
 A description of the API is available at /api/info/models, for instance:
 http://localhost:3002/api/info/models
 
 This is the output the description of all resources.
 
-### Routing and Controllers
+## Routing and Controllers
 
 By default Resources will have the standard CRUD based routing (ie resource: :blogs from rails). Routes can be altered with rhino configuration directives.
 
@@ -39,7 +33,7 @@ class Blog < ApplicationRecord
 end
 ```
 
-#### Built In Controllers
+### Built In Controllers
 
 #### Rhino::BaseController
 
@@ -63,7 +57,7 @@ Rhino.setup do |config|
 end
 ```
 
-### Parameters
+## Parameters
 
 Parameters are what is accepted or returned from the API as properties for the Resource. Parameters by default reflect the properties of a resource, but can be overwritten by the resource itself or policies.
 
@@ -94,19 +88,19 @@ However when setting a reference parameter, use the identifier property (ie the 
 }
 ```
 
-#### Nested support
+### Nested support
 
-Resources with many references resources can accepted "nested" . With active record based resources this is handled automatically if accepts_nested_attributes_for is configureated on the model.
+Resources with many references resources can accepted "nested" . With active record based resources this is handled automatically if [`accepts_nested_attributes_for`](https://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html) is configured on the model.
 
-#### Properties vs Parameters
+### Properties vs Parameters
 
 Properties are part of the data model of the Resource, while parameters are what the REST API will accept and return for a Resource. They can be different.
 
-### Filtering with Sieves
+## Sieves
 
-Filtering resources on index API endpoints is accomplished through Sieves. Sieves are an ordered stack of filter actions applied based on query parameters. They act very much like the rails middleware stack.
+Querying resources on index API endpoints is implemented with sieves. Sieves are an ordered stack of actions applied based on URL parameters.
 
-There is a default set of sieves, but they can be altered on a per resource basis. For instance this would remove the
+There is a default set of sieves, but they can be altered on a per resource basis. For instance this:
 
 ```ruby
 class Blog < ApplicationRecord
@@ -114,25 +108,27 @@ class Blog < ApplicationRecord
 end
 ```
 
-#### Rhino::Sieve::Filter
+would remove the default limit of 10 from the index endpoint for blogs.
+
+### Rhino::Sieve::Filter
 
 > Filter based on properties, including properties of referenced resources [read more](./filtering).
 
-#### Rhino::Sieve::Limit
+### Rhino::Sieve::Limit
 
 > Limit the number of resources returned.
 > http://localhost:3002/api/blogs?limit=10
 
-#### Rhino::Sieve::Offset
+### Rhino::Sieve::Offset
 
 > Offset from start of the results. Used for pagination.
 > http://localhost:3002/api/blogs?limit=10&offset=10
 
-#### Rhino::Sieve::Order
+### Rhino::Sieve::Order
 
 > Sorting of the results [read more](./sorting).
 
-#### Rhino::Sieve::Search
+### Rhino::Sieve::Search
 
 > Full text contains searching
 > http://localhost:3002/api/blog_posts?title=heart
