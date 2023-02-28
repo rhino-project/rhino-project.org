@@ -1,0 +1,11 @@
+# Pagination
+
+This guide demonstrates use cases for the Limit and Offset Sieves. These sieves are used when `limit` and `offset` parameters are found in the query parameters, _e.g._ `?limit=10&offset=20`.
+
+## General usage
+
+The canonical use case for the limit and offset sieves is to provide pagination for the API results by a certain column. For example, it is needed to fetch the third page of blog posts in groups of 20, the request and its query parameters could be:
+
+```
+/blog_posts?limit=20&offset=40
+```
