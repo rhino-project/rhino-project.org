@@ -94,7 +94,11 @@ const sidebars = {
         type: "doc",
         id: "concepts/rest_api/index",
       },
-      items: ["concepts/rest_api/filtering", "concepts/rest_api/sorting"],
+      items: [
+        "concepts/rest_api/filtering",
+        "concepts/rest_api/sorting",
+        "concepts/rest_api/pagination",
+      ],
     },
     "concepts/models_attributes_paths",
     {
