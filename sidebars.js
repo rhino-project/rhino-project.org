@@ -60,10 +60,10 @@ const sidebars = {
       ],
     },
     "guides/updating",
+    "guides/properties",
     {
       UI: ["guides/ui/api_hooks", "guides/ui/overrides"],
     },
-    "guides/non_database_attributes",
     "guides/jobs",
     "guides/notifications",
     "guides/subscription",
@@ -86,15 +86,7 @@ const sidebars = {
   ],
 
   concept: [
-    {
-      type: "category",
-      label: "Resources",
-      link: {
-        type: "doc",
-        id: "concepts/resources/index",
-      },
-      items: ["concepts/resources/attributes"],
-    },
+    "concepts/resources/index",
     {
       type: "category",
       label: "REST API",
@@ -104,6 +96,7 @@ const sidebars = {
       },
       items: ["concepts/rest_api/filtering", "concepts/rest_api/sorting"],
     },
+    "concepts/models_attributes_paths",
     {
       type: "category",
       label: "Authentication",
