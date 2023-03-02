@@ -364,6 +364,21 @@ const { data: { results = [] } = {} } = useModelIndex(
   );
 ```
 
+similarly for useModelShow:
+
+```jsx
+const { data: { data: resource } = {} } = useModelShow(
+  "warehouse",
+  warehouseId
+);
+```
+
+becomes:
+
+```jsx
+const { resource } = useModelShow("warehouse", warehouseId);
+```
+
 #### Simplified data access
 
 There are also now direct accessors for the resources, results and total count:
