@@ -343,3 +343,41 @@ const { data } = useModelIndex(model, {
   filter: { user_id: user.id },
 });
 ```
+
+### Data access
+
+Previous versions of the hooks used the `data` property of the react query response to access the data. This data propery contained the full axios response including things like `header`. The body of an axios response is in the `data` property and so there were many `data.data` style access. The data is now directly available:
+
+```jsx
+const { data: { data: { results = [] } = {} } = {} } = useModelIndex(
+    'users_role',
+    filter: { user: loggedInUserId }
+  );
+```
+
+becomes:
+
+```jsx
+const { data: { results = [] } = {} } = useModelIndex(
+    'users_role',
+    filter: { user: loggedInUserId }
+  );
+```
+
+#### Simplified data access
+
+There are also now direct accessors for the resources, results and total count:
+
+```jsx
+const { data: { data: { results = [] } = {} } = {} } = useModelIndex(
+    'users_role',
+    filter: { user: loggedInUserId }
+  );
+```
+
+```jsx
+const { results = [], total } = useModelIndex(
+    'users_role',
+    filter: { user: loggedInUserId }
+  );
+```
