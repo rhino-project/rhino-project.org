@@ -64,6 +64,7 @@ const sidebars = {
     {
       UI: ["guides/ui/api_hooks", "guides/ui/overrides"],
     },
+    "guides/audit_trail",
     "guides/jobs",
     "guides/notifications",
     "guides/subscription",
