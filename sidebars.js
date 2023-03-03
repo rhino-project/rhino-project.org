@@ -37,6 +37,15 @@ const sidebars = {
   guide: [
     {
       type: "category",
+      label: "Upgrading",
+      link: {
+        type: "doc",
+        id: "guides/updating",
+      },
+      items: ["guides/release_notes"],
+    },
+    {
+      type: "category",
       label: "Deployment",
       link: {
         type: "doc",
@@ -59,7 +68,6 @@ const sidebars = {
         },
       ],
     },
-    "guides/updating",
     "guides/properties",
     {
       UI: ["guides/ui/api_hooks", "guides/ui/overrides"],

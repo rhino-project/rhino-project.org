@@ -1,0 +1,178 @@
+# Release Notes
+
+## 2.1.0
+
+The key changes in this release are:
+
+- Model has been simplified
+- Data acess and query hook arguments have been updated to be more explicit and easier to use.
+- react-hook-form is now included as a dependency and used for the authentication forms (sign in, sign up, forgot password, reset password)
+  - More support for this will be added in future releases
+
+See below for more details.
+
+### Model fetching
+
+#### Passing to API query and mutation hooks
+
+Historically `getModel` was used to fetch a model object and then pass it too an API hook, but this is no longer necessary as the hooks will create a memoized model object for you and also return it.
+
+```jsx
+const { data } = useModelShow(getModel("warehouse"), resource.warehouse.id);
+```
+
+becomes:
+
+```jsx
+const { data } = useModelShow("warehouse", resource.warehouse.id);
+```
+
+and if you need the model object:
+
+```jsx
+const { data, model: warehouseModel } = useModelShow(
+  "warehouse",
+  resource.warehouse.id
+);
+```
+
+#### Other uses
+
+In some cases the model object was used for other purposes, for instance to construct a URL. In this case the `getModel` function may have been used directly and possibly memoized. The `useModel` hook can be used to achieve the same result:
+
+```jsx
+const model = useMemo(() => getModel("warehouse"), []);
+```
+
+becomes:
+
+```jsx
+const model = useModel("warehouse");
+```
+
+useModel will handle the case where the model is already an object and will return it directly in that case already memoized.
+
+```jsx
+const MyComponent = ({ model }) => {
+  const componentModel = useModel(model);
+  const { data } = useModelShow(componentModel, resource.warehouse.id);
+};
+```
+
+### Model query hook arguments
+
+In general the hooks are backwards compatible with older arguments styles, but it is recommended to migrate to the new format. Here are a list of patterns that can be migrated with 2.1.0.
+
+Previous versions of the hooks the second parameter of the index hook to pass options to the network call which created the query params for filtering, limit, offset, order, search and also used the third parameter to pass options to react query. A more explicit API has been introduced filtering, limit, offset, order, search and the options for react query are now passed as a named object in the second parameter..
+
+```jsx
+const { data } = useModelIndex(
+  "users_role",
+  {
+    params: {
+      filter: { user_id: user.id },
+    },
+  },
+  { enabled: false }
+);
+```
+
+becomes:
+
+```jsx
+const { data } = useModelIndex("users_role", {
+  filter: { user_id: user.id },
+  queryOptions: { enabled: false },
+});
+```
+
+#### networkOptions
+
+Previous versions of the also allowed used a `networkOptions` object to pass parameters to the network call which created the sear. This has been replaced with a more explicit API.
+
+```jsx
+const { data } = useModelIndex("users_role", {
+  networkOptions: {
+    params: {
+      filter: { user_id: user.id },
+    },
+  },
+});
+```
+
+```jsx
+const { data } = useModelIndex(model, {
+  filter: { user_id: user.id },
+});
+```
+
+### Model hook data access
+
+Previous versions of the hooks used the `data` property of the react query response to access the data. This data propery contained the full axios response including things like `header`. The body of an axios response is in the `data` property and so there were many `data.data` style access. The data is now directly available in the `data` property of the query responses:
+
+```jsx
+const { data: { data: { results = [] } = {} } = {} } = useModelIndex(
+    'users_role',
+    filter: { user: loggedInUserId }
+  );
+```
+
+becomes:
+
+```jsx
+const { data: { results = [] } = {} } = useModelIndex(
+    'users_role',
+    filter: { user: loggedInUserId }
+  );
+```
+
+similarly for useModelShow:
+
+```jsx
+const { data: { data: resource } = {} } = useModelShow(
+  "warehouse",
+  warehouseId
+);
+```
+
+becomes:
+
+```jsx
+const { resource } = useModelShow("warehouse", warehouseId);
+```
+
+and in the callbacks of the mutation hooks:
+
+```jsx
+const { mutate } = useModelCreate("warehouse", {
+  onSuccess: (data) =>
+    history.push(`/warehouses/${data.data.id}`);
+});
+```
+
+becomes:
+
+```jsx
+const { mutate } = useModelCreate("warehouse", {
+  onSuccess: (newWarehouse) =>
+    history.push(`/warehouses/${newWarehouse.id}`);
+});
+```
+
+### useModelIndex data helpers
+
+There are also now direct accessors for the resources, results and total count in useModelIndex:
+
+```jsx
+const { data: { data: { results = [] } = {} } = {} } = useModelIndex(
+    'users_role',
+    filter: { user: loggedInUserId }
+  );
+```
+
+```jsx
+const { resources, results = [], total } = useModelIndex(
+    'users_role',
+    filter: { user: loggedInUserId }
+  );
+```
