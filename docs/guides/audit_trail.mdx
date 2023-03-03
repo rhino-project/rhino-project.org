@@ -1,0 +1,27 @@
+# Audit Trail
+
+Audit trail support in Rhino is provided by the [paper_trail](https://github.com/paper-trail-gem/paper_trail) gem.
+
+This gem provides a `has_paper_trail` method that can be used to add audit trail support to any model. The gem also provides a `Version` model that is used to store the audit trail data.
+
+## Installation
+
+Installation requires installing the gem, running the generator and running the migrations.
+
+```bash
+bundle add paper_trail
+rails generate paper_trail:install
+rails db:migrate
+```
+
+## Enabling
+
+Enabled for a model as follows:
+
+```ruby
+class BlogPost < ApplicationRecord
+  has_paper_trail
+end
+```
+
+Rhino will automatically add the current user to the audit trail for API requests.
