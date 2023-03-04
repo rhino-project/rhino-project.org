@@ -1,0 +1,30 @@
+# Create page
+
+The create page is for creating a new record of a model. It is the page that is shown when you click on the "Add" button in the index page. The component structure of the create page is as follows:
+
+```mermaid
+graph TB
+    ModelCreate-->ModelCreateHeader
+    ModelCreate-->ModelCreateForm
+    ModelCreate-->ModelCreateActions
+    ModelCreateForm-->ModelForm
+    ModelCreateActions-->ModelActions
+```
+
+## ModelCreateForm
+
+### Changing the creatable fields
+
+```javascript
+const globalOverrides = {
+  blog: {
+    create: {
+      ModelCreateForm: {
+        props: {
+          paths: ["title", "published_at"],
+        },
+      },
+    },
+  },
+};
+```
