@@ -1,0 +1,31 @@
+# Show page
+
+The show page is for showing a single record of a model. It is the page that is shown when you click on a record in the index page. The component structure of the show page is as follows:
+
+```mermaid
+graph TB
+    ModelShow-->ModelShowHeader
+    ModelShow-->ModelShowActions
+    ModelShow-->ModelShowDescription
+    ModelShow-->ModelShowRelated
+    ModelShowActions-->ModelActions
+    ModelShowRelated-->ModelIndex
+```
+
+## ModelShowDescription
+
+### Changing displayed fields
+
+```javascript
+const globalOverrides = {
+  blog: {
+    show: {
+      ModelShowDescription: {
+        props: {
+          paths: ["title", "author"],
+        },
+      },
+    },
+  },
+};
+```

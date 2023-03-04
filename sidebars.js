@@ -65,6 +65,9 @@ const sidebars = {
       "UI Customization": [
         "guides/ui/roles",
         "guides/ui/index_page",
+        "guides/ui/show_page",
+        "guides/ui/create_page",
+        "guides/ui/edit_page",
         "guides/ui/overrides",
       ],
     },
