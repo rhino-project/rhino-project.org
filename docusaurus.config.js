@@ -86,9 +86,10 @@ const config = {
             label: "Concepts",
           },
           {
-            href: "https://api.rhino-project.org",
-            label: "API",
+            type: "docSidebar",
             position: "left",
+            sidebarId: "reference",
+            label: "Reference",
           },
           {
             href: "https://github.com/rhino-project",
