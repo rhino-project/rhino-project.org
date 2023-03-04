@@ -1,0 +1,41 @@
+# Role Based
+
+This guide is an introduction to override for React
+
+:::warning
+Do not rely on frontend roles for security. This is only for UI purposes.
+:::
+
+## One specific role
+
+The `useHasRoleOf` hook can be used to check if the current user has any of several roles.
+
+```jsx
+const InfoView = (props) => {
+  // highlight-next-line
+  const isAdmin = useHasRoleOf("admin");
+
+  if (isAdmin) {
+    return <AdminInfoView {...props} />;
+  } else {
+    return <InfoView {...props} />;
+  }
+};
+```
+
+## One of several roles
+
+The `useHasRoleIn` hook can be used to check if the current user has a specific role.
+
+```jsx
+const InfoView = (props) => {
+  // highlight-next-line
+  const canEdit = useHasRoleIn(["admin", "owner"]);
+
+  if (canEdit) {
+    return <InlineEditView {...props} />;
+  } else {
+    return <InfoView {...props} />;
+  }
+};
+```

@@ -62,7 +62,11 @@ const sidebars = {
     "guides/updating",
     "guides/properties",
     {
-      UI: ["guides/ui/api_hooks", "guides/ui/overrides"],
+      "UI Customization": [
+        "guides/ui/roles",
+        "guides/ui/index_page",
+        "guides/ui/overrides",
+      ],
     },
     "guides/audit_trail",
     "guides/jobs",
@@ -114,6 +118,15 @@ const sidebars = {
     {
       Extending: ["concepts/extending/modules", "concepts/extending/overrides"],
     },
+  ],
+
+  reference: [
+    {
+      type: "link",
+      label: "Backend API",
+      href: "https://api.rhino-project.org",
+    },
+    { "Front End": ["reference/front_end/api_hooks", "guides/ui/overrides"] },
   ],
 };
 
