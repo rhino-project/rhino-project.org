@@ -1,5 +1,16 @@
 # Release Notes
 
+## 2.2.0
+
+The key changes in this release are:
+
+- Filters are now based on react-hook-form and support devtools for debugging
+- Float and Year filters has been added
+- Model Integer and Model Float filters now support minimum and and maximum values (and exclusiveMinimum and exclusiveMaximum)
+- Separate filters for globally owned models (ModelFilterReference) and non-globally owned models (ModelFilterOwnerReference)
+
+All of the above changes should be backwards compatible unless you have created any custom filters. In that case you will need to update them to use react-hook-form.
+
 ## 2.1.0
 
 The key changes in this release are:
