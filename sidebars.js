@@ -91,6 +91,7 @@ const sidebars = {
         "guides/importing/importing_scraping",
       ],
     },
+    "guides/testing",
   ],
 
   concept: [
