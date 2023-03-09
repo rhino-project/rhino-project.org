@@ -1,0 +1,138 @@
+# Filters
+
+The index page is for listing all the records of a model. It is the default page for a model. It is also the page that is shown when you click on the model name in the sidebar. The component structure of the index page is as follows:
+
+```mermaid
+graph TB
+    ModelFilters-->ModelFilterGroup
+
+    ModelFilterGroup-->FilterGroup
+    FilterGroup-->FilterLayout
+
+    FilterLayout-->FilterLayoutVertical
+    FilterLayoutVertical-->Filter
+    Filter-->ModelFilter
+    FilterLayoutVertical-->FilterLabel
+    FilterLabel-->ModelFilterLabel
+
+    ModelFilter-->ModelFilterBoolean
+    ModelFilterBoolean-->FilterBoolean
+    FilterBoolean-->FieldBooleanIndeterminate
+
+    ModelFilter-->ModelFilterDate
+    ModelFilterDate-->FilterDate
+    FilterDate-->FieldDate
+
+    ModelFilter-->ModelFilterDateTime
+    ModelFilterDateTime-->FilterDateTime
+    FilterDateTime-->FieldDateTime
+
+    ModelFilter-->ModelFilterEnum
+    ModelFilterEnum-->FilterSelectControlled
+    FilterSelectControlled-->FieldInputControlled
+
+    ModelFilter-->ModelFilterFloat
+    ModelFilterFloat-->FilterFloat
+    FilterFloat-->FieldFloat
+    FieldFloat-->FieldInput
+
+    ModelFilter-->ModelFilterInteger
+    ModelFilterInteger-->FilterInteger
+    FilterInteger-->FieldInteger
+    FieldInteger-->FieldInput
+
+    ModelFilter-->ModelFilterIntegerSelect
+
+    ModelFilter-->ModelFilterOwnerReference
+    ModelFilterOwnerReference-->ModelFilterReference
+    ModelFilter-->ModelFilterReference
+    ModelFilterReference-->FilterSelectControlled
+
+    ModelFilter-->ModelFilterString
+    ModelFilterString-->FilterString
+    FilterString-->FieldString
+    FieldString-->FieldInput
+
+    ModelFilter-->ModelFilterTime
+    ModelFilterTime-->FilterTime
+    FilterTime-->FieldTime
+
+    ModelFilter-->ModelFilterYear
+    ModelFilterYear-->FilterYear
+    FilterYear-->FieldYear
+```
+
+## Samples
+
+```jsx
+import { useWatch } from "react-hook-form";
+import FilterGroup from "rhino/components/forms/FilterGroup";
+import ModelFilterGroup from "rhino/components/models/ModelFilterGroup";
+
+const MyDivComponent = () => {
+  const watch = useWatch({ name: "created_at.gteq" });
+
+  return <div>Val: {watch}</div>;
+};
+
+const globalOverrides = {
+  blog: {
+    index: {
+      ModelIndexHeader: {
+        ModelFilters: {
+          props: {
+            paths: [
+              "published_at",
+              <MyDivComponent />,
+              <ModelFilterGroup
+                path="created_at::gteq"
+                overrides={{
+                  FilterLayout: {
+                    FilterLabel: { props: { label: "Created At2" } },
+                  },
+                }}
+              />,
+              <FilterGroup
+                label="Non-Model Filter"
+                placeholder="Customer Placeholder"
+                path="title"
+              />,
+            ],
+          },
+        },
+      },
+    },
+  },
+  blog_post: {
+    index: {
+      ModelIndexHeader: {
+        ModelFilters: {
+          props: {
+            paths: ["published"],
+          },
+        },
+      },
+    },
+  },
+  every_field: {
+    index: {
+      ModelIndexHeader: {
+        ModelFilters: {
+          props: {
+            paths: [
+              "integer_no_nil::gt",
+              "date_time_required::lteq",
+              "date_time_required::gt",
+              "date_time",
+              "date_required::gteq",
+              "time_required::lt",
+              "year::lt",
+              "enum",
+            ],
+          },
+        },
+      },
+    },
+  },
+};
+```

@@ -131,6 +131,7 @@ const sidebars = {
       ],
     },
     "concepts/models_attributes_paths",
+    "concepts/components",
     {
       type: "category",
       label: "Authentication",
