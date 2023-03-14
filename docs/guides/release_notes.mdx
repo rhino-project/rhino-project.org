@@ -9,6 +9,18 @@ The key changes in this release are:
 - String type for filters
 - Allow attachment links in thend index table to be opened with moving to the view of the item
 
+### Custom ModelIndex\* components
+
+Custom ModelIndex\* components will need to use the new controller and context. Generally this will be done by using the new useModelIndexContext hook instead of relying on prop drilling. For example:
+
+```diff
+-const RecruitingBoard = ({ loading, team_season, resources }) => {
++const RecruitingBoard = ({ team_season }) => {
++  const { isLoading: loading, resources } = useModelIndexContext();
+```
+
+### Custom Filters
+
 Custom filters will need to use the new controller and context - see the [filters guide](ui/filters) for more details.
 
 ## 2.3.0
