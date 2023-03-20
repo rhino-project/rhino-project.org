@@ -72,7 +72,16 @@ const sidebars = {
     {
       "UI Customization": [
         "guides/ui/roles",
-        "guides/ui/index_page",
+        {
+          type: "category",
+          label: "Index page",
+          link: {
+            type: "doc",
+            id: "guides/ui/index_page",
+          },
+          collapsed: false,
+          items: ["guides/ui/filters", "guides/ui/cells"],
+        },
         "guides/ui/show_page",
         "guides/ui/create_page",
         "guides/ui/edit_page",
