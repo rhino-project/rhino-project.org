@@ -1,0 +1,75 @@
+# Super Admin
+
+This guide describes how to set up a super admin in Rhino.
+
+## Dashboard
+
+Rhino uses the [ActiveAdmin](https://activeadmin.info/) gem to create an admin dashboard. It is a powerful tool that allows you to create a custom admin dashboard for your application.
+
+By default Rhino comes with a basic dashboard that displays all [resources](../concepts/resources/) and allows editing based on the configuration.
+
+### Configuration
+
+The admin dashboard configuration is in `config/initializers/active_admin.rb` and can be altered to the project needs.
+
+## Extending
+
+When the admin dashboard is generated, it will create a model for each resource. You can override the default behavior by creating a new model in the `app/admin` folder. For example, if you want to change the default filters for the `Blog` resource, you can create `app/admin/blog.rb`:
+
+```ruby title="app/admin/blog.rb"
+ActiveAdmin.register Blog do
+  filter :title
+  filter :published
+end
+```
+
+## Theming
+
+Rhino includes the [arctic_admin](https://github.com/cprodhomme/arctic_admin) theme.
+
+## ActiveAdmin Addons
+
+Rhino include the [activeadmin_addons](https://github.com/platanus/activeadmin_addons) gem to add some extra functionality to ActiveAdmin.
+
+### Optimizing select filters
+
+ActiveAdmin’s default select filter loads all records from the database which can cause significant performance issues. To avoid this, a lazy typeahead select filter can be created using [activeadmin_addons](https://github.com/platanus/activeadmin_addons), and the [Ransack](https://github.com/activerecord-hackery/ransack) gem used by ActiveAdmin.
+
+Imagine we have an InvoiceLineItem table, that belongs to a UsersRole, that in turn belongs to a User. If we want a “User“ filter in the InvoiceLineItem Index page, we would do something like this:
+
+```ruby title="app/admin/invoice_line_items.rb"
+ActiveAdmin.register InvoiceLineItem do
+  preserve_default_filters!
+  remove_filter :users_role # remove original filter
+  filter :users_role_user_id, # this name must contain the relationships path from the model from the index page until the user table, so invoice_line_item -> users_role -> user. the engine will do a join.
+    label: "User",
+    as: :search_select_filter,
+    url: proc { admin_users_path }, # AJAX endpoint
+    fields: %w[name nickname email], # columns in the looked up table to be compared against
+    minimum_input_length: 2,
+    method_model: User, # original table
+    width: "190px", # necessary for fixing a UI bug
+    display_name: "full_nickname_and_email", # custom display name that gives you more flexibility to use whatever you want
+    order_by: "name"
+end
+```
+
+Create a json view for the admin_users_path to return a custom attribute that will be shown in the results select box.
+
+```ruby title="app/views/admin/users/index.json.jbuilder"
+json.array!(@users) do |user|
+  json.extract! user, :id, :full_nickname_and_email
+end
+```
+
+Finish up by implementing the custom display field in the User model:
+
+```ruby title="app/models/user.rb"
+def full_nickname_and_email
+  "#{nickname || name} - #{email}"
+end
+```
+
+:::info
+jbuilder is no longer included in Rhino by default. You will need to add it to your Gemfile.
+:::
