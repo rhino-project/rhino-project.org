@@ -11,10 +11,153 @@ graph TB
     ModelIndexHeader-->ModelSort
     ModelIndexHeader-->ModelPager
     ModelIndexActions-->ModelActions
-    ModelIndexTable-->ModelTable
+    ModelIndexTable-->Table
+    Table-->ModelCell
 ```
 
 ## ModelIndexTable
+
+The `paths` prop of the `ModelIndexTable` component is used to specify which attributes of the model should be displayed. The `paths` prop can be a mixed array of strings and [valid react components](https://react.dev/reference/react/isValidElement). The strings should be a [path to the attribute](../../concepts/models_attributes_paths). `ModelIndexTable` uses `ModelCell` to determine the default renderer of the attribute.
+
+For more about the `ModelCell` component, see the [cells guide](cells).
+
+### Changing attributes and order displayed
+
+```jsx title="src/models/overrides.js"
+const globalOverrides = {
+  blog: {
+    index: {
+      ModelIndexTable: {
+        props: {
+          paths: ["title", "banner_attachment"],
+        },
+      },
+    },
+  },
+};
+```
+
+### Changing the column header
+
+```jsx title="src/models/overrides.js"
+const globalOverrides = {
+  blog: {
+    index: {
+      ModelIndexTable: {
+        props: {
+          paths: [<ModelCell header="Summary" path="title" >, "banner_attachment"],
+        },
+      },
+    },
+  },
+};
+```
+
+the header can also be a react component
+
+```jsx title="src/models/overrides.js"
+const globalOverrides = {
+  blog: {
+    index: {
+      ModelIndexTable: {
+        props: {
+          paths: [<ModelCell header={<em>Summary</em>} path="title" >, "banner_attachment"],
+        },
+      },
+    },
+  },
+};
+```
+
+### Changing the column footer
+
+```jsx title="src/models/overrides.js"
+const globalOverrides = {
+  blog: {
+    index: {
+      ModelIndexTable: {
+        props: {
+          paths: [<ModelCell footer="Summary" path="title" >, "banner_attachment"],
+        },
+      },
+    },
+  },
+};
+```
+
+the header can also be a react component
+
+```jsx title="src/models/overrides.js"
+const globalOverrides = {
+  blog: {
+    index: {
+      ModelIndexTable: {
+        props: {
+          paths: [<ModelCell footer={<em>Summary</em>} path="title" >, "banner_attachment"],
+        },
+      },
+    },
+  },
+};
+```
+
+### Removing the header
+
+```jsx title="src/rhino.config.js"
+const rhinoConfig = {
+  version: 1,
+  components: {
+    ModelHeader: null,
+  },
+};
+```
+
+### Removing the footer
+
+```jsx title="src/rhino.config.js"
+const rhinoConfig = {
+  version: 1,
+  components: {
+    ModelFooter: null,
+  },
+};
+```
+
+### Custom accessor
+
+```jsx
+const globalOverrides = {
+  blog: {
+    index: {
+      ModelIndexTable: {
+        props: {
+          paths: [
+            <CustomNameCell
+              accessor={(row) => `${row.firstName} ${row.lastName}`}
+            />,
+          ],
+        },
+      },
+    },
+  },
+};
+```
+
+### Fully custom cell
+
+```jsx
+const globalOverrides = {
+  blog: {
+    index: {
+      ModelIndexTable: {
+        props: {
+          paths: [<CustomCell />],
+        },
+      },
+    },
+  },
+};
+```
 
 ### Cards instead of a table
 
