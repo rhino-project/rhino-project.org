@@ -1,5 +1,74 @@
 # Release Notes
 
+## 2.5.0
+
+The key changes in this release are:
+
+- ModelIndexTable no longer uses ModelTable internally and uses react-table 8 see [table and cells guide](ui/cells) for more details
+- Update to Cypress 12
+
+### ModelIndexTable/ModelTable overrides
+
+Because ModelIndexTable no longer uses ModelTable internally, any path overrides to ModelTable should be updated to use ModelIndexTable instead, however simple cases are backwards compatible. For example:
+
+```jsx title="src/models/overrides.js"
+const globalOverrides = {
+  invoice: {
+    index: {
+      ModelIndexTable: {
+        // highlight-next-line
+        ModelTable: {
+          props: {
+            paths: [
+              "id",
+              "project.client",
+              "project",
+              "project.billing_frequency",
+              "beginning_at",
+              "ending_at",
+              "currency",
+              "amount",
+              "approved",
+              "quickbooks_number",
+              "invoiced",
+            ],
+          },
+          // highlight-next-line
+        },
+      },
+    },
+  },
+};
+```
+
+becomes
+
+```jsx title="src/models/overrides.js"
+const globalOverrides = {
+  invoice: {
+    index: {
+      ModelIndexTable: {
+        props: {
+          paths: [
+            "id",
+            "project.client",
+            "project",
+            "project.billing_frequency",
+            "beginning_at",
+            "ending_at",
+            "currency",
+            "amount",
+            "approved",
+            "quickbooks_number",
+            "invoiced",
+          ],
+        },
+      },
+    },
+  },
+};
+```
+
 ## 2.4.0
 
 The key changes in this release are:
@@ -7,7 +76,7 @@ The key changes in this release are:
 - Controller and context for ModelIndex with ModelIndexBase
 - exclusiveMininum and exclusiveMaximum support for ModelFilterDate, ModelFilterDateTime and ModelFilterYear
 - String type for filters
-- Allow attachment links in thend index table to be opened with moving to the view of the item
+- Allow attachment links in the index table to be opened without moving to the view of the item
 
 ### Custom ModelIndex\* components
 
