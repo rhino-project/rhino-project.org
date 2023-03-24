@@ -89,6 +89,7 @@ const sidebars = {
       ],
     },
     "guides/audit_trail",
+    "guides/super_admin",
     "guides/jobs",
     "guides/notifications",
     "guides/subscription",
