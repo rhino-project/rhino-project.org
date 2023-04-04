@@ -1,11 +1,42 @@
 # Release Notes
 
+## 2.6.0
+
+The key changes in this release are:
+
+- New support for per model and per attribute overrides in `rhino.config.js`
+  - Not all components are currently covered, but ModelCells* and ModelFilters* and ModelIndexTable are
+- Controller and context for ModelShow with ModelShowBase
+
 ## 2.5.0
 
 The key changes in this release are:
 
 - ModelIndexTable no longer uses ModelTable internally and uses react-table 8 see [table and cells guide](ui/cells) for more details
 - Update to Cypress 12
+
+### Path dot syntax
+
+Use dot syntax only for paths now to support react-table and react-hook-form. For example:
+
+```diff title="src/models/overrides.js"
+const globalOverrides = {
+  invoice: {
+    index: {
+      ModelIndexTable: {
+        props: {
+          paths: [
+-            "external_linked_teams[0].display_name",
++            "external_linked_teams.0.display_name",
+          ],
+        },
+      },
+    },
+  },
+};
+```
+
+See https://react-hook-form.com/api/useform/register/#rules and https://tanstack.com/table/v8/docs
 
 ### ModelIndexTable/ModelTable overrides
 
