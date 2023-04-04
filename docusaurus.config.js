@@ -1,5 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
+const rhinoconfig = require("./plugins/remark-rhino-config-tabs");
+const npm2yarn = require("@docusaurus/remark-plugin-npm2yarn");
 
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
@@ -59,6 +61,7 @@ const config = {
               banner: "none",
             },
           },
+          remarkPlugins: [rhinoconfig, [npm2yarn, { sync: true }]],
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
