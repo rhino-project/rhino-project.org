@@ -123,7 +123,7 @@ const globalOverrides = {
 
 ## ModelCellBoolean
 
-Boolean cells are rendered as strings with the text "Yes" or "No" depending on the value of the attribute. The text can be changed by passing the `trueText` and `falseText` props to the `ModelCellBoolean` or CellBoolean components.
+Boolean cells are rendered as strings with the text "Yes" or "No" depending on the value of the attribute. The text can be changed by passing the `trueText` and `falseText` props to the `ModelCellBoolean` or `CellBoolean` components.
 
 ### Change text for true and false
 
@@ -137,6 +137,32 @@ const globalOverrides = {
             <ModelCellBoolean
               trueText="Thumbs up"
               falseText="Thumbs down"
+              path="published"
+            />,
+          ],
+        },
+      },
+    },
+  },
+};
+```
+
+## ModelCellBooleanIcon
+
+Boolean icon cells are rendered as [bootstrap icons](https://icons.getbootstrap.com/) with  "check" or "x" svg icons depending on the value of the attribute. The icon can be changed by passing the `trueIcon` and `falseIcon` props to the `ModelCellBooleanIcon` or `CellBooleanIcon` components.
+
+### Change icon text for any bootstrap icon
+
+```jsx title="src/models/overrides.js"
+const globalOverrides = {
+  blog: {
+    index: {
+      ModelIndexTable: {
+        props: {
+          paths: [
+            <ModelCellBooleanIcon
+              trueIcon="check-circle"
+              falseIcon="x-circle"
               path="published"
             />,
           ],
