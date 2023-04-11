@@ -54,22 +54,8 @@ Attachment cells are rendered as a link to the attachment using the `display_nam
 
 ### Change link text
 
-```jsx title="src/models/overrides.js"
-const globalOverrides = {
-  blog: {
-    index: {
-      ModelIndexTable: {
-        props: {
-          paths: [
-            <ModelCellAttachment path="banner_attachment">
-              <em>Summary</em>
-            </ModelCellAttachment>,
-          ],
-        },
-      },
-    },
-  },
-};
+```rhinoconfig title="src/rhino.config.js"
+ModelCellAttachment: (props) => (<ModelCellAttachmentBase {...props}>Report</ModelCellAttachmentBase>)
 ```
 
 ## ModelCellAttachmentDownload
@@ -78,47 +64,18 @@ Attachment download cells are rendered as a link to the attachment with a downlo
 
 ### Change link text
 
-```jsx title="src/models/overrides.js"
-const globalOverrides = {
-  blog: {
-    index: {
-      ModelIndexTable: {
-        props: {
-          paths: [
-            <ModelCellAttachmentDownload path="banner_attachment">
-              <em>Summary</em>
-            </ModelCellAttachmentDownload>,
-          ],
-        },
-      },
-    },
-  },
-};
+```rhinoconfig title="src/rhino.config.js"
+ModelCellAttachmentDownload: (props) => (<ModelCellAttachmentDownloadBase {...props}>Report</ModelCellAttachmentDownloadBase>)
 ```
 
 ## ModelCellAttachmentImage
 
-Attachment link cells are rendered as a thumbnail image (usually the file name) or passed children for display. The `altText` prop is used for the `alt` attribute of the image and is by default the `url` of the attachment.
+Attachment link cells are rendered as a thumbnail image (usually the file name) or passed children for display. The `alt` attribute of the image is by default the `url` of the attachment.
 
 ### Change alt text
 
-```jsx title="src/models/overrides.js"
-const globalOverrides = {
-  blog: {
-    index: {
-      ModelIndexTable: {
-        props: {
-          paths: [
-            <ModelCellAttachmentImage
-              altText="Blog banner"
-              path="banner_attachment"
-            />,
-          ],
-        },
-      },
-    },
-  },
-};
+```rhinoconfig title="src/rhino.config.js"
+ModelCellAttachmentImage: { props: { alt: "Blog banner" } }
 ```
 
 ## ModelCellBoolean
@@ -127,50 +84,18 @@ Boolean cells are rendered as strings with the text "Yes" or "No" depending on t
 
 ### Change text for true and false
 
-```jsx title="src/models/overrides.js"
-const globalOverrides = {
-  blog: {
-    index: {
-      ModelIndexTable: {
-        props: {
-          paths: [
-            <ModelCellBoolean
-              trueText="Thumbs up"
-              falseText="Thumbs down"
-              path="published"
-            />,
-          ],
-        },
-      },
-    },
-  },
-};
+```rhinoconfig title="src/rhino.config.js"
+ModelCellBoolean: { props: { trueText: "Thumbs up", falseText: "Thumbs down" } }
 ```
 
 ## ModelCellBooleanIcon
 
-Boolean icon cells are rendered as [bootstrap icons](https://icons.getbootstrap.com/) with  "check" or "x" svg icons depending on the value of the attribute. The icon can be changed by passing the `trueIcon` and `falseIcon` props to the `ModelCellBooleanIcon` or `CellBooleanIcon` components.
+Boolean icon cells are rendered as [bootstrap icons](https://icons.getbootstrap.com/) with "check" or "x" svg icons depending on the value of the attribute. The icon can be changed by passing the `trueIcon` and `falseIcon` props to the `ModelCellBooleanIcon` or `CellBooleanIcon` components.
 
 ### Change icon text for any bootstrap icon
 
-```jsx title="src/models/overrides.js"
-const globalOverrides = {
-  blog: {
-    index: {
-      ModelIndexTable: {
-        props: {
-          paths: [
-            <ModelCellBooleanIcon
-              trueIcon="check-circle"
-              falseIcon="x-circle"
-              path="published"
-            />,
-          ],
-        },
-      },
-    },
-  },
-};
+```rhinoconfig title="src/rhino.config.js"
+ModelCellBooleanIcon: { props: { trueIcon: "check-circle", falseIcon: "x-circle" } }
 ```
 
 ## ModelCellDate
@@ -179,18 +104,8 @@ Date cells are rendered as strings with a format of `MMMM d, yyyy` (date-fns) by
 
 ### Change date format to Feb 26/23
 
-```jsx title="src/models/overrides.js"
-const globalOverrides = {
-  blog: {
-    index: {
-      ModelIndexTable: {
-        props: {
-          paths: [<ModelCellDate format="MMM d/yy" path="created_at" />],
-        },
-      },
-    },
-  },
-};
+```rhinoconfig title="src/rhino.config.js"
+ModelCellDate: { props: { format: 'MMM d/yy' } }
 ```
 
 ## ModelCellDateTime
@@ -199,20 +114,8 @@ Date time cells are rendered as strings with a format of `MMMM d, yyyy h:mm aa` 
 
 ### Change date time to 24 hr format
 
-```jsx title="src/models/overrides.js"
-const globalOverrides = {
-  blog: {
-    index: {
-      ModelIndexTable: {
-        props: {
-          paths: [
-            <ModelCellDateTime format="MMMM d, yyyy HH:mm" path="created_at" />,
-          ],
-        },
-      },
-    },
-  },
-};
+```rhinoconfig title="src/rhino.config.js"
+ModelCellDate: { props: { format: 'MMMM d, yyyy HH:mm' } }
 ```
 
 ## ModelCellTime
@@ -221,16 +124,6 @@ Time cells are rendered as strings with a format of `h:mm aa` (date-fns) by defa
 
 ### Change time to 24 hr format
 
-```jsx title="src/models/overrides.js"
-const globalOverrides = {
-  blog: {
-    index: {
-      ModelIndexTable: {
-        props: {
-          paths: [<ModelCellTime format="HH:mm" path="created_at" />],
-        },
-      },
-    },
-  },
-};
+```rhinoconfig title="src/rhino.config.js"
+ModelCellDate: { props: { format: 'HH:mm' } }
 ```
