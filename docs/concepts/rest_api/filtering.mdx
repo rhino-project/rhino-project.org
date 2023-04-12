@@ -207,3 +207,21 @@ or
 ```
 /blogs?filter[author][name]=Rhino
 ```
+
+### Relationship operators
+
+The Filter sieve also supports some relationship operators that build up a very specific query, touching not only the `WHERE` clause, but also other parts of the query, like the `JOIN` clause.
+
+For example, given a 1:N relationship between blog posts and og meta tags, in which a blog post can have multiple tags, one could have the need of fetching the blog post records that don't have any tags associated. One way of doing that is using `OUTER JOIN` to join the `blog_posts` and `og_meta_tags` tables. That would match all blog posts and each of their associated tags, so the blog post records that don't have any tags would still be included, but with null values for the tag's columns. In order to keep only the blog posts records that are not tagged, one would only need to add a `WHERE` clause with `og_meta_tags.id IS NULL`.
+
+For that, Rhino has the `_is_empty` association operator. The `filter` value in the query params would look like this:
+
+```
+/blog_posts?filter[og_meta_tags][_is_empty]=true
+```
+
+These operators can be combined with the other operators for the same table and for different tables as well:
+
+```
+/blog_posts?filter[og_meta_tags][_is_empty]=true&filter[og_meta_tags][name]=Urgent&filter[blog]=1
+```
