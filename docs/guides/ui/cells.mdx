@@ -118,6 +118,22 @@ Date time cells are rendered as strings with a format of `MMMM d, yyyy h:mm aa` 
 ModelCellDate: { props: { format: 'MMMM d, yyyy HH:mm' } }
 ```
 
+## ModelCellDateTimeDistance
+
+Date time distance cells are rendered as the distance between the given dates in words format of `formatDistance()` (date-fns).
+Default baseDate is `new Date()`.
+
+### Change baseDate for any date to compare with value
+```js
+import { sub } from 'date-fns';
+const twoDaysAgo = sub(new Date(), { days: 2 });
+```
+```rhinoconfig title="src/rhino.config.js"
+ModelCellDateTimeDistance: {
+      props: { baseDate: twoDaysAgo }
+    }
+```
+
 ## ModelCellTime
 
 Time cells are rendered as strings with a format of `h:mm aa` (date-fns) by default.
