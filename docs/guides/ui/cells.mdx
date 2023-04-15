@@ -127,3 +127,12 @@ Time cells are rendered as strings with a format of `h:mm aa` (date-fns) by defa
 ```rhinoconfig title="src/rhino.config.js"
 ModelCellDate: { props: { format: 'HH:mm' } }
 ```
+## ModelCellLinkEmail
+
+Email link cells are rendered as a link with a `href="mailto: ..."` and the value of the attribute as the text.
+
+### Change link text
+
+```rhinoconfig title="src/rhino.config.js"
+ModelCellLinkEmail: (props) => (<ModelCellLinkEmailBase {...props}>Click here to send email</ModelCellLinkEmailBase>)
+```
