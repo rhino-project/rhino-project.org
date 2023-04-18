@@ -114,26 +114,6 @@ Working but not yet documented
 
 Rhino provides additional backend helpers for common formats that can be used to validate the format of a property.
 
-### Phone
-
-Use phonelib for backend validation. It is built based on [Google's libphonenumber](https://github.com/google/libphonenumber) which is the standard for this. Your model might look something like this:
-
-```ruby
-  # Set the format for the attribute
-  rhino_properties_format phone: :phone
-
-  # Normalize the phone number to e164 format
-  before_validation :normalize_phone
-
-  # Validate the phone number is possible (limited check)
-  validates :phone, phone: { message: "not a valid phone number", possible: true }
-
-  private
-    def normalize_phone
-      self.phone = Phonelib.parse(phone).full_e164.presence
-    end
-```
-
 ### Country
 
 Use the country validator based on [countries gem](https://github.com/countries/countries) for backend validation. Your model might look something like this:
@@ -146,6 +126,15 @@ Use the country validator based on [countries gem](https://github.com/countries/
 ```ruby
   # Validate the required alpha3 country
   validates :country, country: { alpha3: true }
+```
+
+### Currency
+
+Use the field as currency in the front end. Your model might look something like this:
+
+```ruby
+  # Set the format for the attribute
+  rhino_properties_format amount: :currency
 ```
 
 ### IPv4
@@ -164,6 +153,26 @@ Use the mac address validator for backend validation. Your model might look some
 ```ruby
   # Validate the optional country
   validates :mac_address, mac_address: { allow_blank: true }
+```
+
+### Phone
+
+Use phonelib for backend validation. It is built based on [Google's libphonenumber](https://github.com/google/libphonenumber) which is the standard for this. Your model might look something like this:
+
+```ruby
+  # Set the format for the attribute
+  rhino_properties_format phone: :phone
+
+  # Normalize the phone number to e164 format
+  before_validation :normalize_phone
+
+  # Validate the phone number is possible (limited check)
+  validates :phone, phone: { message: "not a valid phone number", possible: true }
+
+  private
+    def normalize_phone
+      self.phone = Phonelib.parse(phone).full_e164.presence
+    end
 ```
 
 ## Synthetic Attributes
