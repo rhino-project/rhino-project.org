@@ -170,7 +170,13 @@ const sidebars = {
       label: "Backend API",
       href: "https://api.rhino-project.org",
     },
-    { "Front End": ["reference/front_end/api_hooks", "guides/ui/overrides"] },
+    {
+      "Front End": [
+        "reference/front_end/api_hooks",
+        "reference/front_end/controllers",
+        "guides/ui/overrides",
+      ],
+    },
   ],
 };
 
