@@ -92,7 +92,18 @@ const sidebars = {
         "guides/importing/importing_scraping",
       ],
     },
-    "guides/testing",
+    {
+      type: "category",
+      label: "Development",
+      link: {
+        type: "generated-index",
+        title: "Development",
+        description: "Learn more about developing with Rhino",
+        slug: "/guides/development",
+        keywords: ["guides", "development"],
+      },
+      items: ["guides/dev_environment", "guides/testing"],
+    },
   ],
 
   concept: [
