@@ -1,0 +1,23 @@
+# Dev Environment
+
+Ensure that you have completed the [prerequisites](../tutorials/index.mdx#prerequisites) before continuing. Then from the root of the boilerplate_server repo run the following commands:
+
+```bash
+rails rhino:dev:setup
+```
+
+This will set up the .env files and install git hooks.
+
+## IDEs
+
+### VSCode
+
+Rhino will recommend extensions for both the server and client when loading the workspace. You can also install the recommended extensions manually. Format on save is recommended for the client (prettier) and server (rubocop via the [Ruby LSP](https://marketplace.visualstudio.com/items?itemName=Shopify.ruby-lsp) plugin from Shopify).
+
+### RubyMine
+
+RubyMine is a good alternative, particular if you are new to Ruby and Rails. It has a lot of features that help you learn the language and framework. It is also a good IDE for debugging.
+
+## Multiple projects
+
+If you are working on multiple projects that use the boilerplate_server, you should configure different ports with `rails rhino:dev:setup`.
