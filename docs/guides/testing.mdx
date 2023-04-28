@@ -48,6 +48,27 @@ Then run the tests with the following command so that they do not run in paralle
 PARALLEL_WORKERS=1 rails test test/models/user_test.rb
 ```
 
+### Mock third-party APIs
+
+The `webmock` gem is included in Rhino. To use it, and mock third-party APIs add the following to your test:
+
+```ruby
+require "test_helper"
+require "webmock/minitest"
+
+class CurrencyTest < ActiveSupport::TestCase
+  test "currency should be created" do
+    stub_request(:get, "https://api.example.com/customer-id/")
+      .to_return(status: 200, body: { id: 1 }.to_json, headers: {})
+    uri = URI("https://api.example.com/customer-id/")
+    response = Net::HTTP.get_response(uri)
+    data = JSON.parse(response.body)
+    assert_equal data["id"], 1
+  end
+end
+```
+Read more on [webmock docs](https://github.com/bblimke/webmock).
+
 ## Frontend
 
 Rhino uses Jest for unit and component testing on the frontend. The tests are located in the `src/__tests__` directory.
