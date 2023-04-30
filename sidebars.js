@@ -104,7 +104,7 @@ const sidebars = {
             id: "guides/ui/create_page",
           },
           collapsed: false,
-          items: ["guides/ui/create_actions"],
+          items: ["guides/ui/fields", "guides/ui/create_actions"],
         },
         {
           type: "category",
@@ -114,7 +114,7 @@ const sidebars = {
             id: "guides/ui/edit_page",
           },
           collapsed: false,
-          items: ["guides/ui/edit_actions"],
+          items: ["guides/ui/fields", "guides/ui/edit_actions"],
         },
         "guides/ui/overrides",
       ],
