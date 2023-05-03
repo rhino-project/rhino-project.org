@@ -82,7 +82,16 @@ const sidebars = {
           collapsed: false,
           items: ["guides/ui/filters", "guides/ui/cells"],
         },
-        "guides/ui/show_page",
+        {
+          type: "category",
+          label: "Show page",
+          link: {
+            type: "doc",
+            id: "guides/ui/show_page",
+          },
+          collapsed: false,
+          items: ["guides/ui/displays"],
+        },
         "guides/ui/create_page",
         "guides/ui/edit_page",
         "guides/ui/overrides",
