@@ -76,6 +76,7 @@ const sidebars = {
     "guides/jobs",
     "guides/notifications",
     "guides/subscription",
+    "guides/geocoding",
     {
       type: "category",
       label: "Importing data",
