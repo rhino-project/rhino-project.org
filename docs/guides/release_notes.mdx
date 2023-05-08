@@ -1,5 +1,65 @@
 # Release Notes
 
+## 2.8.0
+
+The key changes in this release are:
+
+- Create and edit controllers for ModelEdit, ModelEditModal, ModelCreate and ModelCreateModal
+- Create, Edit, Index and Show Actions overhaul
+  - Rrepend/append/replace actions
+  - Use Custom components directly in the actions prop
+- Improve access control UI for org mode
+- Route path helpers
+  - getRootPath, getIndexPath, getShowPath, getEditPath, getCreatePath etc
+
+### Create and edit controllers
+
+Customized uses of ModelEdit and ModelCreate will need the following changes:
+
+- ModelEdit,
+  - modelId is now passed to the modal as a prop (instead of resource)
+- ModelCreate
+  - modelId is now passed to the modal as a prop (instead of resource)
+- ModelEditModal usage has to be altered
+  - modelId is now passed to the modal as a prop (instead of resource)
+
+### Actions overhaul
+
+Custom actions are not backwards compatible.
+
+- Custom actions in the object style are no longer supported. Something like:
+
+```json
+{
+  name: 'auto',
+  label: 'Generate Payout',
+  color: 'warning',
+  icon: 'gear',
+  onAction: handleGeneratePayouts
+}
+```
+
+shoule be replace with an `<IconButton />` component
+
+### Route path helpers
+
+Eaiser to use helpers for route paths are now available. For example:
+
+```jsx
+import { getModelIndexPath } from "rhino/utils/routes";
+
+const MyComponent = () => {
+  const path = getModelIndexPath("invoice");
+  return <Link to={path}>Invoices</Link>;
+};
+```
+
+## 2.7.0
+
+The key changes in this release are:
+
+- New UI system for show pages with ModelDisplay
+
 ## 2.6.0
 
 The key changes in this release are:
