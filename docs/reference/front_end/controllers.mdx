@@ -31,11 +31,13 @@ const { model, resource } = useModelShowController(options);
 
 - `model` a string for the model name or an already existing model object (from useModel or getModel) **_(required)_**
 - `modelId` a value for the id of the object to fetch (omitted or null for singular models) **_(required)_**
+- `paths` the paths to render for the create view (default: all viewable paths except for the parent)
 - All options for [useModelShow](api_hooks#usemodelshow)
 
 and in additon to the [useModelShow](api_hooks#usemodelshow) returns, useModelShowController returns:
 
 - `modelId` the id of the model object being fetched
+- `renderPaths` the elementized paths for the show view
 
 ### useModelShowContext
 
@@ -160,7 +162,7 @@ and in additon to the [useModelUpdate](api_hooks#usemodelupdate) returns, useMod
 - `resolver` the yup resolver for the model uses for form validation
 - `schema` the yup schema for the model uses for form validation
 - `methods` the output of `useForm` from react-hook-form
-- `renderPaths` the elementized paths for the create view
+- `renderPaths` the elementized paths for the edit view
 
 ### useModelEditContext
 
