@@ -1,4 +1,4 @@
-# Filters
+# Filters and Sorting
 
 The index page is for listing all the records of a model. It is the default page for a model. It is also the page that is shown when you click on the model name in the sidebar. The component structure of the index page is as follows:
 
@@ -63,77 +63,39 @@ graph TB
     FilterYear-->FieldYear
 ```
 
-## Samples
+## ModelFilters
 
-```jsx
-import { useWatch } from "react-hook-form";
-import FilterGroup from "rhino/components/forms/FilterGroup";
-import ModelFilterGroup from "rhino/components/models/ModelFilterGroup";
+### Changing filters and order displayed
 
-const MyDivComponent = () => {
-  const watch = useWatch({ name: "created_at.gteq" });
+List the specific filters in the desired order:
 
-  return <div>Val: {watch}</div>;
-};
+```rhinoconfig title="src/rhino.config.js"
+ModelFilters: { props: { paths: ['created_at', 'published_at', 'category'] } }
+```
 
-const globalOverrides = {
-  blog: {
-    index: {
-      ModelIndexHeader: {
-        ModelFilters: {
-          props: {
-            paths: [
-              "published_at",
-              <MyDivComponent />,
-              <ModelFilterGroup
-                path="created_at::gteq"
-                overrides={{
-                  FilterLayout: {
-                    FilterLabel: { props: { label: "Created At2" } },
-                  },
-                }}
-              />,
-              <FilterGroup
-                label="Non-Model Filter"
-                placeholder="Customer Placeholder"
-                path="title"
-              />,
-            ],
-          },
-        },
-      },
-    },
-  },
-  blog_post: {
-    index: {
-      ModelIndexHeader: {
-        ModelFilters: {
-          props: {
-            paths: ["published"],
-          },
-        },
-      },
-    },
-  },
-  every_field: {
-    index: {
-      ModelIndexHeader: {
-        ModelFilters: {
-          props: {
-            paths: [
-              "integer_no_nil::gt",
-              "date_time_required::lteq",
-              "date_time_required::gt",
-              "date_time",
-              "date_required::gteq",
-              "time_required::lt",
-              "year::lt",
-              "enum",
-            ],
-          },
-        },
+### Changing filter label
+
+Filter labels default to ModelFilterLabel. To change the label of a particular column, you can override for the particular attribute.
+
+```jsx title="src/rhino.config.js"
+const rhinoConfig = {
+  version: 1,
+  components: {
+    blog: {
+      created_at: {
+        ModelFilterLabel: () => "Created",
       },
     },
   },
 };
 ```
+
+### Adding an operator
+
+An filter operator can be added to a filter by adding the operator to the filter path:
+
+```rhinoconfig title="src/rhino.config.js"
+ModelFilters: { props: { paths: ['created_at::gteq']}}
+```
+
+See [operators](../../concepts/rest_api/filtering.mdx) for a complete list of operators.
