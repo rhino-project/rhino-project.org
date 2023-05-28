@@ -70,8 +70,17 @@ const sidebars = {
     },
     "guides/properties",
     {
-      "UI Customization": [
-        "guides/ui/roles",
+      type: "category",
+      label: "UI Customization",
+      link: {
+        type: "generated-index",
+        title: "UI Customization",
+        description:
+          "Learn more about customizing the UI based on user interface concepts",
+        slug: "/guides/ui_customization",
+        keywords: ["guides", "importing"],
+      },
+      items: [
         {
           type: "category",
           label: "Index page",
@@ -116,7 +125,7 @@ const sidebars = {
           collapsed: false,
           items: ["guides/ui/fields", "guides/ui/edit_actions"],
         },
-        "guides/ui/overrides",
+        "guides/ui/roles",
       ],
     },
     "guides/audit_trail",
@@ -170,8 +179,7 @@ const sidebars = {
         "concepts/rest_api/pagination",
       ],
     },
-    "concepts/models_attributes_paths",
-    "concepts/components",
+    "concepts/ui",
     {
       type: "category",
       label: "Authentication",
@@ -196,7 +204,6 @@ const sidebars = {
       "Front End": [
         "reference/front_end/api_hooks",
         "reference/front_end/controllers",
-        "guides/ui/overrides",
       ],
     },
   ],
