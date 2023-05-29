@@ -254,15 +254,13 @@ These are the implementation of global components. They are useful for composing
 
 ### Simple Components
 
-These are components that provide a basic context. They are useful for composing more specific components or avoiding global overrides. `ModelIndexTableBase` is an example of a base component.
+These are components that provide the context but no user interface. They are useful for creating arbitrary user interfaces while retaining the power of the view controllers. `ModelIndexSimple` is an example of a simple component.
 
 ### Abstract Components
 
 These are components that render a more specific component based on the model and attribute data. `ModelCell` is an example of an abstract component.
 
 ### Composite Components
-
-ie FilterGroup, FilterLayoutVertical
 
 These are components that layout or groups multiple components together, typically the components they compose are [overrideable](#overrides). `FilterLayoutVertical` is an example of a composite component that lays out filters with a vertical form label and a filter field.
 
