@@ -56,6 +56,26 @@ const rhinoConfig = {
 };
 ```
 
+alternatively use the `header` prop of the `ModelCell` component as either a string or a component
+
+```jsx title="src/rhino.config.js"
+const rhinoConfig = {
+  version: 1,
+  components: {
+    blog: {
+      ModelIndexTable: {
+        props: {
+          paths: [
+            <ModelCell path="title" header="Summary" />,
+            <ModelCell path="banner_attachment" header={<em>Banner</em>} />,
+          ],
+        },
+      },
+    },
+  },
+};
+```
+
 ### Changing a column footer
 
 Column footers default to `ModelFoot`. To change the footer of a particular column, you can override for the particular attribute.
@@ -67,6 +87,26 @@ const rhinoConfig = {
     blog: {
       title: {
         ModelFooter: () => "Summary",
+      },
+    },
+  },
+};
+```
+
+alternatively use the `footer` prop of the `ModelCell` component as either a string or a component
+
+```jsx title="src/rhino.config.js"
+const rhinoConfig = {
+  version: 1,
+  components: {
+    blog: {
+      ModelIndexTable: {
+        props: {
+          paths: [
+            <ModelCell path="title" footer="Summary" />,
+            <ModelCell path="banner_attachment" footer={<em>Banner</em>} />,
+          ],
+        },
       },
     },
   },
@@ -97,7 +137,7 @@ const rhinoConfig = {
       ModelIndexTable: {
         props: {
           paths: [
-            <ModelCellString
+            <ModelCell
               path="title"
               accessor={(row) => `${row.title} ${row.published_at}`}
             />,
@@ -111,7 +151,7 @@ const rhinoConfig = {
 
 ### Fully custom cell
 
-You can use a custom cell to render anything you want. The cell will be passed the `row` and `column` from `react-table` and act as a [`Display Column`](https://tanstack.com/table/v8/docs/guide/column-defs#api).
+A custom cell to render any arbitrary component. The cell will be passed the `row` and `column` from `react-table` and act as a [`Display Column`](https://tanstack.com/table/v8/docs/guide/column-defs#api).
 
 ```jsx title="src/rhino.config.js"
 const rhinoConfig = {
@@ -121,6 +161,30 @@ const rhinoConfig = {
       ModelIndexTable: {
         props: {
           paths: [<CustomTitleCell />, "banner_attachment"],
+        },
+      },
+    },
+  },
+};
+```
+
+the header and footer of a custom cell can be overridden with the `header` and `footer` props as either a string or a component:
+
+```jsx title="src/rhino.config.js"
+const rhinoConfig = {
+  version: 1,
+  components: {
+    blog: {
+      ModelIndexTable: {
+        props: {
+          paths: [
+            <CustomCell header="Custom Header" footer="Custom Footer" />,
+            <AnotherCell
+              header={<em>Banner Header</em>}
+              footer={<em>Banner Footer</em>}
+            />,
+            "banner_attachment",
+          ],
         },
       },
     },
