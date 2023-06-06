@@ -61,6 +61,8 @@ graph TB
 
 ## General field behaviour
 
+#
+
 ### Change field label
 
 ```rhinoconfig title="src/rhino.config.js"
@@ -71,6 +73,12 @@ ModelFieldLabel: { props: { label: 'Awesome Title!' } }
 
 ```rhinoconfig title="src/rhino.config.js"
 ModelFieldString: { props: { readOnly: true } }
+```
+
+### Horizontal layout
+
+```rhinoconfig title="src/rhino.config.js"
+ModelFieldGroup: ModelFieldGroupHorizontal
 ```
 
 ## ModelFieldString
