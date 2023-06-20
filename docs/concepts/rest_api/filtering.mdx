@@ -84,6 +84,10 @@ translates to something like
 ... WHERE title IS NOT NULL
 ```
 
+:::info
+To see if a relationship is null, use `id` of the relationship as the field name name. For example, to see if a blog has no category, use `filter[ca][category][id][is_null]=true`.
+:::
+
 ### Combining operators
 
 Using more than one operator for a single field is supported, so searching for objects with a certain column in a range of two values is simple. In order to fetch all blog posts created **between** June 30th 2002 and July 8th 2014:
