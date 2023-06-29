@@ -156,7 +156,7 @@ or even
 
 ### Has many
 
-_Has many_ replationships works the same way as _belong to_. However, it is important to mind the correct name of the relationship, generally this kind of assocation uses the plural name of the related table. If blog posts had a 1:N relationship with, for example, a comments table, it would be possible to fetch posts that had at least one comment made by a user with id equal to 55:
+_Has many_ replationships works the same way as _belong to_. However, it is important to mind the correct name of the relationship, generally this kind of association uses the plural name of the related table. If blog posts had a 1:N relationship with, for example, a comments table, it would be possible to fetch posts that had at least one comment made by a user with id equal to 55:
 
 ```
 /blog_posts?filter[comments][user]=55
@@ -190,9 +190,9 @@ or
 /blog_posts?filter[tags][name]=Social
 ```
 
-### Overriden relationship name
+### Overridden relationship name
 
-For the case of overriden names in relationships like:
+For the case of overridden names in relationships like:
 
 ```ruby
 class Blog < ApplicationRecord

@@ -105,6 +105,6 @@ jest.mock("@rollbar/react", () => ({
 
 ## TODO: Source maps
 
-In a production environment, Rollbar is only able to see the minified version of the code, which doesn't help with debugging. In order to improve that, it's necessary to inform the version of the release and upload the soource maps files. This [answer](https://github.com/rollbar/rollbar.js/issues/728#issuecomment-495409109) points to a really good direction.
+In a production environment, Rollbar is only able to see the minified version of the code, which doesn't help with debugging. In order to improve that, it's necessary to inform the version of the release and upload the source maps files. This [answer](https://github.com/rollbar/rollbar.js/issues/728#issuecomment-495409109) points to a really good direction.
 
 Also, Heroku's post build script in package.json can be a good place to issue the source maps upload command.
