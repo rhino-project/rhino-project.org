@@ -61,11 +61,11 @@ Custom actions are not backwards compatible.
 }
 ```
 
-shoule be replace with an `<IconButton />` component
+should be replace with an `<IconButton />` component
 
 ### Route path helpers
 
-Eaiser to use helpers for route paths are now available. For example:
+Easier to use helpers for route paths are now available. For example:
 
 ```jsx
 import { getModelIndexPath } from "rhino/utils/routes";
@@ -228,7 +228,7 @@ All of the above changes should be backwards compatible unless you have created 
 The key changes in this release are:
 
 - Model has been simplified
-- Data acess and query hook arguments have been updated to be more explicit and easier to use.
+- Data access and query hook arguments have been updated to be more explicit and easier to use.
 - react-hook-form is now included as a dependency and used for the authentication forms (sign in, sign up, forgot password, reset password)
   - More support for this will be added in future releases
 
@@ -331,7 +331,7 @@ const { data } = useModelIndex(model, {
 
 ### Model hook data access
 
-Previous versions of the hooks used the `data` property of the react query response to access the data. This data propery contained the full axios response including things like `header`. The body of an axios response is in the `data` property and so there were many `data.data` style access. The data is now directly available in the `data` property of the query responses:
+Previous versions of the hooks used the `data` property of the react query response to access the data. This data property contained the full axios response including things like `header`. The body of an axios response is in the `data` property and so there were many `data.data` style access. The data is now directly available in the `data` property of the query responses:
 
 ```jsx
 const { data: { data: { results = [] } = {} } = {} } = useModelIndex(

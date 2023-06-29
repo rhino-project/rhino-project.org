@@ -1,6 +1,6 @@
 # Table and Cells
 
-`ModelIndexTable` uses `ModelCell` to determine the default renderer of the attribute. `ModelCell` will use the attribute information to determin the specific `ModelCell` component to use and that model cell component will use a basic cell component for rendering. For example, if the attribute is a `string` type, `ModelCell` will use `ModelCellString` to render the cell or if the attribute is an `enum`, `ModelCell` will use `ModelCellEnum` to render the cell. `ModelCellEnum` will use `CellBadge`.
+`ModelIndexTable` uses `ModelCell` to determine the default renderer of the attribute. `ModelCell` will use the attribute information to determine the specific `ModelCell` component to use and that model cell component will use a basic cell component for rendering. For example, if the attribute is a `string` type, `ModelCell` will use `ModelCellString` to render the cell or if the attribute is an `enum`, `ModelCell` will use `ModelCellEnum` to render the cell. `ModelCellEnum` will use `CellBadge`.
 
 :::info
 Not all model cell components have a directly corresponding cell component. For example, `ModelCellArray` does not have a corresponding `CellArray` component. In those cases passing a path only to a cell is unlikely to provide the desired result as there is likely more complex data access required to render the cell.
