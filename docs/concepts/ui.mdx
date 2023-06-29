@@ -194,9 +194,9 @@ const rhinoConfig = {
 
 ### Paths functions
 
-If the paths are passed as a fucntion, it will receive as arguments the current user's roles and the resources in context. For instance, `paths` related to `create` would receive `null` as `resource`, whereas the `edit` case would lead to `resource` being the current record. For `index`, the list of resources would be passed.
+If the paths are passed as a function, it will receive as arguments the current user's roles and the resources in context. For instance, `paths` related to `create` would receive `null` as `resource`, whereas the `edit` case would lead to `resource` being the current record. For `index`, the list of resources would be passed.
 
-For example, if it was desired to hide some fileds from non-admin users:
+For example, if it was desired to hide some fields from non-admin users:
 
 ```javascript
 const rhinoConfig = {
@@ -262,7 +262,7 @@ These are components that render a more specific component based on the model an
 
 ### Composite Components
 
-These are components that layout or groups multiple components together, typically the components they compose are [overrideable](#overrides). `FilterLayoutVertical` is an example of a composite component that lays out filters with a vertical form label and a filter field.
+These are components that layout or groups multiple components together, typically the components they compose are [overridable](#overrides). `FilterLayoutVertical` is an example of a composite component that lays out filters with a vertical form label and a filter field.
 
 ### Convenience Components
 

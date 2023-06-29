@@ -1,6 +1,6 @@
 # API Hooks
 
-This guide is an introduction to the various hooks availble for accessing the api in the front end.
+This guide is an introduction to the various hooks available for accessing the api in the front end.
 
 ## Hooks and API requests
 
@@ -37,9 +37,9 @@ const { resource } = useModelShow(model, id, options);
 - `id` a value for the id of the object to fetch (omitted or null for singular models)
 - `options`
   - `networkOptions` a set of options passed to axios
-  - `queryOptions` a set of options pased to useQuery (for instance to set the `enabled` option)
+  - `queryOptions` a set of options passed to useQuery (for instance to set the `enabled` option)
 
-and in additon to the [useQuery](https://react-query.tanstack.com/reference/useQuery) returns, useModelShow returns:
+and in addition to the [useQuery](https://react-query.tanstack.com/reference/useQuery) returns, useModelShow returns:
 
 - `model` a memoized model used to construct the query
 - `resource` a memoized copy of the model (or null if not yet available)
@@ -60,9 +60,9 @@ const { resources } = useModelIndex(model, options);
   - `limit` a number representing the maximum number of results
   - `offset` a number representing the start of the results
   - `networkOptions` a set of options passed to axios
-  - `queryOptions` a set of options pased to useQuery (for instance to set the `enabled` option)
+  - `queryOptions` a set of options passed to useQuery (for instance to set the `enabled` option)
 
-and in additon to the [useQuery](https://react-query.tanstack.com/reference/useQuery) returns, useModelIndex returns:
+and in addition to the [useQuery](https://react-query.tanstack.com/reference/useQuery) returns, useModelIndex returns:
 
 - `model` a memoized model used to construct the query
 - `resources` a memoized copy the model list object from the api with results and total (resources.results, resources.total) (or null if not yet available)
@@ -137,9 +137,9 @@ const { mutation } = useModelCreate(model, mutationOptions);
 ```
 
 - `model` a string for the model name or an already existing model object (from useModel or getModel)
-- `mutationOptions` a set of options pased to useMutation (for instance to set the `enabled` option)
+- `mutationOptions` a set of options passed to useMutation (for instance to set the `enabled` option)
 
-and in additon to the [[useMutation](https://react-query.tanstack.com/reference/useMutation) returns, useModelCreate returns:
+and in addition to the [[useMutation](https://react-query.tanstack.com/reference/useMutation) returns, useModelCreate returns:
 
 - `model` a memoized model used to construct the query
 - `resource` a memoized copy of the model (or null if not yet available)
@@ -163,9 +163,9 @@ const { mutation } = useModelUpdate(model, mutationOptions);
 ```
 
 - `model` a string for the model name or an already existing model object (from useModel or getModel)
-- `mutationOptions` a set of options pased to useMutation (for instance to set the `enabled` option)
+- `mutationOptions` a set of options passed to useMutation (for instance to set the `enabled` option)
 
-and in additon to the [useMutation](https://react-query.tanstack.com/reference/useMutation) returns, useModelUpdate returns:
+and in addition to the [useMutation](https://react-query.tanstack.com/reference/useMutation) returns, useModelUpdate returns:
 
 - `model` a memoized model used to construct the query
 - `resource` a memoized copy of the model (or null if not yet available)
@@ -199,9 +199,9 @@ const { mutation } = useModelDestroy(model, mutationOptions);
 ```
 
 - `model` a string for the model name or an already existing model object (from useModel or getModel)
-- `mutationOptions` a set of options pased to useMutation (for instance to set the `enabled` option)
+- `mutationOptions` a set of options passed to useMutation (for instance to set the `enabled` option)
 
-and in additon to the [useMutation](https://react-query.tanstack.com/reference/useMutation) returns, useModelDestroy returns:
+and in addition to the [useMutation](https://react-query.tanstack.com/reference/useMutation) returns, useModelDestroy returns:
 
 - `model` a memoized model used to construct the query
 - `resource` a memoized copy of the model (or null if not yet available)
