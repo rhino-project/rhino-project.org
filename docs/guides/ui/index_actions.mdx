@@ -12,7 +12,7 @@ graph TB
 
 The text of the create button can be changed by passing in a child component.
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelIndexActionCreate: (<ModelIndexActionCreate>New Blog</ModelIndexActionCreate>)}} />
 ```
 
@@ -20,7 +20,7 @@ ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelIndexActionCreate: (
 
 The icon of the create button can be changed by passing in an icon name.
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelIndexActionCreate: (<ModelIndexActionCreate icon="plus-circle"/>)}} />
 ```
 
@@ -28,7 +28,7 @@ ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelIndexActionCreate: (
 
 You can replace the default action with custom actions.
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelIndexActions: { props: { actions: [<MyCustomAction />]} }
 ```
 
@@ -36,7 +36,7 @@ ModelIndexActions: { props: { actions: [<MyCustomAction />]} }
 
 You can prepend one or more actions to the defaults.
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelIndexActions: { props: { prepend: true, actions: [<MyCustomAction />]} }
 ```
 
@@ -44,7 +44,7 @@ ModelIndexActions: { props: { prepend: true, actions: [<MyCustomAction />]} }
 
 You can append one or more actions to the defaults.
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelIndexActions: { props: { append: true, actions: [<MyCustomAction />]} }
 ```
 
@@ -52,6 +52,6 @@ ModelIndexActions: { props: { append: true, actions: [<MyCustomAction />]} }
 
 Instead of creating on a separate page, you can create with a modal.
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelIndexActions: ModelIndexActionsModalCreate
 ```
