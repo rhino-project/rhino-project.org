@@ -192,6 +192,30 @@ const rhinoConfig = {
 };
 ```
 
+### Roles
+
+If the paths are passed as an object, the keys of the object will be used to specify paths based on the user's roles for the current base owner.
+
+For example, if it was desired to show different fields for the `admin` and `editor` roles:
+
+```javascript
+const rhinoConfig = {
+  version: 1,
+  components: {
+    blog: {
+      ModelIndexTable: {
+        props: {
+          paths: {
+            admin: ["title", "category", "published_at", "author"],
+            editor: ["title", "author"],
+          },
+        },
+      },
+    },
+  },
+};
+```
+
 ### Paths functions
 
 If the paths are passed as a function, it will receive as arguments the current user's roles and the resources in context. For instance, `paths` related to `create` would receive `null` as `resource`, whereas the `edit` case would lead to `resource` being the current record. For `index`, the list of resources would be passed.
