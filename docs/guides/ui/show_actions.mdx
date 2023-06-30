@@ -14,7 +14,7 @@ graph TB
 
 The text of the edit button can be changed by passing in a child component.
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelShowActions: <ModelShowActionsBase overrides={{ ModelShowActionEdit: (<ModelShowActionEdit>Change Blog</ModelShowActionEdit>)}} />
 ```
 
@@ -22,7 +22,7 @@ ModelShowActions: <ModelShowActionsBase overrides={{ ModelShowActionEdit: (<Mode
 
 The icon of the edit button can be changed by passing in an icon name.
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelShowActionEdit: <ModelShowActionEdit icon="pen"/>}} />
 ```
 
@@ -30,7 +30,7 @@ ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelShowActionEdit: <Mod
 
 The text of the delete button can be changed by passing in a child component.
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelShowActions: <ModelShowActionsBase overrides={{ ModelShowActionDelete: (<ModelShowActionDelete>Throw Away Blog</ModelShowActionDelete>)}} />
 ```
 
@@ -38,7 +38,7 @@ ModelShowActions: <ModelShowActionsBase overrides={{ ModelShowActionDelete: (<Mo
 
 The icon of the delete button can be changed by passing in an icon name.
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelShowActionDelete: <ModelShowActionDelete icon="trash2" />}} />
 ```
 
@@ -46,7 +46,7 @@ ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelShowActionDelete: <M
 
 The edit button can be removed entirely
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelShowActionEdit: null}} />
 ```
 
@@ -54,7 +54,7 @@ ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelShowActionEdit: null
 
 The delete button can be removed entirely
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelShowActionDelete: null}} />
 ```
 
@@ -62,7 +62,7 @@ ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelShowActionDelete: nu
 
 You can replace the default actions with custom actions.
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelShowActions: { props: { actions: [<MyCustomAction />]} }
 ```
 
@@ -70,7 +70,7 @@ ModelShowActions: { props: { actions: [<MyCustomAction />]} }
 
 You can prepend one or more actions to the defaults.
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelShowActions: { props: { prepend: true, actions: [<MyCustomAction />]} }
 ```
 
@@ -78,7 +78,7 @@ ModelShowActions: { props: { prepend: true, actions: [<MyCustomAction />]} }
 
 You can append one or more actions to the defaults.
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelShowActions: { props: { append: true, actions: [<MyCustomAction />]} }
 ```
 
@@ -86,6 +86,6 @@ ModelShowActions: { props: { append: true, actions: [<MyCustomAction />]} }
 
 Instead of editing on a separate page, you can edit with a modal.
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelShowActions: ModelShowActionsModalEdit
 ```
