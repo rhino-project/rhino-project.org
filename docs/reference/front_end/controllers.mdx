@@ -38,6 +38,9 @@ and in addition to the [useModelShow](api_hooks#usemodelshow) returns, useModelS
 
 - `modelId` the id of the model object being fetched
 - `renderPaths` the elementized paths for the show view
+- `create` the return values of [useModelCreate](api_hooks#usemodelcreate)
+- `update` the return values of [useModelUpdate](api_hooks#usemodelupdate)
+- `destroy` the return values of [useModelDestroy](api_hooks#usemodeldestroy)
 
 ### useModelShowContext
 
@@ -84,6 +87,9 @@ and in addition to the [useModelIndex](api_hooks#usemodelindex) returns, useMode
 - `hasPrevPage` a boolean indicating whether there is a previous page of resources
 - `firstPage` a function to set the page to the first page of resources
 - `lastPage` a function to set the page to the last page of resources
+- `create` the return values of [useModelCreate](api_hooks#usemodelcreate)
+- `update` the return values of [useModelUpdate](api_hooks#usemodelupdate)
+- `destroy` the return values of [useModelDestroy](api_hooks#usemodeldestroy)
 
 ### useModelIndexContext
 
@@ -119,11 +125,11 @@ and in addition to the [useModelCreate](api_hooks#usemodelcreate) returns, useMo
 
 - `parentModel` a memoized version of the parent model
 - `parentId` the id of the parent model object being fetched
-- `showParent` the results of the [show controller](#usemodelshowcontroller) for the `parentId`
 - `resolver` the yup resolver for the model uses for form validation
 - `schema` the yup schema for the model uses for form validation
 - `methods` the output of `useForm` from react-hook-form
 - `renderPaths` the elementized paths for the create view
+- `showParent` the return values of [useModelShow](api_hooks#usemodelshow) for the parent object
 
 ### useModelCreateContext
 
@@ -158,11 +164,11 @@ const {
 and in addition to the [useModelUpdate](api_hooks#usemodelupdate) returns, useModelEditController returns:
 
 - `modelId` the id of the model object being fetched
-- `show` the results of the [show controller](#usemodelshowcontroller) for the `modelId`
 - `resolver` the yup resolver for the model uses for form validation
 - `schema` the yup schema for the model uses for form validation
 - `methods` the output of `useForm` from react-hook-form
 - `renderPaths` the elementized paths for the edit view
+- `show` the return values of [useModelShow](api_hooks#usemodelshow)
 
 ### useModelEditContext
 
