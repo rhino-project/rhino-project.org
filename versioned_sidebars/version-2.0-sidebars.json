@@ -1,0 +1,134 @@
+{
+  "tutorialSidebar": [
+    "index",
+    {
+      "type": "category",
+      "label": "Tutorial",
+      "link": {
+        "type": "doc",
+        "id": "tutorials/index"
+      },
+      "items": [
+        "tutorials/advanced",
+        "tutorials/nested_resources",
+        "tutorials/organization",
+        "tutorials/custom_role"
+      ]
+    }
+  ],
+
+  "guide": [
+    {
+      "type": "category",
+      "label": "Deployment",
+      "link": {
+        "type": "doc",
+        "id": "guides/production/deployment"
+      },
+      "items": [
+        "guides/production/accounts",
+        "guides/production/analytics",
+        {
+          "type": "category",
+          "label": "Error Reporting",
+          "link": {
+            "type": "doc",
+            "id": "guides/production/error_reporting"
+          },
+          "items": [
+            "guides/production/error_reporting_client",
+            "guides/production/error_reporting_server"
+          ]
+        }
+      ]
+    },
+    "guides/updating",
+    "guides/properties",
+    {
+      "UI Customization": [
+        "guides/ui/roles",
+        "guides/ui/index_page",
+        "guides/ui/show_page",
+        "guides/ui/create_page",
+        "guides/ui/edit_page",
+        "guides/ui/overrides"
+      ]
+    },
+    "guides/audit_trail",
+    "guides/super_admin",
+    "guides/jobs",
+    "guides/notifications",
+    "guides/subscription",
+    "guides/geocoding",
+    {
+      "type": "category",
+      "label": "Importing data",
+      "link": {
+        "type": "generated-index",
+        "title": "Importing Data",
+        "description": "Learn more about importing data",
+        "slug": "/guides/importing",
+        "keywords": ["guides", "importing"]
+      },
+      "items": [
+        "guides/importing/importing_google_sheets",
+        "guides/importing/importing_excel_csv",
+        "guides/importing/importing_scraping"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Development",
+      "link": {
+        "type": "generated-index",
+        "title": "Development",
+        "description": "Learn more about developing with Rhino",
+        "slug": "/guides/development",
+        "keywords": ["guides", "development"]
+      },
+      "items": ["guides/dev_environment", "guides/testing"]
+    }
+  ],
+
+  "concept": [
+    "concepts/resources/index",
+    {
+      "type": "category",
+      "label": "REST API",
+      "link": {
+        "type": "doc",
+        "id": "concepts/rest_api/index"
+      },
+      "items": [
+        "concepts/rest_api/filtering",
+        "concepts/rest_api/sorting",
+        "concepts/rest_api/pagination"
+      ]
+    },
+    "concepts/models_attributes_paths",
+    {
+      "type": "category",
+      "label": "Authentication",
+      "link": {
+        "type": "doc",
+        "id": "concepts/auth/index"
+      },
+      "items": ["concepts/auth/frontend", "concepts/auth/policies"]
+    },
+    {
+      "Extending": [
+        "concepts/extending/modules",
+        "concepts/extending/overrides"
+      ]
+    }
+  ],
+
+  "reference": [
+    {
+      "type": "link",
+      "label": "Backend API",
+      "href": "https://api.rhino-project.org"
+    },
+    { "Front End": ["reference/front_end/api_hooks", "guides/ui/overrides"] }
+  ]
+}

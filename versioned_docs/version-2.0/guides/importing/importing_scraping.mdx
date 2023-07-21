@@ -1,0 +1,17 @@
+# Website scraping
+
+This guide describes how to scrape import data from web pages.
+
+## Fetching
+
+Use the `faraday` gem https://github.com/lostisland/faraday to fetch. It is the basis of many third party API libraries and provides convenient wrappers around many network libraries (net_http by default) and my already be installed.
+
+Useful middleware gems for scraping include:
+
+- Following redirects: https://github.com/tisba/faraday-follow-redirects
+- Retrying: https://github.com/lostisland/faraday-retry
+- Submitting form data: https://lostisland.github.io/faraday/middleware/url-encoded
+
+## Parsing
+
+Use the `Nokogiri` gem https://nokogiri.org/ to parse HTML. You can use [xpath and css selectors](https://nokogiri.org/#parsing-and-querying) to extract data.

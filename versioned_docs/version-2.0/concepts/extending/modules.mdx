@@ -1,0 +1,72 @@
+# Modules
+
+Modules in Rhino provide and extend the functionality of the core application. They are intended to be used for functionality that is not required by all users of Rhino, but is required by some. [Organizations](../../tutorials/organization.mdx), [Jobs](../../guides/jobs.mdx), [Notifcations](../../guides/notifications.mdx), [Subscriptions](../../guides/subscription.mdx) are all examples of modules.
+
+Modules are backed by [Engines](https://guides.rubyonrails.org/engines.html) in Rails and are installed initially via [Generators](https://guides.rubyonrails.org/generators.html).
+
+Modules come in two flavors, simple and full. A simple module should be used for simple functionality that does not require a full dummy app for testing such as scripting some setup and installing a related gem. A full module should be used to provide models, controllers or other more complex functionality as it comes with a full dummy app for testing.
+
+### Creating
+
+A new simple module can be created with
+
+```bash
+rails rhino:module
+```
+
+and a full module with
+
+```bash
+rails rhino:module_full
+```
+
+:::tip
+Module names should describe the functionality provided rather than the technology used, for instance 'rhino_subscriptions' instead of 'rhino_stripe'.
+:::
+
+### Installation
+
+Each module provides an installation command for instance
+
+```bash
+rails rhino_jobs:install
+```
+
+that installs migrations (if any) and allows you to do any other setup work in `install_generator.rb`.
+
+### Registration
+
+Modules should register themselves as appropriate in `engine.rb`, for instance if a model is present or an environment variable is set.
+
+```ruby
+initializer 'rhino_organizations.register_module' do
+  config.after_initialize do
+    if Rhino.resources.include?('Organization')
+      Rhino.registered_modules[:rhino_organizations] = {
+        version: RhinoOrganizations::VERSION
+      }
+    end
+  end
+end
+```
+
+### Testing
+
+After creating the module, tests are runnable with
+
+```bash
+rails rhino:test MODULE_NAME
+```
+
+and can be addedd to the CircleCI job to generate coverage
+
+```bash
+rails rhino:coverage MODULE_NAME
+```
+
+Full modules have a dummy app for testing. This can be setup and used as follows
+
+```bash
+rails rhino:dummy MODULE_NAME db:setup
+rails rhino:dummy MODULE_NAME server
+```

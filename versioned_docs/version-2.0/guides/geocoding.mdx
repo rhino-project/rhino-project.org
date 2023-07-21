@@ -1,0 +1,93 @@
+# Geocoding
+
+Geocoding capabilities can be added to Rhino with the [geocoder](https://github.com/alexreisner/geocoder) gem
+
+```bash
+bundle add geocoder
+rails generate geocoder:config
+```
+
+## API Access
+
+Enable the Geocoding API in the [Google Cloud Console](https://console.cloud.google.com/apis/library/geocoding-backend.googleapis.com).
+
+Get an API key from [Google Cloud Credentials](https://console.cloud.google.com/apis/credentials).
+
+## Configuration
+
+Update `config/initializers/geocoder.rb` with your API key and the lookup service you want to use:
+
+```ruby title="config/initializers/geocoder.rb"
+Geocoder.configure(
+  # Geocoding options
+  # timeout: 3,                 # geocoding service timeout (secs)
+  # highlight-next-line
+  lookup: :google,         # name of geocoding service (symbol)
+  # ip_lookup: :ipinfo_io,      # name of IP address geocoding service (symbol)
+  # language: :en,              # ISO-639 language code
+  # use_https: false,           # use HTTPS for lookup requests? (if supported)
+  # http_proxy: nil,            # HTTP proxy server (user:pass@host:port)
+  # https_proxy: nil,           # HTTPS proxy server (user:pass@host:port)
+
+  # API key for geocoding service
+  # highlight-next-line
+  api_key: ENV['GOOGLE_API_KEY'],
+
+  # cache: nil,                 # cache object (must respond to #[], #[]=, and #del)
+  # cache_prefix: 'geocoder:',  # prefix (string) to use for all cache keys
+
+  # Exceptions that should not be rescued by default
+  # (if you want to implement custom error handling);
+  # supports SocketError and Timeout::Error
+  # always_raise: [],
+
+  # Calculation options
+  # units: :mi,                 # :km for kilometers or :mi for miles
+  # distances: :linear          # :spherical or :linear
+)
+```
+
+## Testing
+
+To test geocoding in development, you can configure the geocoder to use test mode with a default stub in `test/test_helper.rb`:
+
+```ruby title="test/test_helper.rb"
+class ActiveSupport::TestCase
+  # Run tests in parallel with specified workers
+  parallelize(workers: :number_of_processors)
+
+  parallelize_setup do |worker|
+    SimpleCov.command_name "#{SimpleCov.command_name}-#{worker}"
+
+    ActiveStorage::Blob.service.root = "#{ActiveStorage::Blob.service.root}-#{worker}"
+
+    # Set the geocoder to test mode and give it a default stub
+    # highlight-next-line
+    Geocoder.configure(lookup: :test, ip_lookup: :test)
+    # highlight-next-line
+    Geocoder::Lookup::Test.set_default_stub(
+    # highlight-next-line
+      [
+    # highlight-next-line
+        {
+    # highlight-next-line
+          "coordinates" => [40.7143528, -74.0059731],
+    # highlight-next-line
+          "address" => "New York, NY, USA",
+    # highlight-next-line
+          "state" => "New York",
+    # highlight-next-line
+          "state_code" => "NY",
+    # highlight-next-line
+          "country" => "United States",
+    # highlight-next-line
+          "country_code" => "US"
+    # highlight-next-line
+        }
+    # highlight-next-line
+      ]
+    # highlight-next-line
+    )
+  end
+end
+```

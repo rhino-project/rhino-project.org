@@ -49,6 +49,16 @@ const config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             "https://github.com/rhino-project/rhino-project.org/tree/main/",
+          lastVersion: "current",
+          versions: {
+            current: {
+              label: "v3.0",
+            },
+            "2.0": {
+              label: "v2.0",
+              banner: "none",
+            },
+          },
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
@@ -90,6 +100,10 @@ const config = {
             position: "left",
             sidebarId: "reference",
             label: "Reference",
+          },
+          {
+            type: "docsVersionDropdown",
+            position: "right",
           },
           {
             href: "https://github.com/rhino-project",

@@ -1,0 +1,96 @@
+# Testing
+
+## Backend
+
+Rhino uses minitest for all testing on the backend. The tests are located in the `test` directory. By default the tests will run with parallel workers. Set the `PARALLEL_WORKERS` environment variable to 1 to run the tests in serial.
+
+Read more on [testing](https://guides.rubyonrails.org/testing.html) in Rails.
+
+### Running tests
+
+All tests can be run with the following command:
+
+```bash
+rails test
+```
+
+run a single test file:
+
+```bash
+rails test test/models/user_test.rb
+```
+
+run a single test (`:5` indicates the line number the test starts on)
+
+```bash
+rails test test/models/user_test.rb:5
+```
+
+### Debugging tests
+
+The `debugger` gem is included in Rhino. To use it, add the following to your test:
+
+```ruby
+require "test_helper"
+
+class CurrencyTest < ActiveSupport::TestCase
+  test "currency should be created" do
+    # highlight-next-line
+    debugger
+    assert Currency.new(name: "currency", code: "code").valid?
+  end
+end
+```
+
+Then run the tests with the following command so that they do not run in parallel:
+
+```bash
+PARALLEL_WORKERS=1 rails test test/models/user_test.rb
+```
+
+### Mock third-party APIs
+
+The `webmock` gem is included in Rhino. To use it, and mock third-party APIs add the following to your test:
+
+```ruby
+require "test_helper"
+require "webmock/minitest"
+
+class CurrencyTest < ActiveSupport::TestCase
+  test "currency should be created" do
+    stub_request(:get, "https://api.example.com/customer-id/")
+      .to_return(status: 200, body: { id: 1 }.to_json, headers: {})
+    uri = URI("https://api.example.com/customer-id/")
+    response = Net::HTTP.get_response(uri)
+    data = JSON.parse(response.body)
+    assert_equal data["id"], 1
+  end
+end
+```
+Read more on [webmock docs](https://github.com/bblimke/webmock).
+
+## Frontend
+
+Rhino uses Jest for unit and component testing on the frontend. The tests are located in the `src/__tests__` directory.
+
+### Running tests
+
+All tests can be run with the following command:
+
+```bash
+npm run test
+```
+
+## E2E Testing
+
+Rhino uses Cypress for E2E testing. The tests are located in the `cypress/integration` directory. Cypress can be loaded with the following command:
+
+```bash
+npm run cypress:open
+```
+
+or all tests can be executed on the command line with:
+
+```bash
+npm run cypress:run
+```
