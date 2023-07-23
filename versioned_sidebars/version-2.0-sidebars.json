@@ -20,6 +20,15 @@
   "guide": [
     {
       "type": "category",
+      "label": "Upgrading",
+      "link": {
+        "type": "doc",
+        "id": "guides/updating"
+      },
+      "items": ["guides/release_notes"]
+    },
+    {
+      "type": "category",
       "label": "Deployment",
       "link": {
         "type": "doc",
@@ -42,7 +51,6 @@
         }
       ]
     },
-    "guides/updating",
     "guides/properties",
     {
       "UI Customization": [
