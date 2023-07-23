@@ -52,58 +52,7 @@ function createRhinoConfigTabs(node, levels) {
     value: "</Tabs>",
   });
 
-  console.log("createRhinoConfigTabs", display);
   return display;
-  // return [
-  //   {
-  //     type: "jsx",
-  //     value:
-  //       '<Tabs groupId="rhino-config" defaultValue="1" values={[{label: "Global", value: "1"}, {label: "Model", value: "2"}, {label: "Attribute", value: "3"}]}>',
-  //   },
-  //   {
-  //     type: "jsx",
-  //     value: `<TabItem value="1">`,
-  //   },
-  //   {
-  //     type: "code",
-  //     lang: "jsx",
-  //     value: code1,
-  //   },
-  //   {
-  //     type: "jsx",
-  //     value: "</TabItem>",
-  //   },
-  //   {
-  //     type: "jsx",
-  //     value: `<TabItem value="2">`,
-  //   },
-  //   {
-  //     type: "code",
-  //     lang: "javascript",
-  //     value: code2,
-  //   },
-  //   {
-  //     type: "jsx",
-  //     value: "</TabItem>",
-  //   },
-  //   {
-  //     type: "jsx",
-  //     value: `<TabItem value="3">`,
-  //   },
-  //   {
-  //     type: "code",
-  //     lang: "javascript",
-  //     value: code3,
-  //   },
-  //   {
-  //     type: "jsx",
-  //     value: "</TabItem>",
-  //   },
-  //   {
-  //     type: "jsx",
-  //     value: "</Tabs>",
-  //   },
-  // ];
 }
 
 const isImport = (node) => node.type === "import";
