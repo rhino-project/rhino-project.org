@@ -12,20 +12,25 @@ graph TB
     ModelShowRelated-->ModelIndex
 ```
 
-## ModelShowDescription
-
-### Changing displayed fields
+## Changing displayed fields
 
 ```javascript
-const globalOverrides = {
-  blog: {
-    show: {
-      ModelShowDescription: {
+const rhinoConfig = {
+  version: 1,
+  components: {
+    create: {
+      ModelShow: {
         props: {
-          paths: ["title", "author"],
+          paths: ["title", "published_at"],
         },
       },
     },
   },
 };
+```
+
+## Horizontal layout
+
+```rhinoconfig title="src/rhino.config.js"
+ModelDisplayGroup: ModelDisplayGroupHorizontal
 ```

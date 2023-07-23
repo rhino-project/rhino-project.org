@@ -1,5 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
+const rhinoconfig = require("./plugins/remark-rhino-config-tabs");
+const npm2yarn = require("@docusaurus/remark-plugin-npm2yarn");
 
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
@@ -45,10 +47,19 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl:
             "https://github.com/rhino-project/rhino-project.org/tree/main/",
+          lastVersion: "current",
+          versions: {
+            current: {
+              label: "v3.0",
+            },
+            "2.0": {
+              label: "v2.0",
+              banner: "none",
+            },
+          },
+          remarkPlugins: [rhinoconfig, [npm2yarn, { sync: true }]],
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
@@ -90,6 +101,10 @@ const config = {
             position: "left",
             sidebarId: "reference",
             label: "Reference",
+          },
+          {
+            type: "docsVersionDropdown",
+            position: "right",
           },
           {
             href: "https://github.com/rhino-project",

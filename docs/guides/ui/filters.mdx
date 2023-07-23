@@ -1,0 +1,101 @@
+# Filters and Sorting
+
+The index page is for listing all the records of a model. It is the default page for a model. It is also the page that is shown when you click on the model name in the sidebar. The component structure of the index page is as follows:
+
+```mermaid
+graph TB
+    ModelFilters-->ModelFilterGroup
+
+    ModelFilterGroup-->FilterGroup
+    FilterGroup-->FilterLayout
+
+    FilterLayout-->FilterLayoutVertical
+    FilterLayoutVertical-->Filter
+    Filter-->ModelFilter
+    FilterLayoutVertical-->FilterLabel
+    FilterLabel-->ModelFilterLabel
+
+    ModelFilter-->ModelFilterBoolean
+    ModelFilterBoolean-->FilterBoolean
+    FilterBoolean-->FieldBooleanIndeterminate
+
+    ModelFilter-->ModelFilterDate
+    ModelFilterDate-->FilterDate
+    FilterDate-->FieldDate
+
+    ModelFilter-->ModelFilterDateTime
+    ModelFilterDateTime-->FilterDateTime
+    FilterDateTime-->FieldDateTime
+
+    ModelFilter-->ModelFilterEnum
+    ModelFilterEnum-->FilterSelectControlled
+    FilterSelectControlled-->FieldInputControlled
+
+    ModelFilter-->ModelFilterFloat
+    ModelFilterFloat-->FilterFloat
+    FilterFloat-->FieldFloat
+    FieldFloat-->FieldInput
+
+    ModelFilter-->ModelFilterInteger
+    ModelFilterInteger-->FilterInteger
+    FilterInteger-->FieldInteger
+    FieldInteger-->FieldInput
+
+    ModelFilter-->ModelFilterIntegerSelect
+
+    ModelFilter-->ModelFilterOwnerReference
+    ModelFilterOwnerReference-->ModelFilterReference
+    ModelFilter-->ModelFilterReference
+    ModelFilterReference-->FilterSelectControlled
+    ModelFilter-->ModelFilterReferenceTypeahead
+
+    ModelFilter-->ModelFilterString
+    ModelFilterString-->FilterString
+    FilterString-->FieldString
+    FieldString-->FieldInput
+
+    ModelFilter-->ModelFilterTime
+    ModelFilterTime-->FilterTime
+    FilterTime-->FieldTime
+
+    ModelFilter-->ModelFilterYear
+    ModelFilterYear-->FilterYear
+    FilterYear-->FieldYear
+```
+
+## ModelFilters
+
+### Changing filters and order displayed
+
+List the specific filters in the desired order:
+
+```rhinoconfig title="src/rhino.config.js"
+ModelFilters: { props: { paths: ['created_at', 'published_at', 'category'] } }
+```
+
+### Changing filter label
+
+Filter labels default to ModelFilterLabel. To change the label of a particular column, you can override for the particular attribute.
+
+```jsx title="src/rhino.config.js"
+const rhinoConfig = {
+  version: 1,
+  components: {
+    blog: {
+      created_at: {
+        ModelFilterLabel: () => "Created",
+      },
+    },
+  },
+};
+```
+
+### Adding an operator
+
+An filter operator can be added to a filter by adding the operator to the filter path:
+
+```rhinoconfig title="src/rhino.config.js"
+ModelFilters: { props: { paths: ['created_at::gteq']}}
+```
+
+See [operators](../../concepts/rest_api/filtering.mdx) for a complete list of operators.

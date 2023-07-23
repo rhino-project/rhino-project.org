@@ -1,0 +1,401 @@
+# Release Notes
+
+## 3.0.0-beta.11
+
+The key changes in this release are:
+
+- Direct use of ModelField, ModelDisplay for complex layouts
+- Bootstrap 5.3
+- Rails 7.0.5 and ruby 3.1.4
+
+## 3.0.0-beta.10
+
+The key changes in this release are:
+
+- More consistent overrides patterns for both local and global overrides in ModelIndex, ModelShow, ModelCreate, ModelEdit
+- ModelContext and useModelContext hook to access model context in any view controller
+
+## 3.0.0-beta.9
+
+The key changes in this release are:
+
+- Reactstrap 9 and Bootstrap 5
+  - See [Reactstrap 9 Migration Guide](https://reactstrap.github.io/?path=/docs/home-upgrading--page) for more details
+
+## 3.0.0-beta.8
+
+The key changes in this release are:
+
+- Create and edit controllers for ModelEdit, ModelEditModal, ModelCreate and ModelCreateModal
+- Create, Edit, Index and Show Actions overhaul
+  - Rrepend/append/replace actions
+  - Use Custom components directly in the actions prop
+- Improve access control UI for org mode
+- Route path helpers
+  - getRootPath, getIndexPath, getShowPath, getEditPath, getCreatePath etc
+
+### Create and edit controllers
+
+Customized uses of ModelEdit and ModelCreate will need the following changes:
+
+- ModelEdit,
+  - modelId is now passed to the modal as a prop (instead of resource)
+- ModelCreate
+  - modelId is now passed to the modal as a prop (instead of resource)
+- ModelEditModal usage has to be altered
+  - modelId is now passed to the modal as a prop (instead of resource)
+
+### Actions overhaul
+
+Custom actions are not backwards compatible.
+
+- Custom actions in the object style are no longer supported. Something like:
+
+```json
+{
+  name: 'auto',
+  label: 'Generate Payout',
+  color: 'warning',
+  icon: 'gear',
+  onAction: handleGeneratePayouts
+}
+```
+
+should be replace with an `<IconButton />` component
+
+### Route path helpers
+
+Easier to use helpers for route paths are now available. For example:
+
+```jsx
+import { getModelIndexPath } from "rhino/utils/routes";
+
+const MyComponent = () => {
+  const path = getModelIndexPath("invoice");
+  return <Link to={path}>Invoices</Link>;
+};
+```
+
+## 3.0.0-beta.7
+
+The key changes in this release are:
+
+- New UI system for show pages with ModelDisplay
+
+## 3.0.0-beta.6
+
+The key changes in this release are:
+
+- New support for per model and per attribute overrides in `rhino.config.js`
+  - Not all components are currently covered, but ModelCells* and ModelFilters* and ModelIndexTable are
+- Controller and context for ModelShow with ModelShowBase
+
+## 3.0.0-beta.5
+
+The key changes in this release are:
+
+- ModelIndexTable no longer uses ModelTable internally and uses react-table 8 see [table and cells guide](ui/cells) for more details
+- Update to Cypress 12
+
+### Path dot syntax
+
+Use dot syntax only for paths now to support react-table and react-hook-form. For example:
+
+```diff title="src/models/overrides.js"
+const globalOverrides = {
+  invoice: {
+    index: {
+      ModelIndexTable: {
+        props: {
+          paths: [
+-            "external_linked_teams[0].display_name",
++            "external_linked_teams.0.display_name",
+          ],
+        },
+      },
+    },
+  },
+};
+```
+
+See https://react-hook-form.com/api/useform/register/#rules and https://tanstack.com/table/v8/docs
+
+### ModelIndexTable/ModelTable overrides
+
+Because ModelIndexTable no longer uses ModelTable internally, any path overrides to ModelTable should be updated to use ModelIndexTable instead, however simple cases are backwards compatible. For example:
+
+```jsx title="src/models/overrides.js"
+const globalOverrides = {
+  invoice: {
+    index: {
+      ModelIndexTable: {
+        // highlight-next-line
+        ModelTable: {
+          props: {
+            paths: [
+              "id",
+              "project.client",
+              "project",
+              "project.billing_frequency",
+              "beginning_at",
+              "ending_at",
+              "currency",
+              "amount",
+              "approved",
+              "quickbooks_number",
+              "invoiced",
+            ],
+          },
+          // highlight-next-line
+        },
+      },
+    },
+  },
+};
+```
+
+becomes
+
+```jsx title="src/models/overrides.js"
+const globalOverrides = {
+  invoice: {
+    index: {
+      ModelIndexTable: {
+        props: {
+          paths: [
+            "id",
+            "project.client",
+            "project",
+            "project.billing_frequency",
+            "beginning_at",
+            "ending_at",
+            "currency",
+            "amount",
+            "approved",
+            "quickbooks_number",
+            "invoiced",
+          ],
+        },
+      },
+    },
+  },
+};
+```
+
+## 3.0.0-beta.4
+
+The key changes in this release are:
+
+- Controller and context for ModelIndex with ModelIndexBase
+- exclusiveMininum and exclusiveMaximum support for ModelFilterDate, ModelFilterDateTime and ModelFilterYear
+- String type for filters
+- Allow attachment links in the index table to be opened without moving to the view of the item
+
+### Custom ModelIndex\* components
+
+Custom ModelIndex\* components will need to use the new controller and context. Generally this will be done by using the new useModelIndexContext hook instead of relying on prop drilling. For example:
+
+```diff
+-const RecruitingBoard = ({ loading, team_season, resources }) => {
++const RecruitingBoard = ({ team_season }) => {
++  const { isLoading: loading, resources } = useModelIndexContext();
+```
+
+### Custom Filters
+
+Custom filters will need to use the new controller and context - see the [filters guide](ui/filters) for more details.
+
+## 3.0.0-beta.3
+
+The key changes in this release are:
+
+- Case insensitive sorting for ModelFilterReference
+- JSX components path for filters
+
+## 3.0.0-beta.2
+
+The key changes in this release are:
+
+- Filters are now based on react-hook-form and support devtools for debugging
+- Float and Year filters has been added
+- Model Integer and Model Float filters now support minimum and and maximum values (and exclusiveMinimum and exclusiveMaximum)
+- Separate filters for globally owned models (ModelFilterReference) and non-globally owned models (ModelFilterOwnerReference)
+
+All of the above changes should be backwards compatible unless you have created any custom filters. In that case you will need to update them to use react-hook-form.
+
+## 3.0.0-beta.1
+
+The key changes in this release are:
+
+- Model has been simplified
+- Data access and query hook arguments have been updated to be more explicit and easier to use.
+- react-hook-form is now included as a dependency and used for the authentication forms (sign in, sign up, forgot password, reset password)
+  - More support for this will be added in future releases
+
+See below for more details.
+
+### Model fetching
+
+#### Passing to API query and mutation hooks
+
+Historically `getModel` was used to fetch a model object and then pass it too an API hook, but this is no longer necessary as the hooks will create a memoized model object for you and also return it.
+
+```jsx
+const { data } = useModelShow(getModel("warehouse"), resource.warehouse.id);
+```
+
+becomes:
+
+```jsx
+const { data } = useModelShow("warehouse", resource.warehouse.id);
+```
+
+and if you need the model object:
+
+```jsx
+const { data, model: warehouseModel } = useModelShow(
+  "warehouse",
+  resource.warehouse.id
+);
+```
+
+#### Other uses
+
+In some cases the model object was used for other purposes, for instance to construct a URL. In this case the `getModel` function may have been used directly and possibly memoized. The `useModel` hook can be used to achieve the same result:
+
+```jsx
+const model = useMemo(() => getModel("warehouse"), []);
+```
+
+becomes:
+
+```jsx
+const model = useModel("warehouse");
+```
+
+useModel will handle the case where the model is already an object and will return it directly in that case already memoized.
+
+```jsx
+const MyComponent = ({ model }) => {
+  const componentModel = useModel(model);
+  const { data } = useModelShow(componentModel, resource.warehouse.id);
+};
+```
+
+### Model query hook arguments
+
+In general the hooks are backwards compatible with older arguments styles, but it is recommended to migrate to the new format. Here are a list of patterns that can be migrated with 2.1.0.
+
+Previous versions of the hooks the second parameter of the index hook to pass options to the network call which created the query params for filtering, limit, offset, order, search and also used the third parameter to pass options to react query. A more explicit API has been introduced filtering, limit, offset, order, search and the options for react query are now passed as a named object in the second parameter..
+
+```jsx
+const { data } = useModelIndex(
+  "users_role",
+  {
+    params: {
+      filter: { user_id: user.id },
+    },
+  },
+  { enabled: false }
+);
+```
+
+becomes:
+
+```jsx
+const { data } = useModelIndex("users_role", {
+  filter: { user_id: user.id },
+  queryOptions: { enabled: false },
+});
+```
+
+#### networkOptions
+
+Previous versions of the also allowed used a `networkOptions` object to pass parameters to the network call which created the sear. This has been replaced with a more explicit API.
+
+```jsx
+const { data } = useModelIndex("users_role", {
+  networkOptions: {
+    params: {
+      filter: { user_id: user.id },
+    },
+  },
+});
+```
+
+```jsx
+const { data } = useModelIndex(model, {
+  filter: { user_id: user.id },
+});
+```
+
+### Model hook data access
+
+Previous versions of the hooks used the `data` property of the react query response to access the data. This data property contained the full axios response including things like `header`. The body of an axios response is in the `data` property and so there were many `data.data` style access. The data is now directly available in the `data` property of the query responses:
+
+```jsx
+const { data: { data: { results = [] } = {} } = {} } = useModelIndex(
+    'users_role',
+    filter: { user: loggedInUserId }
+  );
+```
+
+becomes:
+
+```jsx
+const { data: { results = [] } = {} } = useModelIndex(
+    'users_role',
+    filter: { user: loggedInUserId }
+  );
+```
+
+similarly for useModelShow:
+
+```jsx
+const { data: { data: resource } = {} } = useModelShow(
+  "warehouse",
+  warehouseId
+);
+```
+
+becomes:
+
+```jsx
+const { resource } = useModelShow("warehouse", warehouseId);
+```
+
+and in the callbacks of the mutation hooks:
+
+```jsx
+const { mutate } = useModelCreate("warehouse", {
+  onSuccess: (data) =>
+    history.push(`/warehouses/${data.data.id}`);
+});
+```
+
+becomes:
+
+```jsx
+const { mutate } = useModelCreate("warehouse", {
+  onSuccess: (newWarehouse) =>
+    history.push(`/warehouses/${newWarehouse.id}`);
+});
+```
+
+### useModelIndex data helpers
+
+There are also now direct accessors for the resources, results and total count in useModelIndex:
+
+```jsx
+const { data: { data: { results = [] } = {} } = {} } = useModelIndex(
+    'users_role',
+    filter: { user: loggedInUserId }
+  );
+```
+
+```jsx
+const { resources, results = [], total } = useModelIndex(
+    'users_role',
+    filter: { user: loggedInUserId }
+  );
+```

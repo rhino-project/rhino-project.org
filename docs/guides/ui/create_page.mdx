@@ -11,15 +11,14 @@ graph TB
     ModelCreateActions-->ModelActions
 ```
 
-## ModelCreateForm
-
-### Changing the creatable fields
+## Changing the creatable fields
 
 ```javascript
-const globalOverrides = {
-  blog: {
+const rhinoConfig = {
+  version: 1,
+  components: {
     create: {
-      ModelCreateForm: {
+      ModelCreate: {
         props: {
           paths: ["title", "published_at"],
         },

@@ -37,6 +37,15 @@ const sidebars = {
   guide: [
     {
       type: "category",
+      label: "Upgrading",
+      link: {
+        type: "doc",
+        id: "guides/updating",
+      },
+      items: ["guides/release_notes"],
+    },
+    {
+      type: "category",
       label: "Deployment",
       link: {
         type: "doc",
@@ -59,16 +68,64 @@ const sidebars = {
         },
       ],
     },
-    "guides/updating",
     "guides/properties",
     {
-      "UI Customization": [
+      type: "category",
+      label: "UI Customization",
+      link: {
+        type: "generated-index",
+        title: "UI Customization",
+        description:
+          "Learn more about customizing the UI based on user interface concepts",
+        slug: "/guides/ui_customization",
+        keywords: ["guides", "importing"],
+      },
+      items: [
+        {
+          type: "category",
+          label: "Index page",
+          link: {
+            type: "doc",
+            id: "guides/ui/index_page",
+          },
+          collapsed: false,
+          items: [
+            "guides/ui/filters",
+            "guides/ui/cells",
+            "guides/ui/index_actions",
+          ],
+        },
+        {
+          type: "category",
+          label: "Show page",
+          link: {
+            type: "doc",
+            id: "guides/ui/show_page",
+          },
+          collapsed: false,
+          items: ["guides/ui/displays", "guides/ui/show_actions"],
+        },
+        {
+          type: "category",
+          label: "Create page",
+          link: {
+            type: "doc",
+            id: "guides/ui/create_page",
+          },
+          collapsed: false,
+          items: ["guides/ui/fields", "guides/ui/create_actions"],
+        },
+        {
+          type: "category",
+          label: "Edit page",
+          link: {
+            type: "doc",
+            id: "guides/ui/edit_page",
+          },
+          collapsed: false,
+          items: ["guides/ui/fields", "guides/ui/edit_actions"],
+        },
         "guides/ui/roles",
-        "guides/ui/index_page",
-        "guides/ui/show_page",
-        "guides/ui/create_page",
-        "guides/ui/edit_page",
-        "guides/ui/overrides",
       ],
     },
     "guides/audit_trail",
@@ -122,7 +179,7 @@ const sidebars = {
         "concepts/rest_api/pagination",
       ],
     },
-    "concepts/models_attributes_paths",
+    "concepts/ui",
     {
       type: "category",
       label: "Authentication",
@@ -143,7 +200,12 @@ const sidebars = {
       label: "Backend API",
       href: "https://api.rhino-project.org",
     },
-    { "Front End": ["reference/front_end/api_hooks", "guides/ui/overrides"] },
+    {
+      "Front End": [
+        "reference/front_end/api_hooks",
+        "reference/front_end/controllers",
+      ],
+    },
   ],
 };
 

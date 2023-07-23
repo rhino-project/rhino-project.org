@@ -11,15 +11,14 @@ graph TB
     ModelEditActions-->ModelActions
 ```
 
-## ModelEditForm
-
-### Changing the editable fields
+## Changing the editable fields
 
 ```javascript
-const globalOverrides = {
-  blog: {
-    edit: {
-      ModelEditForm: {
+const rhinoConfig = {
+  version: 1,
+  components: {
+    create: {
+      ModelEdit: {
         props: {
           paths: ["title", "published_at"],
         },

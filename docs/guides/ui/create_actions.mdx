@@ -1,0 +1,84 @@
+# Actions
+
+The create page (and modal) actions by default include a save button which creates the resource and returns to the show page of the newly created resource.
+
+```mermaid
+graph TB
+  ModelCreateActions-->ModelCreateActionSave
+  ModelCreateActions-->ModelCreateActionCancel
+  ModelCreateActions-->ModelCreateActionSaveShow
+  ModelCreateActions-->ModelCreateActionSaveBack
+  ModelCreateActions-->ModelCreateActionSaveAnother
+```
+
+## Change the text of the save button
+
+The text of the save button can be changed by passing in a child component.
+
+```rhinoconfig title="src/rhino.config.js" global model
+ModelCreateActions: <ModelCreateActionsBase overrides={{ModelCreateActionSave: <ModelCreateActionSave>Keep Forever</ModelCreateActionSave>}} />
+```
+
+## Change the icon of the save button
+
+The icon of the save button can be changed by passing in an icon name.
+
+```rhinoconfig title="src/rhino.config.js" global model
+ModelCreateActions: <ModelCreateActionsBase overrides={{ModelCreateActionSave: <ModelCreateActionSave icon="life-preserver" />}} />
+```
+
+## Add a cancel action
+
+A cancel action which returns to the index page can be added:
+
+```rhinoconfig title="src/rhino.config.js" global model
+ModelCreateActions: { props: { hasCancel: true } }
+```
+
+## Change the text of the cancel button
+
+The text of the cancel button can be changed by passing in a child component.
+
+```rhinoconfig title="src/rhino.config.js" global model
+ModelCreateActions: <ModelCreateActionsBase overrides={{ModelCreateActionCancel: <ModelCreateActionCancel>No Way</ModelCreateActionCancel>}} hasCancel />
+```
+
+## Change the icon of the cancel button
+
+The icon of the cancel button can be changed by passing in an icon name.
+
+```rhinoconfig title="src/rhino.config.js" global model
+ModelCreateActions: <ModelCreateActionsBase overrides={{ModelCreateActionCancel: <ModelCreateActionCancel icon="x-octagon" />}} hasCancel />
+```
+
+## Replace the default actions
+
+You can replace the default actions with custom actions.
+
+```rhinoconfig title="src/rhino.config.js" global model
+ModelCreateActions: { props: { actions: [<MyCustomAction />]} }
+```
+
+## Prepend actions
+
+You can prepend one or more actions to the defaults.
+
+```rhinoconfig title="src/rhino.config.js" global model
+ModelCreateActions: { props: { prepend: true, actions: [<MyCustomAction />]} }
+```
+
+## Append actions
+
+You can append one or more actions to the defaults.
+
+```rhinoconfig title="src/rhino.config.js" global model
+ModelCreateActions: { props: { append: true, actions: [<MyCustomAction />]} }
+```
+
+## Add a save and add another button
+
+And addition "Save & Add Another" button can be added to allow users to create another resource of the same type.
+
+```rhinoconfig title="src/rhino.config.js" global model
+ModelCreateActions: { props: { append: true, actions: [<ModelCreateActionSaveAnother />]} }
+```

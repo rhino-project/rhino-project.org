@@ -1,0 +1,157 @@
+# Resources and Properties
+
+A resource is an object with member properties that is intended to be exposed and manipulated by a [REST API](../rest_api), manipulated via a REST api. Resources may be created, read, updated, or destroyed (CRUD) based on [policies](../auth/policies).
+
+A resource implements the Rhino::Resource interface. Most common is an ActiveRecord based resource, but Rhino also provides other [built in resources](#built-in-resources).
+
+## Ownership
+
+Every resource must have an owner. Ownership allows for the creation of a hierarchy of resources. For instance a blog post may be owned by a blog. In the case of an Active Record based resource, ownership is usually a belongs_to relationship.
+
+```ruby
+class BlogPost < ApplicationRecord
+  belongs_to :blog
+
+  rhino_owner :blog
+end
+```
+
+The resource owner must be explicitly specified for every resource.
+
+### Base Owner
+
+At the top of the hierachy is the base owner resource. The base owner owns the all the data under it. By default the built-in 'User' resource is the base owner.
+
+```ruby
+class Blog < ApplicationRecord
+  belongs_to :user
+
+  rhino_owner_base
+end
+```
+
+The [rhino_organization module](../../tutorials/organization.mdx) configures a different resource as the base owner, the built-in 'Organization' resource. This allows a company or organization to own the blogs while individual users may come and go from the organization.
+
+### Global Owner
+
+If a resource is shared across multiple base owners, it can be designated as a global resource.
+
+```ruby
+class Category < ApplicationRecord
+  rhino_owner_global
+end
+```
+
+Global resources may still have child resources:
+
+```ruby
+class SubCategory < ApplicationRecord
+  rhino_owner :category
+end
+```
+
+The `SubCategory` resource will still be designated as a global resource for access purposes.
+
+### Auth Owner
+
+The auth owner is the resource that controls authentication and authorization. By default the built-in 'User' resource is the auth owner. It is not common for the auth owner to own a resource in the hierarchy (though the base owner and auth owner can be the same resource), but it is possible.
+
+## Properties
+
+Properties are the member values of a resource. They are defined by the resource class and are used to describe the resource in the OpenAPI spec. Rhino introspects the attributes of the model to determine the properties as well as the type and format of each. The properties are then used to generate an OpenAPI compliant spect spec and the front end.
+
+### Types & Formats
+
+[Types](https://swagger.io/docs/specification/data-models/data-types/) are defined by the OpenAPI spec and are used to describe the type of a property. Formats are used to describe the format of a property. For instance a string property may be a date, email, url, etc.
+
+:::info
+Rhino does add additional types and formats to the OpenAPI spec. While formats are open and extendable, types are not so technically Rhino is not compliant with the OpenAPI spec, but this is not an issue in practice currently and the additional types are useful.
+:::
+
+### Readable & Writeable Properties
+
+Properties can be designated as read only, write only or both. Write properties can be further subdivided into create only and update only, though it is less common to use these.
+
+### Reference properties
+
+Reference propertie links to related resources and must be explicitly configured to be included in the API response in order to proect against infinite recursion and performance issues. The REST API will include the full referenced object as part of the referenced response. Both 'one' and 'many' relationships can be included.
+
+```ruby
+class BlogPost < ApplicationRecord
+  belongs_to :blog
+
+  rhino_owner :blog
+  rhino_references [:blog]
+end
+```
+
+```ruby
+class Blog < ApplicationRecord
+  has_many :blog_posts
+
+  rhino_owner_base
+  rhino_references [:blog_posts]
+end
+```
+
+:::warning
+Referencing 'many' relationships can significantly impact performance
+:::
+
+#### Owner reference
+
+A reference to the owner of a resource should always be included so that resources can be created.
+
+:::warning
+Not including a reference to the owner will not allow the object
+:::
+
+### Nullable properties
+
+Properties can be designated as [nullable](https://swagger.io/docs/specification/data-models/data-types/#null). This is useful for properties that are not required in the database. ActiveRecord based resources will automatically translate the `null: true` option on migrations and validations to the nullable property.
+
+### Default values
+
+The OpenAPI spec default descriptor is supported. ActiveRecord and ActiveModel based resources will automatically translate default values from the attributes and database.
+
+### Validations
+
+The OpenAPI spec minimum, maximum, minLength, maxLength, exclusiveMin, exclusiveMax and [enum](https://swagger.io/docs/specification/data-models/enums/) constraints are all supported.
+
+Active Record based resources will automatically translate some validations automatically such as:
+
+- ActiveModel::Validations::NumericalityValidator
+- ActiveRecord::Validations::LengthValidator
+- ActiveModel::Validations::InclusionValidator
+
+### Array properties
+
+Array properties are support both for database arrays and for 'many' references. The OpenAPI spec [array](https://swagger.io/docs/specification/data-models/data-types/#array) is used and ActiveRecord and ActiveModel based resources will automatically translate array properties from the attributes and database.
+
+## Built-in resources
+
+Rhino includes a number of built-in resources that can be used to provide data as a resource.
+
+### Rhino::Resource
+
+The abstract resource interface to be implemented. Implementations can include it directly and supply a few additional methods or create new module which can then itself be included. See `rhino/rhino/app/resources/rhino/open_api_info.rb` for an example.
+
+### Rhino::Resource::ActiveRecordExtension
+
+An [ActiveRecord](https://guides.rubyonrails.org/active_record_basics.html) resource implementation that exposes all attributes (including relations) and validations of the model.
+
+### Rhino::Resource::ActiveStorage
+
+Inherits from Rhino::Resource::ActiveRecordExtension and supports [ActiveStorage](https://guides.rubyonrails.org/active_storage_overview.html) to provide API responses for attachments. Read more on adding file attachments to your resources in the [file attachments](../../tutorials/advanced) tutorial and in the [properties guide](../../guides/properties#file-attachments).
+
+### Rhino::Resource::ActiveRecordTree
+
+Inherits from Rhino::Resource::ActiveRecordExtension and supports the [ancestry](https://github.com/stefankroes/ancestry) gem to return API response in a tree format.
+
+### Rhino::Resource::ActiveModelExtension
+
+An [ActiveModel](https://guides.rubyonrails.org/active_model_basics.html) resource implementation that exposes all attributes and validations of the model. ActiveModels must also implement the BackingStore interface for storage.
+
+:::info
+ActiveRecord actually inherits from ActiveModel and many attribute and validation behaviour is shared
+:::

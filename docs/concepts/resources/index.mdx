@@ -20,7 +20,7 @@ The resource owner must be explicitly specified for every resource.
 
 ### Base Owner
 
-At the top of the hierachy is the base owner resource. The base owner owns the all the data under it. By default the built-in 'User' resource is the base owner.
+At the top of the hierarchy is the base owner resource. The base owner owns the all the data under it. By default the built-in 'User' resource is the base owner.
 
 ```ruby
 class Blog < ApplicationRecord
@@ -74,7 +74,7 @@ Properties can be designated as read only, write only or both. Write properties 
 
 ### Reference properties
 
-Reference propertie links to related resources and must be explicitly configured to be included in the API response in order to proect against infinite recursion and performance issues. The REST API will include the full referenced object as part of the referenced response. Both 'one' and 'many' relationships can be included.
+Reference properties link to related resources and must be explicitly configured to be included in the API response in order to proect against infinite recursion and performance issues. The REST API will include the full referenced object as part of the referenced response. Both 'one' and 'many' relationships can be included.
 
 ```ruby
 class BlogPost < ApplicationRecord

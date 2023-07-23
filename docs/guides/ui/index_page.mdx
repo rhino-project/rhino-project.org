@@ -10,22 +10,199 @@ graph TB
     ModelIndexHeader-->ModelFilters
     ModelIndexHeader-->ModelSort
     ModelIndexHeader-->ModelPager
-    ModelIndexActions-->ModelActions
-    ModelIndexTable-->ModelTable
+    ModelIndexTable-->Table
+    Table-->ModelCell
 ```
 
 ## ModelIndexTable
+
+The `paths` prop of the `ModelIndexTable` component is used to specify which attributes of the model should be displayed in the table. `ModelIndexTable` uses `ModelCell` to determine the default renderer of the attribute.
+
+For more about the `ModelCell` component, see the [cells guide](cells).
+
+### Changing attributes and order displayed
+
+List the specific cells in the desired order:
+
+```jsx title="src/rhino.config.js"
+const rhinoConfig = {
+  version: 1,
+  components: {
+    blog: {
+      ModelIndexTable: {
+        props: {
+          paths: ["title", "banner_attachment"],
+        },
+      },
+    },
+  },
+};
+```
+
+### Changing a column header
+
+Column headers default to `ModelHeader`. To change the header of a particular column, you can override for the particular attribute.
+
+```jsx title="src/rhino.config.js"
+const rhinoConfig = {
+  version: 1,
+  components: {
+    blog: {
+      title: {
+        ModelHeader: () => "Summary",
+      },
+    },
+  },
+};
+```
+
+alternatively use the `header` prop of the `ModelCell` component as either a string or a component
+
+```jsx title="src/rhino.config.js"
+const rhinoConfig = {
+  version: 1,
+  components: {
+    blog: {
+      ModelIndexTable: {
+        props: {
+          paths: [
+            <ModelCell path="title" header="Summary" />,
+            <ModelCell path="banner_attachment" header={<em>Banner</em>} />,
+          ],
+        },
+      },
+    },
+  },
+};
+```
+
+### Changing a column footer
+
+Column footers default to `ModelFoot`. To change the footer of a particular column, you can override for the particular attribute.
+
+```jsx title="src/rhino.config.js"
+const rhinoConfig = {
+  version: 1,
+  components: {
+    blog: {
+      title: {
+        ModelFooter: () => "Summary",
+      },
+    },
+  },
+};
+```
+
+alternatively use the `footer` prop of the `ModelCell` component as either a string or a component
+
+```jsx title="src/rhino.config.js"
+const rhinoConfig = {
+  version: 1,
+  components: {
+    blog: {
+      ModelIndexTable: {
+        props: {
+          paths: [
+            <ModelCell path="title" footer="Summary" />,
+            <ModelCell path="banner_attachment" footer={<em>Banner</em>} />,
+          ],
+        },
+      },
+    },
+  },
+};
+```
+
+### Removing the header
+
+```rhinoconfig title="src/rhino.config.js"
+ModelHeader: null,
+```
+
+### Removing the footer
+
+```rhinoconfig title="src/rhino.config.js"
+ModelFooter: null,
+```
+
+### Custom accessor
+
+You can use a custom accessor to alter the value displayed in a column. The accessor will be passed the `row` from `react-table`. You can also achieve similar results by using a fully custom cell.
+
+```jsx title="src/rhino.config.js"
+const rhinoConfig = {
+  version: 1,
+  components: {
+    blog: {
+      ModelIndexTable: {
+        props: {
+          paths: [
+            <ModelCell
+              path="title"
+              accessor={(row) => `${row.title} ${row.published_at}`}
+            />,
+          ],
+        },
+      },
+    },
+  },
+};
+```
+
+### Fully custom cell
+
+A custom cell to render any arbitrary component. The cell will be passed the `row` and `column` from `react-table` and act as a [`Display Column`](https://tanstack.com/table/v8/docs/guide/column-defs#api).
+
+```jsx title="src/rhino.config.js"
+const rhinoConfig = {
+  version: 1,
+  components: {
+    blog: {
+      ModelIndexTable: {
+        props: {
+          paths: [<CustomTitleCell />, "banner_attachment"],
+        },
+      },
+    },
+  },
+};
+```
+
+the header and footer of a custom cell can be overridden with the `header` and `footer` props as either a string or a component:
+
+```jsx title="src/rhino.config.js"
+const rhinoConfig = {
+  version: 1,
+  components: {
+    blog: {
+      ModelIndexTable: {
+        props: {
+          paths: [
+            <CustomCell header="Custom Header" footer="Custom Footer" />,
+            <AnotherCell
+              header={<em>Banner Header</em>}
+              footer={<em>Banner Footer</em>}
+            />,
+            "banner_attachment",
+          ],
+        },
+      },
+    },
+  },
+};
+```
 
 ### Cards instead of a table
 
 Rhino has a `ModelIndexCard` component that can be used to show the records in a card-based view. To use it, add the following to your `overrides.js` file:
 
-```javascript
+```jsx title="src/rhino.config.js"
 import ModelIndexCard from "components/models/ModelIndexCard";
 
-const globalOverrides = {
-  blog: {
-    index: {
+const rhinoConfig = {
+  version: 1,
+  components: {
+    blog: {
       ModelIndexTable: ModelIndexCard,
     },
   },
@@ -34,12 +211,13 @@ const globalOverrides = {
 
 #### Changing the card attributes
 
-```javascript
+```jsx title="src/rhino.config.js"
 import ModelIndexCard from "components/models/ModelIndexCard";
 
-const globalOverrides = {
-  blog: {
-    index: {
+const rhinoConfig = {
+  version: 1,
+  components: {
+    blog: {
       ModelIndexTable: {
         component: ModelIndexCard,
         props: {
