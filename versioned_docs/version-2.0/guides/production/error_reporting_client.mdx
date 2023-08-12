@@ -86,7 +86,7 @@ It can be useful to know which user suffered from the error. It's possible to se
 
 const AuthProvider = ({ children }) => {
   const sessionQuery = useSession();
-  const { isError, isLoading, isSuccess, data, refetch } = sessionQuery;
+  const { isError, isInitialLoading, isSuccess, data, refetch } = sessionQuery;
   const [user, setUser] = useState(null);
   const [resolving, setResolving] = useState(true);
   useRollbarPerson(user);

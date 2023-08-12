@@ -1,5 +1,50 @@
 # Release Notes
 
+## 3.0.0-beta.12
+
+The key changes in this release are:
+
+- React Query 4
+- Rails 7.0.7
+
+### React Query 4
+
+#### Imports
+
+The imports for react query have [changed](https://tanstack.com/query/latest/docs/react/guides/migrating-to-react-query-4#react-query-is-now-tanstackreact-query)
+
+```diff
+- import { useQuery } from 'react-query'
+- import { ReactQueryDevtools } from 'react-query/devtools'
+
++ import { useQuery } from '@tanstack/react-query'
++ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+```
+
+Run the [codemod](https://tanstack.com/query/latest/docs/react/guides/migrating-to-react-query-4#codemod) to update your code:
+
+```bash
+npx jscodeshift ./path/to/src/ \
+  --extensions=js,jsx \
+  --transform=./node_modules/@tanstack/react-query/codemods/v4/replace-import-specifier.js
+```
+
+#### Query keys
+
+All query keys **must** be [arrays now](https://tanstack.com/query/latest/docs/react/guides/migrating-to-react-query-4#query-keys-and-mutation-keys-need-to-be-an-array) - the query linter should find most instances of this
+
+:::info
+The query linter should find most instances of this
+:::
+
+#### Loading indicators
+
+`isLoading` behavior has changed for [disabled queries](https://tanstack.com/query/latest/docs/react/guides/migrating-to-react-query-4#disabled-queries) - it is better to use `isInitialLoading` for loading flags.
+
+:::danger
+Failure to update loading code may result in unpredictable results
+:::
+
 ## 3.0.0-beta.11
 
 The key changes in this release are:
