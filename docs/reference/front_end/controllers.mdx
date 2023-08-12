@@ -119,6 +119,7 @@ const {
 - `Component` the component to render for the create view (default: ModelFieldGroup)
 - `extraDefaultValues` values to augment the default values for the create view
 - `paths` the paths to render for the create view (default: all creatable paths except for the parent)
+- `queryOptions` options to pass to the query for the parent model object (passed to useModelShow)
 - All options for [useModelCreate](api_hooks#usemodelcreate)
 
 and in addition to the [useModelCreate](api_hooks#usemodelcreate) returns, useModelCreateController returns:
@@ -159,6 +160,7 @@ const {
 - `Component` the component to render for the create view (default: ModelFieldGroup)
 - `extraDefaultValues` values to augment the default values for the create view
 - `paths` the paths to render for the create view (default: all creatable paths except for the parent)
+- `queryOptions` options to pass to the query for the model object (passed to useModelShow)
 - All options for [useModelUpdate](api_hooks#usemodelupdate)
 
 and in addition to the [useModelUpdate](api_hooks#usemodelupdate) returns, useModelEditController returns:
