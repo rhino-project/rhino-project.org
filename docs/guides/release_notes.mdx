@@ -24,7 +24,7 @@ The imports for react query have [changed](https://tanstack.com/query/latest/doc
 Run the [codemod](https://tanstack.com/query/latest/docs/react/guides/migrating-to-react-query-4#codemod) to update your code:
 
 ```bash
-npx jscodeshift ./path/to/src/ \
+npx jscodeshift src/ \
   --extensions=js,jsx \
   --transform=./node_modules/@tanstack/react-query/codemods/v4/replace-import-specifier.js
 ```
