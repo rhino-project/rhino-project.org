@@ -8,7 +8,7 @@ Rhino uses server side cookies for auth, so you must have [domains that meet the
 
 ## Heroku
 
-For both client and server the default Heroku stack `heroku-20` is sufficient.
+For both client and server the default Heroku stack `heroku-22` is recommended.
 
 ### Server
 
@@ -37,7 +37,7 @@ The server requires the following environment variables to be set:
 
 ### Client
 
-The client needs the `mars/create-react-app` buildpack.
+The client needs the `heroku/nodejs` and `heroku-community/nginx` buildpacks
 
 The client requires the following environment variables to be set:
 
