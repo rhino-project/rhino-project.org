@@ -192,6 +192,9 @@ const sidebars = {
     {
       Extending: ["concepts/extending/modules", "concepts/extending/overrides"],
     },
+    {
+      Design: ["concepts/design/overview"],
+    },
   ],
 
   reference: [
