@@ -1,5 +1,38 @@
 # Release Notes
 
+## 3.0.0-beta.13
+
+The key changes in this release are:
+
+- heroku-22 stack support
+- Vite & Vitest for client
+- Rails 7.0.7.2
+
+### heroku-22
+
+The default Heroku stack `heroku-22` is now supported. This is the default stack for new Heroku apps. Server apps need no changes, simply update the stack:
+
+```bash
+heroku stack:set heroku-22 -a <APP-NAME>
+```
+
+and redeploy.
+
+Client apps need to update the buildpacks.
+
+```bash
+heroku buildpacks:clear -a <APP-NAME>
+heroku buildpacks:add heroku/nodejs -a <APP-NAME>
+heroku buildpacks:add heroku-community/nginx -a <APP-NAME>
+heroku stack:set heroku-22 -a <APP-NAME>
+```
+
+and redeploy.
+
+### Vite & Vitetest
+
+[Vite](https://vitejs.dev/) is a new build tool for javascript and typescript and is the default for Rhino 3.0.0-beta.13. It is also used for the new [Vitest](https://vitest.dev/) tool which is a replacement for jest. See the [testing guide](testing) for more details.
+
 ## 3.0.0-beta.12
 
 The key changes in this release are:
