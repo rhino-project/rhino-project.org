@@ -98,7 +98,7 @@ const AuthProvider = ({ children }) => {
 Some Rollbar features interfere with tests, making them fail, in particular the `useRollbarPerson` hook. It is necessary to mock it in each test that directly or indirectly uses it.
 
 ```javascript
-jest.mock("@rollbar/react", () => ({
+vi.mock("@rollbar/react", () => ({
   useRollbarPerson: (person) => null,
 }));
 ```

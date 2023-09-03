@@ -37,7 +37,12 @@ The server requires the following environment variables to be set:
 
 ### Client
 
-The client needs the `mars/create-react-app` buildpack.
+The client needs the `heroku/nodejs` and `heroku-community/nginx` buildpacks.
+
+```bash
+heroku buildpacks:add heroku/nodejs -a <APP-NAME>
+heroku buildpacks:add heroku-community/nginx -a <APP-NAME>
+```
 
 The client requires the following environment variables to be set:
 
