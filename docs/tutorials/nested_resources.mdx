@@ -61,6 +61,8 @@ class OgMetaTag < ApplicationRecord
   # Rhino specific code
   # highlight-next-line
   rhino_owner :blog_post
+  # highlight-next-line
+  rhino_references %i[blog_post]
 
   # highlight-next-line
   validates :tag_name, presence: true
@@ -78,7 +80,7 @@ end
 ```
 
 :::tip
-By default Rhino will use the `name` or `title` attribute of the model, but this can be overridden by defining a `display_name` method.  
+By default Rhino will use the `name` or `title` attribute of the model, but this can be overridden by defining a `display_name` method.
 :::
 
 ### BlogPost
