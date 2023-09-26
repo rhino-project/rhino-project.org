@@ -22,16 +22,16 @@ Or for the client:
 git remote add boilerplate git@github.com:nubinary/boilerplate_client.git
 ```
 
-#### Fetch the `v3.0.0-beta.12` tag from Rhino and name it `boilerplate-v3.0.0-beta.12` locally:
+#### Fetch the `v3.0.0-beta.14` tag from Rhino and name it `boilerplate-v3.0.0-beta.14` locally:
 
 ```
-git fetch boilerplate v3.0.0-beta.12:boilerplate-v3.0.0-beta.12
+git fetch boilerplate v3.0.0-beta.14:boilerplate-v3.0.0-beta.14
 ```
 
 #### Get the latest updates from Rhino's repository
 
 ```
-git checkout boilerplate-v3.0.0-beta.12
+git checkout boilerplate-v3.0.0-beta.14
 ```
 
 #### Create a ticket (in Jira, Trello, etc.) just for the update, e.g. `[NUB-777] Update from boilerplate`
@@ -43,10 +43,10 @@ git checkout main
 git checkout -b task/NUB-777
 ```
 
-#### Merge the updated `boilerplate-v3.0.0-beta.12` into the newly created branch:
+#### Merge the updated `boilerplate-v3.0.0-beta.14` into the newly created branch:
 
 ```
-git merge boilerplate-v3.0.0-beta.12
+git merge boilerplate-v3.0.0-beta.14
 ```
 
 Review the [release notes](release_notes) and to test the application to make sure nothing was broken.
@@ -67,7 +67,7 @@ Merge: fa486dd6 62bab999
 Author: Person NuBinary <person@nubinary.com>
 Date:   Mon Jan 10 20:29:39 2022 -0300
 
-    Merge branch 'boilerplate-v3.0.0-beta.12' into task/NUB-777
+    Merge branch 'boilerplate-v3.0.0-beta.14' into task/NUB-777
 ```
 
 If it's necessary to make changes after the merge, it's recommended to use as git message the name of the task. That way, `git log` would end up with this fix commit as the last one and with the merge commit right after it like so:
@@ -84,7 +84,7 @@ Merge: fa486dd6 62bab999
 Author: Person NuBinary <person@nubinary.com>
 Date:   Mon Jan 10 20:29:39 2022 -0300
 
-    Merge branch 'boilerplate-v3.0.0-beta.12' into task/NUB-777
+    Merge branch 'boilerplate-v3.0.0-beta.14' into task/NUB-777
 ```
 
 If that is the state of `git log`, then there isn't anything else to be done and it is recommended to open the PR just like this. However, in case there are more commits and you want to rebase and squash them, you might find the state of `git log` like this:
@@ -113,7 +113,7 @@ Merge: fa486dd6 62bab999
 Author: Person NuBinary <person@nubinary.com>
 Date:   Mon Jan 10 20:29:39 2022 -0300
 
-    Merge branch 'boilerplate-v3.0.0-beta.12' into task/NUB-777
+    Merge branch 'boilerplate-v3.0.0-beta.14' into task/NUB-777
 ```
 
 Then, you're probably going to need to squash the last 3 commits (i.e. `6feb48197a71742803a04af5dac2a2338012356b`, `abc8a2ba2112f5e03f3ece20c9e35c76c2717196` and `36676eab4e68e8d3959aee4a8a66a5265882f09f`) into one single commit with the message being `[NUB-777] Update from boilerplate`. **It's really important that you keep the merge commit intact**, so you will have to rebase from `1b4134524d465b02a795d57c3c06de29960352a7` (merge commit) and up:
@@ -138,7 +138,7 @@ Merge: fa486dd6 62bab999
 Author: Person NuBinary <person@nubinary.com>
 Date:   Mon Jan 10 20:29:39 2022 -0300
 
-    Merge branch 'boilerplate-v3.0.0-beta.12' into task/NUB-777
+    Merge branch 'boilerplate-v3.0.0-beta.14' into task/NUB-777
 ```
 
 It is expected that the commit hash from `[NUB-777] Update from boilerplate` just changes, as that's exactly what `git rebase` does - re-writes the history.
