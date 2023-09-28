@@ -1,0 +1,31 @@
+# Core Maintenance
+
+## Security
+
+The core rhino repos (`nubinary/boilerplate_client` and `nubinary/boilerplate_server`) are configured to use Dependabot for security to automatically flag issues. Dependabot will open a PR when a dependency has a new version available.
+
+### Frontend
+
+If the package is not a top level package in `package.json`, then find top level package and update that version. Use `npm ls` to find the top level package.
+
+```bash
+npm ls <lower-level-package>
+```
+
+### Backend
+
+If the gem is not a top level gem in `Gemfile`, then find top level gem and update the version there. Use `bundle list` to find the top level gem.
+
+```bash
+gem dependency <lower-level-gem> --reverse-dependencies
+```
+
+If the gem is typically installed by Rails (for instance `puma`) test to see if the "soft" dependency specified in `Gemfile.lock` is compatible with the new version. If it is, then update the version in `Gemfile` and run `bundle install`.
+
+You can check this by running:
+
+```bash
+rails new testapp-<latest-version>
+```
+
+and checking the `Gemfile.lock` in the new app.
