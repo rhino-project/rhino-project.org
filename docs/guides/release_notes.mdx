@@ -1,5 +1,25 @@
 # Release Notes
 
+## 3.0.0-beta.15
+
+The key changes in this release are:
+
+- React 18 with @testing-library/react update
+- Remove unused 2.x code
+- Handle multiple or no slashes in REACT_APP_API_ROOT_PATH
+
+### React 18
+
+May require additional installed project libraries to be upgraded. `@testing-library/react` was upgraded and renderHook was moved to the core library instead of a separate package.
+
+### Unused 2.x code
+
+ModelFormField and ModelTable were the primary components that were removed. These were replaced by the react-hook-form based ModelField a ModelIndexTable respectively.
+
+### Handle multiple or no slashes in REACT_APP_API_ROOT_PATH
+
+Make sure you have REACT_APP_API_ROOT_PATH defined locally in .env and in production
+
 ## 3.0.0-beta.14
 
 The key changes in this release are:
