@@ -175,6 +175,32 @@ Use phonelib for backend validation. It is built based on [Google's libphonenumb
     end
 ```
 
+## Changing Validation Messages
+
+Sometimes you want to rewrite the default validation message for an attribute.
+
+E.g. Let's say you have the following `Customer` model:
+
+```ruby
+class Customer < ApplicationRecord
+  validates :email, presence: true, email: true, uniqueness: true
+end
+```
+
+The customer table has `name` and you want to add the `name` to the error message in case the email has already been taken.
+Here is how you can achieve that:
+
+```ruby
+class Customer < ApplicationRecord
+  validates :email, presence: true, email: true, uniqueness: { message: lambda do |object, data|
+                                                                            customer = Customer.find_by(email: data[:value])
+                                                                            "has already been taken by customer: #{customer.name}"
+                                                                          end }
+end
+```
+
+Reference: https://guides.rubyonrails.org/active_record_validations.html#message
+
 ## Synthetic Attributes
 
 At times you may need to "synthesize" an attribute that is not stored in the database. This is useful for attributes that are derived from other attributes or attributes that are not stored in the database but are needed for display or other purposes.
