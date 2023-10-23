@@ -4,21 +4,27 @@ This guide is an introduction to Rhino Jobs
 
 ## Jobs
 
-ActiveJob on top of resque is the basis for async and scheduled jobs in Rhino Jobs.
+ActiveJob backed by [Resque](https://github.com/resque/resque) is the basis for async and scheduled jobs in Rhino Jobs.
 
 More details at https://guides.rubyonrails.org/active_job_basics.html.
 
 ### Installation
 
-`rails rhino_jobs:install`
+```bash
+rails rhino_jobs:install
+```
 
 ### Creating a job
 
-`rails g job Test`
+```bash
+rails g job Test
+```
 
 ### Running a job
 
+```ruby
 TestJob.perform_later
+```
 
 ### Scheduling a job
 
@@ -26,8 +32,18 @@ Edit resque_schedule.yml. See https://github.com/JustinAiken/active_scheduler fo
 
 ### Processing the queue
 
-The queued jobs `COUNT=1 QUEUE=* bundle exec rails resque:workers`.
+A worker for the queued jobs can be executed with:
 
-The scheduled jobs `bundle exec rails resque:scheduler`
+```bash
+COUNT=1 QUEUE=* bundle exec rails resque:workers
+```
 
-On Heroku, Procfile is already updated for this.
+A worker to queue scheduled jobs can be executed with:
+
+```bash
+bundle exec rails resque:scheduler
+```
+
+#### Heroku
+
+On Heroku, Procfile is already updated to launch both a worker and a scheduler.
