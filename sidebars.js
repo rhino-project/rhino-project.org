@@ -131,6 +131,7 @@ const sidebars = {
     "guides/audit_trail",
     "guides/super_admin",
     "guides/jobs",
+    "guides/websockets",
     "guides/notifications",
     "guides/subscription",
     "guides/geocoding",
