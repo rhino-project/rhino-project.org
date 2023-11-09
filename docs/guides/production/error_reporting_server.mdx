@@ -1,13 +1,13 @@
 # For Server (Rails)
 
-Backend applications generally are easy to set up error reporting tools, as they generally don't count with code minification, obfuscation, etc.
+Backend applications generally are easy to set up error reporting tools, as they generally have to deal with minification, obfuscation, etc.
 
 ## Making it work
 
-After adding the gem, Rollbar provides an install command that places an initializer file for configuration that does the basic things necessary to make it work. Adding the following snippet will make sure it doesn't run on development or test environments:
+The **only** environment variable **necessary to make Rollbar work** is `ROLLBAR_ACCESS_TOKEN`, that can be found in the `env.sample` file. By default, Rollbar will not work if there's no access token set, but neither will it break the application.
 
-```ruby
-if Rails.env.test? || Rails.env.development?
-  config.enabled = false
-end
+The following snippet is present in `config/initializers/rollbar.rb` will make sure it doesn't run on development or test environments:
+
+```ruby title="config/initializers/rollbar.rb"
+  config.enabled = false if Rails.env.test? || Rails.env.development? || config.access_token.blank?
 ```
