@@ -63,13 +63,13 @@ graph TB
     FilterYear-->FieldYear
 ```
 
-## ModelFilters
+## Filtering
 
-### Changing filters and order displayed
+### Changing filters and displayed order
 
 List the specific filters in the desired order:
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelFilters: { props: { paths: ['created_at', 'published_at', 'category'] } }
 ```
 
@@ -77,7 +77,7 @@ ModelFilters: { props: { paths: ['created_at', 'published_at', 'category'] } }
 
 Filter labels default to ModelFilterLabel. To change the label of a particular column, you can override for the particular attribute.
 
-```jsx title="src/rhino.config.js"
+```jsx title="src/rhino.config.js" global model
 const rhinoConfig = {
   version: 1,
   components: {
@@ -94,8 +94,24 @@ const rhinoConfig = {
 
 An filter operator can be added to a filter by adding the operator to the filter path:
 
-```rhinoconfig title="src/rhino.config.js"
+```rhinoconfig title="src/rhino.config.js" global model
 ModelFilters: { props: { paths: ['created_at::gteq']}}
 ```
 
 See [operators](../../concepts/rest_api/filtering.mdx) for a complete list of operators.
+
+## Sorting
+
+### Changing the default sort order
+
+```rhinoconfig title="src/rhino.config.js" global model
+ModelIndex: { props: { order: 'created_at' }}
+```
+
+## Pagination
+
+### Changing the default page size
+
+```rhinoconfig title="src/rhino.config.js" global model
+ModelIndex: { props: { limit: 20 }}
+```
