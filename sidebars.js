@@ -81,6 +81,7 @@ const sidebars = {
         keywords: ["guides", "importing"],
       },
       items: [
+        "guides/ui/general",
         {
           type: "category",
           label: "Index page",
