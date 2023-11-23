@@ -1,0 +1,37 @@
+# Searching
+
+The REST API's support full text search through the [pg_search](https://github.com/Casecommons/pg_search) gem. The search is performed on specified columns of the model and is case insensitive.
+
+:::info
+No columns are searched by default. You must specify the columns you want to search on.
+:::
+
+## General usage
+
+For example, if it is needed to query users by their name (first or last) the request and its query parameters could be:
+
+```
+/users?search=john
+```
+
+All searchable fields will be searched for the term `john` and the results will be returned.
+
+## Searchable Fields
+
+The searchable fields are specified with `rhino_search` on the model. For example, if the `User` model has a `first_name` and `last_name` columns, the `rhino_search` call could be:
+
+```ruby title="app/models/user.rb"
+class User < ApplicationRecord
+  rhino_search %i[first_name last_name]
+end
+```
+
+### Associated Models
+
+Related models columns can also be used for searching. For instance, if an author has many blogs and blogs have many blog posts, it would be possible to search blog posts using the blog's author
+
+```ruby title="app/models/blog_post.rb"
+class BlogPost < ApplicationRecord
+  rhino_search %i[title body], { author: %i[name] }
+end
+```
