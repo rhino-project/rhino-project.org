@@ -1,90 +1,106 @@
-# Fields
+# Field Groups
 
-Fields render individual form inputs for a model on the edit and create pages. They are used in the `ModelEditForm` and `ModelCreateForm` components.
+Field groups render individual form inputs, labels and a feedback component for a model attribute on the edit and create pages. They are used in the `ModelEditForm` and `ModelCreateForm` components.
 
-The complete list of field components is below.
+The complete list of field group components is [below](#component-hierarchy).
 
-```mermaid
-graph TB
-    ModelField-->ModelArrayInteger
-    ModelArrayInteger-->Typeahead
-    ModelField-->ModelArrayString
-    ModelArrayString-->Typeahead
+## Layout
 
-    ModelField-->ModelFieldBoolean
-    ModelFieldBoolean-->FieldBoolean
+The default layout is vertical. The other layouts are horizontal and floating. Individual fields can be configured to use a different layout by explicitly using the `ModelFieldGroup` variant ie `<ModelFieldGroupHorizontal model="blog" path="title"`.
 
-    ModelField-->ModelFieldCountry
-    ModelFieldCountry
-
-    ModelField-->ModelFieldCurrency
-    ModelFieldCurrency-->CurrencyFormat
-
-    ModelField-->ModelFieldDate
-    ModelFieldDate-->FieldDate
-    ModelField-->ModelFieldDateTime
-    ModelFieldDateTime-->FieldDateTime
-
-    ModelField-->ModelFieldEnum
-    ModelFieldEnum-->FieldSelectControlled
-
-    ModelField-->ModelFieldFile
-
-    ModelField-->ModelFieldFloat
-    ModelFieldFloat-->FieldFloat
-    ModelField-->ModelFieldInteger
-    ModelFieldInteger-->FieldInteger
-    ModelField-->ModelFieldIntegerSelect
-
-    ModelField-->ModelFieldJoinSimple
-    ModelFieldJoinSimple-->Typeahead
-
-    ModelField-->ModelFieldNested
-    ModelFieldNested-->ModelField
-
-    ModelField-->ModelFieldPhone
-    ModelFieldPhone-->FieldPhone
-
-    ModelField-->ModelFieldReference
-    ModelFieldReference-->Typeahead
-
-    ModelField-->ModelFieldString
-    ModelFieldString-->FieldInput
-    ModelField-->ModelFieldText
-    ModelFieldText-->FieldText
-
-    ModelField-->ModelFieldTime
-    ModelFieldTime-->FieldTime
-    ModelField-->ModelFieldYear
-    ModelFieldYear-->FieldYear
-```
-
-## General field behaviour
-
-#
-
-### Change field label
-
-```rhinoconfig title="src/rhino.config.js"
-ModelFieldLabel: { props: { label: 'Awesome Title!' } }
-```
-
-### Make field read-only
-
-```rhinoconfig title="src/rhino.config.js"
-ModelFieldString: { props: { readOnly: true } }
-```
-
-### Horizontal layout
+### Global horizontal layout
 
 ```rhinoconfig title="src/rhino.config.js"
 ModelFieldGroup: ModelFieldGroupHorizontal
 ```
 
-## ModelFieldString
+### Global floating layout
+
+```rhinoconfig title="src/rhino.config.js"
+ModelFieldGroup: ModelFieldGroupFloating
+```
+
+## Field behaviour
+
+### Change label
+
+```rhinoconfig title="src/rhino.config.js"
+ModelFieldGroup: { props: { label: 'Awesome Title!' } }
+```
+
+### Set read-only
+
+```rhinoconfig title="src/rhino.config.js"
+ModelFieldGroup: { props: { readOnly: true } }
+```
 
 ### Change placeholder
 
 ```rhinoconfig title="src/rhino.config.js"
-ModelFieldString: { props: { placeholder: 'Please enter title...' } }
+ModelFieldGroup: { props: { placeholder: 'Please enter title...' } }
+```
+
+## Component Hierarchy
+
+```mermaid
+graph LR
+    ModelFieldGroup-->ModelFieldGroupArrayInteger
+    ModelFieldGroupArrayInteger-->ModelFieldArrayIntegerBaseInput
+
+    ModelFieldGroup-->ModelFieldGroupArrayString
+    ModelFieldGroupArrayString-->ModelFieldArrayStringBaseInput
+
+    ModelFieldGroup-->ModelFieldGroupBoolean
+    ModelFieldGroupBoolean-->FieldGroupBoolean
+
+    ModelFieldGroup-->ModelFieldGroupCountry
+    ModelFieldGroupCountry-->FieldGroupCountry
+
+    ModelFieldGroup-->ModelFieldGroupCurrency
+    ModelFieldGroupCurrency-->FieldGroupCurrency
+
+    ModelFieldGroup-->ModelFieldGroupDate
+    ModelFieldGroupDate-->FieldGroupDate
+
+    ModelFieldGroup-->ModelFieldGroupDateTime
+    ModelFieldGroupDateTime-->FieldGroupDateTime
+
+    ModelFieldGroup-->ModelFieldGroupEnum
+
+    ModelFieldGroup-->ModelFieldGroupFile
+    ModelFieldGroupFile-->FieldGroupFile
+
+    ModelFieldGroup-->ModelFieldGroupFloat
+    ModelFieldGroupFloat-->FieldGroupFloat
+
+    ModelFieldGroup-->ModelFieldGroupInteger
+    ModelFieldGroupInteger-->FieldGroupInteger
+
+    ModelFieldGroup-->ModelFieldGroupIntegerSelect
+
+    ModelFieldGroup-->ModelFieldGroupJoinSimple
+    ModelFieldGroupJoinSimple-->ModelFieldJoinSimpleBaseInput
+
+    ModelFieldGroup-->ModelFieldGroupOwnerReference
+    ModelFieldGroupOwnerReference-->ModelFieldGroupReference
+
+    ModelFieldGroup-->ModelFieldGroupPhone
+    ModelFieldGroupPhone-->FieldGroupPhone
+
+    ModelFieldGroup-->ModelFieldGroupReference
+    ModelFieldGroupReference-->ModelFieldReferenceBaseInput
+
+    ModelFieldGroup-->ModelFieldGroupString
+    ModelFieldGroupString-->FieldGroupString
+
+    ModelFieldGroup-->ModelFieldGroupText
+    ModelFieldGroupText-->FieldGroupText
+
+    ModelFieldGroup-->ModelFieldGroupTime
+    ModelFieldGroupTime-->FieldGroupTime
+
+    ModelFieldGroup-->ModelFieldGroupYear
+    ModelFieldGroupYear-->FieldGroupYear
+
+    ModelFieldGroup-->ModelFieldGroupNested
 ```
