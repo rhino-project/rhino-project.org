@@ -1,69 +1,88 @@
 # Displays
 
-Displays render individual fields in a model on a show page. They are used in the `ModelShowDescription` Dicomponents.
+Display groups render individual form inputs and labels for a model attribute on the show page. They are used in the `ModelShowDescription` component.
+
+The complete list of display group components is [below](#component-hierarchy).
+
+## Layout
+
+The default layout is vertical. The other layouts are horizontal and floating. Individual fields can be configured to use a different layout by explicitly using the `ModelDisplayGroup` variant ie `<ModelDisplayGroupHorizontal model="blog" path="title"`.
+
+### Global horizontal layout
+
+```rhinoconfig title="src/rhino.config.js"
+ModelDisplayGroup: ModelDisplayGroupHorizontal
+```
+
+### Global floating layout
+
+```rhinoconfig title="src/rhino.config.js"
+ModelDisplayGroup: ModelDisplayGroupFloating
+```
+
+## Display behaviour
+
+### Change label
+
+```rhinoconfig title="src/rhino.config.js"
+ModelDisplayGroup: { props: { label: 'Awesome Title!' } }
+```
+
+### Change enpty placeholder
+
+```rhinoconfig title="src/rhino.config.js"
+ModelDisplayGroup: { props: { empty: '/' } }
+```
+
+## Component Hierarchy
 
 ```mermaid
-graph TB
-    ModelShowDescription-->ModelDisplayGroup
+graph LR
+    ModelDisplayGroup-->ModelDisplayGroupArray
+    ModelDisplayGroupArray-->DisplayGroupArray
 
-    ModelDisplayGroup-->DisplayGroup
-    DisplayGroup-->DisplayLayout
+    ModelDisplayGroup-->ModelDisplayGroupArrayReference
+    ModelDisplayGroupArrayReference-->DisplayGroupArrayReference
 
-    DisplayLayout-->DisplayLayoutVertical
-    DisplayLayoutVertical-->Display
-    Display-->ModelDisplay
-    DisplayLayoutVertical-->DisplayLabel
+    ModelDisplayGroup-->ModelDisplayGroupAttachment
+    ModelDisplayGroupAttachment-->DisplayGroupAttachment
 
-    ModelDisplay-->ModelDisplayArray
-    ModelDisplayArray-->DisplayArray
-    DisplayArray-->FieldInputControlled
-    ModelDisplay-->ModelDisplayArrayReference
-    ModelDisplayArrayReference-->DisplayArray
+    ModelDisplayGroup-->ModelDisplayGroupAttachmentImage
+    ModelDisplayGroupAttachmentImage-->DisplayGroupAttachmentImage
 
-    ModelDisplay-->ModelDisplayAttachment
-    ModelDisplayAttachment-->DisplayLink
+    ModelDisplayGroup-->ModelDisplayGroupAttachments
+    ModelDisplayGroupAttachments-->DisplayGroupAttachments
 
-    ModelDisplay-->ModelDisplayAttachmentImage
-    ModelDisplayAttachmentImage-->DisplayImage
+    ModelDisplayGroup-->ModelDisplayGroupBoolean
+    ModelDisplayGroupBoolean-->DisplayGroupBoolean
 
-    ModelDisplay-->ModelDisplayAttachments
-    ModelDisplayAttachments-->DisplayString
+    ModelDisplayGroup-->ModelDisplayGroupCurrency
+    ModelDisplayGroupCurrency-->DisplayGroupCurrency
 
-    ModelDisplay-->ModelDisplayBoolean
-    ModelDisplayBoolean-->DisplayBoolean
-    DisplayBoolean-->FieldBooleanIndeterminate
+    ModelDisplayGroup-->ModelDisplayGroupDate
+    ModelDisplayGroupDate-->DisplayGroupDate
 
-    ModelDisplay-->ModelDisplayDate
-    ModelDisplayDate-->DisplayDate
-    DisplayDate-->FieldInputControlled
+    ModelDisplayGroup-->ModelDisplayGroupDateTime
+    ModelDisplayGroupDateTime-->DisplayGroupDateTime
 
-    ModelDisplay-->ModelDisplayDateTime
-    ModelDisplayDateTime-->DisplayDateTime
-    DisplayDateTime-->FieldInputControlled
+    ModelDisplayGroup-->ModelDisplayGroupEnum
+    ModelDisplayGroupEnum-->DisplayGroupEnum
 
-    ModelDisplay-->ModelDisplayEnum
-    ModelDisplayEnum-->DisplayString
+    ModelDisplayGroup-->ModelDisplayGroupFloat
+    ModelDisplayGroupFloat-->DisplayGroupFloat
 
-    ModelDisplay-->ModelDisplayFloat
-    ModelDisplayFloat-->DisplayFloat
-    DisplayFloat-->FieldInputControlled
+    ModelDisplayGroup-->ModelDisplayGroupInteger
+    ModelDisplayGroupInteger-->DisplayGroupInteger
 
-    ModelDisplay-->ModelDisplayInteger
-    ModelDisplayInteger-->DisplayInteger
-    DisplayInteger-->FieldInputControlled
+    ModelDisplayGroup-->ModelDisplayGroupReference
+    ModelDisplayGroupReference-->DisplayGroupReference
 
-    ModelDisplay-->ModelDisplayReference
-    ModelDisplayReference-->DisplayString
+    ModelDisplayGroup-->ModelDisplayGroupString
+    ModelDisplayGroupString-->DisplayGroupString
 
-    ModelDisplay-->ModelDisplayString
-    ModelDisplayString-->DisplayString
-    DisplayString-->FieldInputControlled
+    ModelDisplayGroup-->ModelDisplayGroupText
+    ModelDisplayGroupText-->DisplayGroupText
 
-    ModelDisplay-->ModelDisplayText
-    ModelDisplayText-->DisplayText
-    DisplayText-->FieldInputControlled
-
-    ModelDisplay-->ModelDisplayTime
-    ModelDisplayTime-->DisplayTime
-    DisplayTime-->FieldInputControlled
+    ModelDisplayGroup-->ModelDisplayGroupTime
+    ModelDisplayGroupTime-->DisplayGroupTime
 ```
