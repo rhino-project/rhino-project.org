@@ -130,6 +130,7 @@ const sidebars = {
       ],
     },
     "guides/audit_trail",
+    "guides/file_storage",
     "guides/geocoding",
     "guides/jobs",
     "guides/notifications",
