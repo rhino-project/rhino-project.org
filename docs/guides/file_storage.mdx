@@ -1,0 +1,41 @@
+# File Storage
+
+File storage capabilities are available in Rhino with the [ActiveStorage](https://guides.rubyonrails.org/active_storage_overview.html). Rhino provides an authenticated endpoint for redirect mode in ActiveStorage as well as direct upload integration on the frontend.
+
+In development ActiveStorage is used to . Set up a cloud provider storage service to use ActiveStorage in production and then use the standard `has_one_attached` and `has_many_attached` methods to attach files to your models and add the attachment as a permitted reference in your controller.
+
+```ruby
+class Blog < ApplicationRecord
+  belongs_to :user
+
+  # highlight-next-line
+  has_one_attached :banner
+
+  rhino_owner_base
+  # highlight-next-line
+  rhino_references [:banner_attachment]
+end
+
+```
+
+## S3
+
+To use S3 as your cloud provider, add the `aws-sdk-s3` gem to your Gemfile:
+
+```bash
+bundle add aws-sdk-s3
+```
+
+Then configure your storage service in with the environment variables `AWS_ACCESS_KEY`, `AWS_SECRET_KEY`, `AWS_REGION`, and `AWS_S3_BUCKET` which are used by default in `config/storage.yml`:
+
+```yaml title="config/storage.yml"
+service: S3
+access_key_id: <%= ENV['AWS_ACCESS_KEY'] %>
+secret_access_key: <%= ENV['AWS_SECRET_KEY'] %>
+region: <%= ENV['AWS_REGION'] %>
+bucket: <%= ENV['AWS_S3_BUCKET'] %>
+```
+
+:::warning
+You must set up CORS for the bucket you are using to allow uploads from your domain. See [this sample](https://guides.rubyonrails.org/active_storage_overview.html#example-s3-cors-configuration) for more information.
+:::
