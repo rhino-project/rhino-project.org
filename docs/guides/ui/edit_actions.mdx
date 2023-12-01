@@ -14,7 +14,7 @@ graph TB
 
 The text of the save button can be changed by passing in a child component.
 
-```rhinoconfig title="src/rhino.config.js" global model
+```rhinoconfig title="src/rhino.config.js" levels=global,model
 ModelEditActions: <ModelEditActionsBase overrides={{ModelEditActionSave: <ModelEditActionSave>Keep Forever</ModelEditActionSave>}} />
 ```
 
@@ -22,7 +22,7 @@ ModelEditActions: <ModelEditActionsBase overrides={{ModelEditActionSave: <ModelE
 
 The icon of the save button can be changed by passing in an icon name.
 
-```rhinoconfig title="src/rhino.config.js" global model
+```rhinoconfig title="src/rhino.config.js" levels=global,model
 ModelEditActions: <ModelEditActionsBase overrides={{ModelEditActionSave: <ModelEditActionSave icon="life-preserver" />}} />
 ```
 
@@ -30,7 +30,7 @@ ModelEditActions: <ModelEditActionsBase overrides={{ModelEditActionSave: <ModelE
 
 A cancel action which returns to the show page can be added:
 
-```rhinoconfig title="src/rhino.config.js" global model
+```rhinoconfig title="src/rhino.config.js" levels=global,model
 ModelEditActions: { props: { hasCancel: true } }
 ```
 
@@ -38,7 +38,7 @@ ModelEditActions: { props: { hasCancel: true } }
 
 The text of the cancel button can be changed by passing in a child component.
 
-```rhinoconfig title="src/rhino.config.js" global model
+```rhinoconfig title="src/rhino.config.js" levels=global,model
 ModelEditActions: <ModelEditActionsBase overrides={{ModelEditActionCancel: <ModelEditActionCancel>No Way</ModelEditActionCancel>}} hasCancel />
 ```
 
@@ -46,7 +46,7 @@ ModelEditActions: <ModelEditActionsBase overrides={{ModelEditActionCancel: <Mode
 
 The icon of the cancel button can be changed by passing in an icon name.
 
-```rhinoconfig title="src/rhino.config.js" global model
+```rhinoconfig title="src/rhino.config.js" levels=global,model
 ModelEditActions: <ModelEditActionsBase overrides={{ModelEditActionCancel: <ModelEditActionCancel icon="x-octagon" />}} hasCancel />
 ```
 
@@ -54,7 +54,7 @@ ModelEditActions: <ModelEditActionsBase overrides={{ModelEditActionCancel: <Mode
 
 You can replace the default actions with custom actions.
 
-```rhinoconfig title="src/rhino.config.js" global model
+```rhinoconfig title="src/rhino.config.js" levels=global,model
 ModelEditActions: { props: { actions: [<MyCustomAction />]} }
 ```
 
@@ -62,7 +62,7 @@ ModelEditActions: { props: { actions: [<MyCustomAction />]} }
 
 You can prepend one or more actions to the defaults.
 
-```rhinoconfig title="src/rhino.config.js" global model
+```rhinoconfig title="src/rhino.config.js" levels=global,model
 ModelEditActions: { props: { prepend: true, actions: [<MyCustomAction />]} }
 ```
 
@@ -70,6 +70,6 @@ ModelEditActions: { props: { prepend: true, actions: [<MyCustomAction />]} }
 
 You can append one or more actions to the defaults.
 
-```rhinoconfig title="src/rhino.config.js" global model
+```rhinoconfig title="src/rhino.config.js" levels=global,model
 ModelEditActions: { props: { append: true, actions: [<MyCustomAction />]} }
 ```
