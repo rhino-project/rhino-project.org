@@ -28,6 +28,10 @@ ModelFieldGroup: ModelFieldGroupFloating
 ModelFieldGroup: { props: { label: 'Awesome Title!' } }
 ```
 
+:::tip
+A better approach may be to set the label on the server side using [`rhino_properties_readable_name`](../properties#setting-display-name).
+:::
+
 ### Set read-only
 
 ```rhinoconfig title="src/rhino.config.js"
@@ -38,6 +42,24 @@ ModelFieldGroup: { props: { readOnly: true } }
 
 ```rhinoconfig title="src/rhino.config.js"
 ModelFieldGroup: { props: { placeholder: 'Please enter title...' } }
+```
+
+## ModelFieldGroupReference
+
+### Additional filtering
+
+```rhinoconfig title="src/rhino.config.js"
+ModelFieldGroupReference: { props: { filter: { published: true } } }
+```
+
+## ModelFieldGroupOwnerReference
+
+### Additional filtering
+
+By default, the owner reference field group will only show items owned by the current [base owner](../../concepts/resources#base-owner).
+
+```rhinoconfig title="src/rhino.config.js" attribute=category
+ModelFieldGroupReference: { props: { filter: { archived: false } } }
 ```
 
 ## Component Hierarchy

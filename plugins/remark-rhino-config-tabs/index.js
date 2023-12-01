@@ -2,19 +2,19 @@ const visit = require("unist-util-visit");
 
 const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
-function createRhinoConfigTabs(node, levels) {
+function createRhinoConfigTabs(node, levels, model, attribute) {
   const code = {
     global: `const rhinoConfig = {\n  version: 1,\n  components: {\n    ${node.value}\n  }\n}`,
   };
 
   code["model"] = code["global"].replace(
     `${node.value}`,
-    `blog: {\n      ${node.value}\n    }`
+    `${model}: {\n      ${node.value}\n    }`
   );
 
   code["attribute"] = code["model"].replace(
     `${node.value}`,
-    `title: {\n        ${node.value}\n      }`
+    `${attribute}: {\n        ${node.value}\n      }`
   );
 
   const tabs = levels.map((level, idx) => ({
@@ -80,18 +80,27 @@ module.exports = function remarkRhinoConfigTabs() {
       }
       transformed = true;
 
-      let levels = [];
-      LEVELS.forEach((l) => {
-        if (node.meta.includes(l)) {
-          levels.push(l);
-        }
-      });
-
-      if (levels.length === 0) {
-        levels = LEVELS;
+      let levels = LEVELS;
+      const levelMatch = node.meta.match(/levels=([\w,]+)/);
+      if (levelMatch) {
+        levels = levelMatch[1].split(",");
       }
 
-      const newNodes = createRhinoConfigTabs(node, levels);
+      let model = "blog";
+      const modelMatch = node.meta.match(/model=(\w+)/);
+      if (modelMatch) {
+        model = modelMatch[1];
+      }
+
+      // If node.meta includes "attribute=" then we want to use that as the attribute
+      // name instead of the default "title".
+      let attribute = "title";
+      const attributeMatch = node.meta.match(/attribute=(\w+)/);
+      if (attributeMatch) {
+        attribute = attributeMatch[1];
+      }
+
+      const newNodes = createRhinoConfigTabs(node, levels, model, attribute);
       parent.children.splice(index, 1, ...newNodes);
     });
 
