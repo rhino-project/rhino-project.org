@@ -1,5 +1,76 @@
 # Release Notes
 
+## 3.0.0-beta.21
+
+The key changes in this release are:
+
+- Mono repo
+
+:::tip
+It is recommended to update to v3.0.0-beta.20 before updating to v3.0.0-beta.21
+:::
+
+### Mono repo
+
+The client and server are now in a single repo. This will make it easier to maintain and update. In order to update to this version you will need to do the following:
+
+#### Install git-filter-repo
+
+```bash
+brew install git-filter-repo
+```
+
+#### Checkout the update scripts
+
+```bash
+git clone git@github.com:nubinary/mono-repo-scripts.git
+```
+
+#### Run the update scripts
+
+Passing the base name of the repo and the github organization as arguments to the script. For example:
+
+```bash
+mono-repo-scripts/combined-mono.sh blog_ myorg
+```
+
+If you have existing repos 'myorg/blog_client' and 'myorg/blog_server'. This will create `mono-construction/blog_mono` which is the new mono repo
+
+#### Create a new repo in github
+
+Create a new repo in github for the mono repo. For example `myorg/blog_mono`
+
+#### Add the new repo as a remote
+
+```bash
+ git remote add origin git@github.com:myorg/blog_mono.git
+```
+
+#### Push the new repo
+
+```bash
+git push -u origin main
+```
+
+#### Setup dev environment
+
+1. Copy existing env files
+2. Run `rails rhino:dev:setup`
+
+#### Deploy
+
+1. Connect the new repo to heroku (client and server)
+2. Add the additional buildpacks and set the APP_BASE config var
+
+```bash
+heroku buildpacks:add -i 1 -a <SERVER-APP-NAME> https://github.com/lstoll/heroku-buildpack-monorepo
+heroku config:set -a <SERVER-APP-NAME> APP_BASE=server
+heroku buildpacks:add -i 1 -a <CLIENT-APP-NAME> https://github.com/lstoll/heroku-buildpack-monorepo
+heroku config:set -a <CLIENT-APP-NAME> APP_BASE=client
+```
+
+4. Deploy
+
 ## 3.0.0-beta.20
 
 The key changes in this release are:
