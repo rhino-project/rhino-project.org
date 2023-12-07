@@ -1,4 +1,4 @@
-# Properties
+# Resources & Properties
 
 ## Restricting properties
 
@@ -53,7 +53,18 @@ A specific format can be set for a property. For example, a phone number can be 
 rhino_properties_formats phone: :phone, blog_categories: :join_table_simple
 ```
 
-### Setting display name
+### Setting resource display name
+
+Rhino uses ActiveModel::Naming to determine the display name for a model. This can be overridden by setting the translation for the model name in the locale file. See [ActiveModel::Naming](https://api.rubyonrails.org/classes/ActiveModel/Naming.html) for and [I18n](https://guides.rubyonrails.org/i18n.html#translations-for-active-record-models) for more information.
+
+```yaml title=config/locales/en.yml
+en:
+  activerecord:
+    models:
+      store_account: Account
+```
+
+### Setting property display name
 
 The readable name is used to label the property in forms, display, filters and more in the front end. By default it is based on the name of the property in the backend. The readable name for one or more properties can be overridden:
 
