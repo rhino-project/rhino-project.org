@@ -108,6 +108,12 @@ See [operators](../../concepts/rest_api/filtering.mdx) for a complete list of op
 ModelIndex: { props: { order: 'created_at' }}
 ```
 
+### Changing the sortable columns
+
+```rhinoconfig title="src/rhino.config.js" model=blog_post levels=global,model
+ModelIndexTable: { props: { sortPaths: ['blog.title'] }}
+```
+
 ## Pagination
 
 ### Changing the default page size
