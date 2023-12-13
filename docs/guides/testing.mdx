@@ -72,19 +72,27 @@ Read more on [webmock docs](https://github.com/bblimke/webmock).
 
 ## Frontend
 
-Rhino uses Vitest for unit and component testing on the frontend. The tests are located in the `src/__tests__` directory.
+### Unit and Component Testing
 
-### Running tests
+Rhino uses [Vitest](https://vitest.dev/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) for unit and component testing on the frontend. Background on this philosophy is here:
+
+- https://kentcdodds.com/blog/making-your-ui-tests-resilient-to-change
+- https://kentcdodds.com/blog/testing-implementation-details
+- https://medium.com/flatiron-labs/testing-async-react-hooks-6a4d0ce2654c
+
+The tests are located in the `client/src/__tests__` directory.
+
+#### Running tests
 
 All tests can be run with the following command:
 
 ```bash
-npm run test
+npm test
 ```
 
-## E2E Testing
+### E2E Testing
 
-Rhino uses Cypress for E2E testing. The tests are located in the `cypress/integration` directory. Cypress can be loaded with the following command:
+Rhino uses Cypress for E2E testing. The tests are located in the `client/cypress/integration` directory. Cypress can be loaded with the following command:
 
 ```bash
 npm run cypress:open
@@ -96,6 +104,6 @@ or all tests can be executed on the command line with:
 npm run cypress:run
 ```
 
-### Recording CI Runs
+#### Recording CI Runs
 
 Cypress can be configured to record runs on Cypress Cloud. To do this, set the `CYPRESS_RECORD_KEY` and `CYPRESS_PROJECT_ID` environment variables in CircleCI -> Environment Variables -> Project Settings.
