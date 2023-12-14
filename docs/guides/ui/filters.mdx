@@ -65,6 +65,24 @@ graph TB
 
 ## Filtering
 
+### Changing default filters
+
+The default filters are what the UI will revert to when the user clears all filters. By default the data is filtered by base owner. You can change the default filters by overriding the `ModelIndex` component (which passes the filter to the [useModelIndexController](../../reference/front_end/controllers#usemodelindexcontroller))
+
+```rhinoconfig title="src/rhino.config.js" levels=global,model
+ModelIndex: { props: { filter: { published: true } } }
+```
+
+:::tip
+
+It is likely you still want to use the base owner filter. You can do this by using the useBaseOwnerFilters hook.
+
+```jsx
+const filter = useBaseOwnerFilters('blog', { extraFilters = { published: true } });
+```
+
+:::
+
 ### Changing filters and displayed order
 
 List the specific filters in the desired order:
