@@ -1,0 +1,20 @@
+# APM
+
+APM is useful for finding performance issues.
+
+## ScoutAPM
+
+There are many available services that provide APM reporting. ScoutAPM is the chosen one by default. ScoutAPM integrates well with both Ruby on Rails and React applications.
+
+## Hosting
+
+ScoutAPM has a plugin for Heroku, so it's possible to set it up for free with just one click from the app's resources widget in Heroku's panel. It is also possible to set up an account directly in ScoutAPM and don't depend on Heroku at all.
+
+## Server Configuration
+
+```bash
+cd server
+bundle add scout_apm
+```
+
+Set the `SCOUT_KEY` environment variable if you did not install via the Heroku plugin.

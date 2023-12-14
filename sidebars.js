@@ -66,6 +66,7 @@ const sidebars = {
             "guides/production/error_reporting_server",
           ],
         },
+        "guides/production/apm",
       ],
     },
     "guides/properties",
