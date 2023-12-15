@@ -48,7 +48,7 @@ The user, users role, role and organization models are provided by Rhino.
 
 ## Install the organizations module
 
-Rhino provides a module to add organization support to your application. Drop the current sample data and install the module with the following commands:
+Rhino provides a module to add organization support to your application. Drop the current sample data and install the module with the following commands from the `server` directory:
 
 ```bash
 rails db:reset
@@ -61,7 +61,7 @@ rails rhino_organizations:install
 
 ## Update the data model
 
-Add an organization reference to the blog model with the following commands
+Add an organization reference to the blog model with the following commands from the `server` directory:
 
 ```bash
 rails g migration add_organization_to_blog organization:references

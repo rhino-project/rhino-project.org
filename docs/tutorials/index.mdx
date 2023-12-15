@@ -4,7 +4,7 @@ This tutorial will walk you through creating a blog application.
 
 ## Prerequisites
 
-Ensure you have checked out and set up the [boilerplate_server](https://github.com/nubinary/boilerplate_server) and [boilerplate_client](https://github.com/nubinary/boilerplate_client) repos as per the server [README](https://github.com/nubinary/boilerplate_server/blob/master/README.md) and client [README](https://github.com/nubinary/boilerplate_client/blob/master/README.md)
+Ensure you have checked out the [boilerplate_mono](https://github.com/nubinary/boilerplate_mono) repo and set up the server [README](https://github.com/nubinary/boilerplate_mono/blob/main/server/README.md) and client [README](https://github.com/nubinary/boilerplate_mono/blob/main/client/README.md)
 
 ## Data model
 
@@ -37,7 +37,7 @@ The user model is provided by Rhino.
 
 ## Create the models and database schema
 
-Generate the models and database schema for the application using the following commands
+Generate the models and database schema for the application using the following commands from the `server` directory.
 
 ```bash
 rails g model category name:string
@@ -162,9 +162,13 @@ rails db:seed
 
 Run the server and client
 
+From the `server` directory
+
 ```bash
 rails s
 ```
+
+From the `client` directory
 
 ```bash
 npm start
