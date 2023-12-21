@@ -1,5 +1,29 @@
 # Release Notes
 
+## 3.0.0-beta.23
+
+- Node 20.10.0, npm 10.2.3 and Vite 5.0.8
+- React Hook Form 7.49.2
+- [Per environment seeds](../guides/importing/seeding)
+- [Index controller improvements](../reference/front_end/controllers#usemodelindexcontroller)
+  - Default base owner filter
+  - Separation between dynamic and default filters
+  - Reseting of default filters
+  - Pre-computed filter counts
+- Global form disablement
+
+### Index controller improvements
+
+Previously `<ModelIndex />` was passed `filter`, `limit`, `offset`, `order`, `search` as props. These were used by the model index controller to compute the default state. This was not ideal as it was not clear which filters were dynamic and which were default. It also made it difficult to reset the default filters. These props were renamed to `defaultFilter`, `defaultLimit`, `defaultOffset`, `defaultOrder`, `defaultSearch` and the model index controller now computes the default state from these props.
+
+`setFilter` now only sets the dynamic filters (on top of the defaultFilter) and the defaultFilter can be changed with `setDefaultFilter` for tabbed browsing for instance. The model index controller provides `fullFilter` composed of the default, initial and dynamic filters.
+
+Finally the model index controller now computes the total number of dynamic filters and the total number of full filters. This is useful for displaying the number of filters applied.
+
+### Global form disablement
+
+The model create and edit controllers now support a `disabled` prop which will disable all form fields. This is useful for displaying a read only view of the form or for disabling the form while a mutation is in progress. Forms are disabled by default while a mutation is in progress.
+
 ## 3.0.0-beta.22
 
 The key changes in this release are:
@@ -104,7 +128,7 @@ The key changes in this release are:
 The key changes in this release are:
 
 - Merged and typed [configuration](ui/general)
-- Overrideable Auth pages
+- Overridable Auth pages
 - Improved alert look and feel
 - Design page improvements
 
@@ -117,8 +141,8 @@ If you receive a merge conflict in src/config.js while updating to this version,
 The key changes in this release are:
 
 - Default sender email address configurable from the `DEFAULT_EMAIL_SENDER` environment variable
-- Design System subapp accessible thorugh the side menu or at `/__design`
-- All base fields globally overrideable
+- Design System subapp accessible through the side menu or at `/__design`
+- All base fields globally overridable
 - Base skeleton count on limit
 
 ## 3.0.0-beta.16

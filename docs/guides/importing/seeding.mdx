@@ -1,0 +1,13 @@
+# Seeding Data
+
+Seeding data is a way to populate your database with data. This is useful in all environments, but especially in development and test environments. Rhino seeding is based on the [Rails seeding system](https://guides.rubyonrails.org/v5.1/active_record_migrations.html#migrations-and-seed-data)
+
+Rhino configures the standard `server/db/seeds.rb` file to load common and per environment seeds. Running `rails db:seed` or `rails db:reset` will load all common and per environment seeds.
+
+## Common Seeds
+
+Some seeds are common to all environments. These seeds are located in `server/db/seeds/*.rb`. These file is loaded by default in all environments.
+
+## Per Environment Seeds
+
+Some seeds are specific to an environment. These seeds are located in `server/db/seeds/<environment>/*.rb`. These files are loaded only in the specified environment.

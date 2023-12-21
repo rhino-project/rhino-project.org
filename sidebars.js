@@ -141,7 +141,7 @@ const sidebars = {
     "guides/websockets",
     {
       type: "category",
-      label: "Importing data",
+      label: "Seeding & Importing Data",
       link: {
         type: "generated-index",
         title: "Importing Data",
@@ -150,6 +150,7 @@ const sidebars = {
         keywords: ["guides", "importing"],
       },
       items: [
+        "guides/importing/seeding",
         "guides/importing/importing_google_sheets",
         "guides/importing/importing_excel_csv",
         "guides/importing/importing_scraping",

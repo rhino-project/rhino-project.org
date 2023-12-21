@@ -16,7 +16,7 @@ const MyCustomComponent = () => {
   return <div>{resource.name}</div>
 }
 
-<ModelIndexBase filter={{category: 6}}>
+<ModelIndexBase defaultFilter={{category: 6}}>
   <MyCustomComponent/>
 <ModelIndexBase>
 ```
@@ -63,8 +63,15 @@ const { page, resources } = useModelIndex(options);
 ```
 
 - `model` a string for the model name or an already existing model object (from useModel or getModel) **_(required)_**
-- All options for [useModelIndex](api_hooks#usemodelindex)
 - `syncUrl` a boolean indicating whether to sync the url with the query parameters (default: true)
+- `defaultFiltersBaseOwner` a boolean indicating whether to include a filter by the base owner (default: true)
+- `defaultFilter` the default filter
+- `defaultOrder` the default order
+- `defaultLimit` the default limit
+- `defaultOffset` the default offset
+- `defaultSearch` the default search
+- `queryOptions` as per [useModelIndex](api_hooks#usemodelindex)
+- `networkOptions` as per [useModelIndex](api_hooks#usemodelindex)
 
 and in addition to the [useModelIndex](api_hooks#usemodelindex) returns, useModelIndex returns:
 
@@ -74,6 +81,10 @@ and in addition to the [useModelIndex](api_hooks#usemodelindex) returns, useMode
 - `setOrder` a function to set the order of the resources
 - `filter` the current filter of the resources
 - `setFilter` a function to set the filter of the resources
+- `totalFilters` the total number of dynamic filters
+- `fullFilter` the current full filter of the resources (default plus dynamic filters)
+- `totalFullFilters` the total number of full filters
+- `setDefaultFilter` a function to set the default filter of the resources
 - `search` the current search of the resources
 - `setSearch` a function to set the search of the resources
 - `limit` the current limit of the resources
@@ -116,11 +127,10 @@ const {
 
 - `model` a string for the model name or an already existing model object (from useModel or getModel) **_(required)_**
 - `parentId` the id of the parent **_(required)_**
-- `Component` the component to render for the create view (default: ModelFieldGroup)
+- `disabled` a boolean indicating whether the form elements in the view should be disabled (default: false)
 - `extraDefaultValues` values to augment the default values for the create view
 - `paths` the paths to render for the create view (default: all creatable paths except for the parent)
-- `queryOptions` options to pass to the query for the parent model object (passed to useModelShow)
-- All options for [useModelCreate](api_hooks#usemodelcreate)
+- `queryOptions` options to pass to the query for the parent mo
 
 and in addition to the [useModelCreate](api_hooks#usemodelcreate) returns, useModelCreateController returns:
 
@@ -129,7 +139,6 @@ and in addition to the [useModelCreate](api_hooks#usemodelcreate) returns, useMo
 - `resolver` the yup resolver for the model uses for form validation
 - `schema` the yup schema for the model uses for form validation
 - `methods` the output of `useForm` from react-hook-form
-- `renderPaths` the elementized paths for the create view
 - `showParent` the return values of [useModelShow](api_hooks#usemodelshow) for the parent object
 
 ### useModelCreateContext
@@ -157,11 +166,11 @@ const {
 
 - `model` a string for the model name or an already existing model object (from useModel or getModel) **_(required)_**
 - `modelId` the id of the resource to be edited **_(required)_**
-- `Component` the component to render for the create view (default: ModelFieldGroup)
+- `disabled` a boolean indicating whether the form elements in the view should be disabled (default: false)
 - `extraDefaultValues` values to augment the default values for the create view
+- `debounceDelay` the delay in ms to debounce the mutation (default: 2000)
 - `paths` the paths to render for the create view (default: all creatable paths except for the parent)
 - `queryOptions` options to pass to the query for the model object (passed to useModelShow)
-- All options for [useModelUpdate](api_hooks#usemodelupdate)
 
 and in addition to the [useModelUpdate](api_hooks#usemodelupdate) returns, useModelEditController returns:
 
@@ -169,7 +178,7 @@ and in addition to the [useModelUpdate](api_hooks#usemodelupdate) returns, useMo
 - `resolver` the yup resolver for the model uses for form validation
 - `schema` the yup schema for the model uses for form validation
 - `methods` the output of `useForm` from react-hook-form
-- `renderPaths` the elementized paths for the edit view
+- `debouncedMutate` a debounced mutate function delayed by `debounceDelay`
 - `show` the return values of [useModelShow](api_hooks#usemodelshow)
 
 ### useModelEditContext
