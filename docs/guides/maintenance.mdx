@@ -2,11 +2,11 @@
 
 ## Security
 
-The core rhino repos (`nubinary/boilerplate_client` and `nubinary/boilerplate_server`) are configured to use Dependabot for security to automatically flag issues. Dependabot will open a PR when a dependency has a new version available.
+The core rhino repo `nubinary/boilerplate_mono` is configured to use Dependabot for security to automatically flag issues. Dependabot will open a PR when a dependency has a new version available.
 
 ### Frontend
 
-If the package is not a top level package in `package.json`, then find top level package and update that version. Use `npm ls` to find the top level package.
+In the `client` sub directory, if the package is not a top level package in `package.json`, then find top level package and update that version. Use `npm ls` to find the top level package.
 
 ```bash
 npm ls <lower-level-package>
@@ -14,7 +14,7 @@ npm ls <lower-level-package>
 
 ### Backend
 
-If the gem is not a top level gem in `Gemfile`, then find top level gem and update the version there. Use `bundle list` to find the top level gem.
+In the `server` sub directory, if the gem is not a top level gem in `Gemfile`, then find top level gem and update the version there. Use `bundle list` to find the top level gem.
 
 ```bash
 gem dependency <lower-level-gem> --reverse-dependencies
