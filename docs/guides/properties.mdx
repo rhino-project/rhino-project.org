@@ -238,6 +238,10 @@ class Temperature < ApplicationRecord
 end
 ```
 
+:::tip
+If you are doing a simple conversion and not accepting both as writeable, you may want to consider using [virtual (generated) columns](#virtual-generated-attributes) instead.
+:::
+
 ### Read only attributes
 
 Its more common to have read only attributes of this type. The built in [attr_readonly](https://api.rubyonrails.org/classes/ActiveRecord/ReadonlyAttributes/ClassMethods.html#method-i-attr_readonly) method can be used to mark the attribute as read only. This prevents the attribute from being updated or being set during creation.
@@ -286,3 +290,28 @@ class Temperature < ApplicationRecord
   validates :celsius, presence: true
 end
 ```
+
+## Generated Columns
+
+Generated columns are similar to synthetic attributes but are stored in the database. Sample migrations:
+
+```ruby
+def change
+  create_table :temps do |t|
+    t.numeric :celcius
+    t.virtual :fahrenheit, type: :numeric, as: 'celsius * 9 / 5 + 32', stored: true
+  end
+end
+```
+
+```ruby
+def change
+  add_column :temps, :fahrenheit, :string, as: 'celsius * 9 / 5 + 32', stored: true, virtual: true
+end
+```
+
+Rhino supports generated columns in the API. The generated column will be included in the API response by default and can be used in filters and sorting.
+
+:::note
+Rails does not support virtual (unstored) columns at this time.
+:::
