@@ -70,7 +70,7 @@ graph TB
 The default filters are what the UI will revert to when the user clears all filters. By default the data is filtered by base owner. You can change the default filters by overriding the `ModelIndex` component (which passes the filter to the [useModelIndexController](../../reference/front_end/controllers#usemodelindexcontroller))
 
 ```rhinoconfig title="src/rhino.config.js" levels=global,model
-ModelIndex: { props: { filter: { published: true } } }
+ModelIndex: { props: { defaultFilter: { published: true } } }
 ```
 
 :::tip
@@ -123,7 +123,7 @@ See [operators](../../concepts/rest_api/filtering.mdx) for a complete list of op
 ### Changing the default sort order
 
 ```rhinoconfig title="src/rhino.config.js" levels=global,model
-ModelIndex: { props: { order: 'created_at' }}
+ModelIndex: { props: { defaultOrder: 'created_at' }}
 ```
 
 ### Changing the sortable columns
@@ -137,5 +137,5 @@ ModelIndexTable: { props: { sortPaths: ['blog.title'] }}
 ### Changing the default page size
 
 ```rhinoconfig title="src/rhino.config.js" levels=global,model
-ModelIndex: { props: { limit: 20 }}
+ModelIndex: { props: { defaultLimit: 20 }}
 ```
