@@ -47,7 +47,7 @@ heroku buildpacks:add heroku-community/nginx -a <APP-NAME>
 The client requires the following environment variables to be set:
 
 ```env
-    REACT_APP_API_ROOT_PATH=https://<server-host-name>
+    VITE_API_ROOT_PATH=https://<server-host-name>
     NODE_ENV=production
 ```
 
@@ -85,7 +85,7 @@ DB_NAME, DB_HOST, DB_USERNAME, DB_PASSWORD are also required for a postgres db
 ### Client
 
 ```bash
-$ docker build --build-arg REACT_APP_API_ROOT_PATH=http://localhost:3002 -t frontend .
+$ docker build --build-arg VITE_API_ROOT_PATH=http://localhost:3002 -t frontend .
 $ docker run --rm -p 3003:3003 -e PORT=3003 frontend
 ```
 

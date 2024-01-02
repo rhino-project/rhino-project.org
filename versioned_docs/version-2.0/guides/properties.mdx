@@ -183,7 +183,7 @@ Because Rhino introspects the attributes for an [ActiveRecord](https://guides.ru
 
 ```ruby
 class Temperature < ApplicationRecord
-  attribute :farhenheit, :float
+  attribute :fahrenheit, :float
 
   rhino_owner_global
 
@@ -207,7 +207,7 @@ Its more common to have read only attributes of this type. The built in [attr_re
 
 ```ruby
 class Temperature < ApplicationRecord
-  attribute :farhenheit, :float
+  attribute :fahrenheit, :float
 
  # highlight-next-line
   attr_readonly :fahrenheit
@@ -228,7 +228,7 @@ All normal manipulations of properties are supported.
 
 ```ruby
 class Temperature < ApplicationRecord
-  attribute :farhenheit, :float
+  attribute :fahrenheit, :float
 
   rhino_owner_global
   # highlight-next-line
