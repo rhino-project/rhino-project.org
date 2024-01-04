@@ -48,6 +48,14 @@ Then run the tests with the following command so that they do not run in paralle
 PARALLEL_WORKERS=1 rails test test/models/user_test.rb
 ```
 
+### Test Data
+
+Rhino can use built-in Rails fixtures and also provides [FactoryBot](https://github.com/thoughtbot/factory_bot) in combination with [FFaker](https://github.com/ffaker/ffaker) for generating test data. FactoryBot is configured to use the `test/factories` directory.
+
+:::tip
+Often models require unique data for attributes. FFaker provides a `unique` method to ensure that the data is unique. `FFaker::Name.unique.name`
+:::
+
 ### Mock third-party APIs
 
 The `webmock` gem is included in Rhino. To use it, and mock third-party APIs add the following to your test:
