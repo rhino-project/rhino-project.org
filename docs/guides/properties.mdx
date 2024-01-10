@@ -224,7 +224,7 @@ Because Rhino introspects the attributes for an [ActiveRecord](https://guides.ru
 
 ```ruby
 class Temperature < ApplicationRecord
-  attribute :farhenheit, :float
+  attribute :fahrenheit, :float
 
   rhino_owner_global
 
@@ -246,34 +246,13 @@ end
 If you are doing a simple conversion and not accepting both as writeable, you may want to consider using [virtual (generated) columns](#virtual-generated-attributes) instead.
 :::
 
-### Read only attributes
-
-Its more common to have read only attributes of this type. The built in [attr_readonly](https://api.rubyonrails.org/classes/ActiveRecord/ReadonlyAttributes/ClassMethods.html#method-i-attr_readonly) method can be used to mark the attribute as read only. This prevents the attribute from being updated or being set during creation.
-
-```ruby
-class Temperature < ApplicationRecord
-  attribute :farhenheit, :float
-
- # highlight-next-line
-  attr_readonly :fahrenheit
-
-  rhino_owner_global
-
-  def fahrenheit
-    celsius * 9 / 5 + 32
-  end
-
-  validates :celsius, presence: true
-end
-```
-
 ### Property manipulations
 
 All normal manipulations of properties are supported.
 
 ```ruby
 class Temperature < ApplicationRecord
-  attribute :farhenheit, :float
+  attribute :fahrenheit, :float
 
   rhino_owner_global
   # highlight-next-line
@@ -310,7 +289,7 @@ end
 
 ```ruby
 def change
-  add_column :temps, :fahrenheit, :string, as: 'celsius * 9 / 5 + 32', stored: true, virtual: true
+  add_column :temps, :fahrenheit, :numeric, as: 'celsius * 9 / 5 + 32', stored: true, virtual: true
 end
 ```
 
@@ -319,3 +298,15 @@ Rhino supports generated columns in the API. The generated column will be includ
 :::note
 Rails does not support virtual (unstored) columns at this time.
 :::
+
+## Read Only Attributes
+
+Attributes listed as readonly with [`attr_readonly`](https://api.rubyonrails.org/classes/ActiveRecord/ReadonlyAttributes/ClassMethods.html#method-i-attr_readonly) will be used to create a new record but will not be updated on an existing record.
+
+```ruby
+class Blog < ActiveRecord::Base
+  attr_readonly :title
+end
+```
+
+Rhino supports read only attributes in the API and will mark them as creatable but not updatable.

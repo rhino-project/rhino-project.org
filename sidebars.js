@@ -166,7 +166,12 @@ const sidebars = {
         slug: "/guides/development",
         keywords: ["guides", "development"],
       },
-      items: ["guides/dev_environment", "guides/testing", "guides/maintenance"],
+      items: [
+        "guides/dev_environment",
+        "guides/testing",
+        "guides/maintenance",
+        "guides/development/dev_tool",
+      ],
     },
   ],
 
