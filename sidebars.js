@@ -173,6 +173,7 @@ const sidebars = {
         "guides/development/dev_tool",
       ],
     },
+    "guides/faq",
   ],
 
   concept: [
