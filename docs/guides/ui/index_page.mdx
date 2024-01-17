@@ -194,34 +194,59 @@ const rhinoConfig = {
 
 ### Cards instead of a table
 
-Rhino has a `ModelIndexCard` component that can be used to show the records in a card-based view. To use it, add the following to your `overrides.js` file:
+Rhino has a `ModelIndexCardGrid` component that can be used to show the records in a card-based view. To use it, add the following to your `overrides.js` file:
 
 ```jsx title="src/rhino.config.js"
-import ModelIndexCard from "components/models/ModelIndexCard";
+import ModelIndexCardGrid from "components/models/ModelIndexCardGrid";
 
 const rhinoConfig = {
   version: 1,
   components: {
     blog: {
-      ModelIndexTable: ModelIndexCard,
+      ModelIndexTable: ModelIndexCardGrid,
     },
   },
 };
 ```
 
+The rendering of model paths is done by cells so editable cells can be used in the card view as well.
+
 #### Changing the card attributes
 
 ```jsx title="src/rhino.config.js"
-import ModelIndexCard from "components/models/ModelIndexCard";
+import ModelIndexCardGrid from "components/models/ModelIndexCardGrid";
 
 const rhinoConfig = {
   version: 1,
   components: {
     blog: {
       ModelIndexTable: {
-        component: ModelIndexCard,
+        component: ModelIndexCardGrid,
         props: {
           paths: ["title", "category", "published_at"],
+        },
+      },
+    },
+  },
+};
+```
+
+#### Skipping title or subtitle on the card
+
+The first two paths are the title and subtitle of the card. If you want to skip the title or subtitle, you can use the `NullComponent` from Rhino.
+
+```jsx title="src/rhino.config.js"
+import ModelIndexCardGrid from "components/models/ModelIndexCardGrid";
+import { NullComponent } from "rhino/components/null";
+
+const rhinoConfig = {
+  version: 1,
+  components: {
+    blog: {
+      ModelIndexTable: {
+        component: ModelIndexCardGrid,
+        props: {
+          paths: [<NullComponent />, <NullComponent />, "published_at"],
         },
       },
     },

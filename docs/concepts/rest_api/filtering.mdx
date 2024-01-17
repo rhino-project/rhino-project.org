@@ -21,6 +21,7 @@ The Filter sieve supports many comparison operators. They are all unary, meaning
 - `gteq`: **greater than or equal to**
 - `lteq`: **less than or equal to**
 - `eq`: **equal to**
+- `*_coalesce`: **coalescing operators**
 - `diff`: **different from**
 - `tree_*`: **tree operators (see below)**
 
@@ -29,6 +30,24 @@ In order to use an operation, one must chain them under the column name. For exa
 ```
 /blog_posts?filter[created_at][gt]=2002-06-30
 ```
+
+### Coalescing Operators
+
+Coalescing operators are used to compare a column against a value and [COALESCE](https://www.postgresql.org/docs/current/functions-conditional.html#FUNCTIONS-COALESCE-NVL-IFNULL) the column to the value if the column is null. This is useful when a row should potentially be included in results if it has a null value. The available coalescing operators are:
+
+- `gt_coalesce`: **greater than**
+- `lt_coalesce`: **less than**
+- `gteq_coalesce`: **greater than or equal to**
+- `lteq_coalesce`: **less than or equal to**
+- `eq_coalesce`: **equal to**
+
+For example:
+
+```
+/blogs?filter[published_at][lteq_coalesce]=2023-12-31
+```
+
+Would get all blogs published before 2023-12-31, including blogs that have not been published yet (published_at is null).
 
 ### Tree Operators
 
