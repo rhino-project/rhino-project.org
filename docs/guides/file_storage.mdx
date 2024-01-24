@@ -36,6 +36,11 @@ region: <%= ENV['AWS_REGION'] %>
 bucket: <%= ENV['AWS_S3_BUCKET'] %>
 ```
 
+And finally, change the active storage service from `:local` to `:amazon` in `config/environments/production.rb` file:
+```ruby
+config.active_storage.service = :amazon
+```
+
 :::warning
 You must set up CORS for the bucket you are using to allow uploads from your domain. See [this sample](https://guides.rubyonrails.org/active_storage_overview.html#example-s3-cors-configuration) for more information.
 :::
