@@ -1,5 +1,40 @@
 # Release Notes
 
+## 3.0.0-beta.26
+
+The key changes in this release are:
+
+- Use [open source rhino](https://github.com/rhino-project/rhino-project)
+- Remove deprecated `models/overrides.js`
+- Drop base url in tsconfig and tsconfig pathts
+
+### Open source rhino
+
+The primary change that needs to be made is the imports in app specific code. For example:
+
+```diff
+- import { useModelShow } from "rhino";
++ import { useModelShow } from "@rhino-project/core";
+```
+
+Rhino projects a `jscodeshift` transform to help with this migration. To use it, run the following command:
+
+```bash
+npx jscodeshift@latest -t https://raw.githubusercontent.com/rhino-project/rhino-project/beta/packages/codemods/src/v1/replace-import-specifier.js src
+```
+
+### Remove deprecated `models/overrides.js`
+
+The `models/overrides.js` file has been deprecated and is no longer used. The overrides are now defined in `rhino.config.js` and are more powerful and flexible. The `models/overrides.js` file can be removed from your project.
+
+### Drop base url in tsconfig and tsconfig pathts
+
+The `baseUrl` and `paths` properties in `tsconfig.json` are no longer used. This should not affect most projects
+
+:::tip
+It is recommended to update to v3.0.0-beta.25 before updating to v3.0.0-beta.26
+:::
+
 ## 3.0.0-beta.25
 
 The key changes in this release are:
