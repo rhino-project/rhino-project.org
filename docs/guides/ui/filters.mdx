@@ -75,10 +75,10 @@ ModelIndex: { props: { defaultFilter: { published: true } } }
 
 :::tip
 
-It is likely you still want to use the base owner filter. You can do this by using the useBaseOwnerFilters hook.
+The base owner filters are included by default to limit the query to the current user or organization - if you want to disable them set `defaultFiltersBaseOwner` 
 
-```jsx
-const filter = useBaseOwnerFilters('blog', { extraFilters = { published: true } });
+```rhinoconfig title="src/rhino.config.js" levels=global,model
+ModelIndex: { props: { defaultFiltersBaseOwner: false, defaultFilter: { published: true } } }
 ```
 
 :::
