@@ -32,7 +32,7 @@ You can replace the default action with custom actions.
 ModelIndexActions: { props: { actions: [<MyCustomAction />]} }
 ```
 
-## Prepend an action
+## Prepend actions
 
 You can prepend one or more actions to the defaults.
 
@@ -40,12 +40,20 @@ You can prepend one or more actions to the defaults.
 ModelIndexActions: { props: { prepend: true, actions: [<MyCustomAction />]} }
 ```
 
-## Append an action
+## Append actions
 
 You can append one or more actions to the defaults.
 
 ```rhinoconfig title="src/rhino.config.js" levels=global,model
 ModelIndexActions: { props: { append: true, actions: [<MyCustomAction />]} }
+```
+
+## Remove all actions
+
+You can append one or more actions to the defaults.
+
+```rhinoconfig title="src/rhino.config.js" levels=global,model
+ModelIndexActions: null
 ```
 
 ## Create with a modal

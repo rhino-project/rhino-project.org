@@ -75,7 +75,15 @@ You can append one or more actions to the defaults.
 ModelCreateActions: { props: { append: true, actions: [<MyCustomAction />]} }
 ```
 
-## Add a save and add another button
+## Remove all actions
+
+You can append one or more actions to the defaults.
+
+```rhinoconfig title="src/rhino.config.js" levels=global,model
+ModelCreateActions: null
+```
+
+## Add a "Save & Add Another" button
 
 And addition "Save & Add Another" button can be added to allow users to create another resource of the same type.
 
