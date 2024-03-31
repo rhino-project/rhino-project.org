@@ -90,3 +90,13 @@ And addition "Save & Add Another" button can be added to allow users to create a
 ```rhinoconfig title="src/rhino.config.js" levels=global,model
 ModelCreateActions: { props: { append: true, actions: [<ModelCreateActionSaveAnother />]} }
 ```
+
+## No navigation when saving
+
+By default the save action will navigate to show the new item, if the preferred action is to stay on the same page, use the default save action which provides no navigation.
+
+```rhinoconfig title="src/rhino.config.js" levels=global,model
+ModelCreateActions: { props: { overrides: { ModelCreateActionSave: ModelCreateActionSave } } }
+```
+
+
