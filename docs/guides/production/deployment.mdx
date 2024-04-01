@@ -32,7 +32,7 @@ The server requires the following environment variables to be set:
     RAILS_LOG_TO_STDOUT=enabled
     RAILS_SERVE_STATIC_FILES=enabled
     ROOT_URL=https://<server-host-name>
-    SECRET_KEY_BASE=84de524c5cc836b5eaf8e2b5ee36e771f0bc5dfb0b63e76b58fe155d32cb3c71ca48f5a39f4992c5aaa3bb9d323d9ab1529b526bb2349bf2e09fd44385ab234c
+    SECRET_KEY_BASE=<generated-secret-key>
     SENDGRID_API_KEY=<sendgrid-api-key>
 ```
 
@@ -52,13 +52,13 @@ Any additional environment variables that need to be passed into that app should
 
 ## Heroku Docker
 
-Rhino comes with support for deploying to Heroku with docker for both the client and server. This is useful if you need to deploy custom tools to the image, for instance an SDK that needs to be built and called from ActiveJob.
+Rhino comes with default support for deploying to Heroku with docker for server only. This is useful if you need to deploy custom tools to the image, for instance an SDK that needs to be built and called from ActiveJob.
+
+Rhino does _not_ directly support Heroku for the client because of https://devcenter.heroku.com/articles/build-docker-images-heroku-yml#set-build-time-environment-variables - build time variables cannot be sourced from environment variables.  The Dockerfile must altered to provide VITE_API_ROOT_PATH directly.
 
 Rhino uses the heroku.yml method of building and deploying docker images. https://devcenter.heroku.com/articles/build-docker-images-heroku-yml
 
 The buildpack for docker should be set to the container type `heroku stack:set container -a <app-name>`
-
-Heroku docker deploys still require
 
 ## Docker
 
@@ -77,7 +77,7 @@ DISABLE_SSL=1 is necessary for SSL termination earlier in the process.
 
 ROOT_URL defaults to `http://localhost:3000` if not specified.
 
-DB_NAME, DB_HOST, DB_USERNAME, DB_PASSWORD are also required for a postgres db.
+DB_NAME, DB_HOST, DB_USERNAME, DB_PASSWORD are also required for the postgres db.
 
 DEFAULT_EMAIL_SENDER defaults to `from@example.com` if not specified.
 
