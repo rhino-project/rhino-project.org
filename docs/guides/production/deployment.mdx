@@ -48,7 +48,7 @@ The client requires the following environment variables to be set:
     NODE_ENV=production
 ```
 
-Any additional environment variables that need to be passed into that app should be prefixed with REACT_APP
+Any additional environment variables that need to be passed into that app should be prefixed with `VITE_`
 
 ## Heroku Docker
 
@@ -88,6 +88,6 @@ $ docker build --build-arg VITE_API_ROOT_PATH=http://localhost:3002 -t frontend 
 $ docker run --rm -p 3003:3003 -e PORT=3003 frontend
 ```
 
-REACT*APP_API_ROOT_PATH is \_required* at build time.
+`VITE_API_ROOT_PATH` is _required_ at build time.
 
 PORT will default to `3001` if not overridden.
