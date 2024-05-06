@@ -142,9 +142,17 @@ If you don't add the models to the `config.resources` array, they will not be av
 
 Rails provides a way to seed the database with data using the `db/seeds.rb` file. This is useful for testing and development. Create a few categories to use in the blog and a user to login with.
 
-```ruby title="db/seeds.rb"
+```ruby title="db/seeds/development/users.rb"
+# Generate sample admin user
+AdminUser.find_or_create_by(email: "admin@example.com") do |u|
+  u.password = "password"
+end
+
 # Generate sample user
-User.create!(email: "test@example.com", password: "password")
+User.find_or_create_by(email: "test@example.com") do |u|
+  u.password = "password"
+  u.confirmed_at = DateTime.now
+end
 
 # Generate sample categories
 3.times do
