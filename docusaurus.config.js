@@ -3,8 +3,9 @@
 const rhinoconfig = require("./plugins/remark-rhino-config-tabs");
 const npm2yarn = require("@docusaurus/remark-plugin-npm2yarn");
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const { themes } = require("prism-react-renderer");
+const lightCodeTheme = themes.github;
+const darkCodeTheme = themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -121,7 +122,7 @@ const config = {
             items: [
               {
                 label: "Tutorial",
-                to: "/docs/tutorials/index",
+                to: "/docs/tutorials",
               },
             ],
           },
@@ -131,7 +132,7 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
-        additionalLanguages: ["ruby", "erb"],
+        additionalLanguages: ["ruby"],
       },
     }),
 };

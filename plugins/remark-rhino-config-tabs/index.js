@@ -1,6 +1,11 @@
-const visit = require("unist-util-visit");
+import { visit } from "unist-util-visit";
 
 const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1);
+
+const isMdxEsmLiteral = (node) => node.type === "mdxjsEsm";
+// TODO legacy approximation, good-enough for now but not 100% accurate
+const isTabsImport = (node) =>
+  isMdxEsmLiteral(node) && node.value.includes("@theme/Tabs");
 
 function createRhinoConfigTabs(node, levels, model, attribute) {
   const code = {
@@ -22,49 +27,35 @@ function createRhinoConfigTabs(node, levels, model, attribute) {
     value: idx.toString(),
   }));
 
-  const display = [
-    {
-      type: "jsx",
-      value: `<Tabs groupId="rhino-config" defaultValue="1" values={${JSON.stringify(
-        tabs
-      )}}>`,
-    },
-  ];
+  const display = [];
 
-  levels.forEach((level, idx) => {
-    display.push({
-      type: "jsx",
-      value: `<TabItem value="${idx}">`,
-    });
-    display.push({
-      type: "code",
-      lang: "javascript",
-      value: code[level],
-    });
-    display.push({
-      type: "jsx",
-      value: "</TabItem>",
-    });
-  });
-
-  display.push({
-    type: "jsx",
-    value: "</Tabs>",
-  });
-
-  return display;
+  return {
+    type: "mdxJsxFlowElement",
+    name: "Tabs",
+    attributes: [
+      { type: "mdxJsxAttribute", name: "groupId", value: "rhino-config" },
+    ],
+    children: levels.map((level, idx) => {
+      return {
+        type: "mdxJsxFlowElement",
+        name: "TabItem",
+        attributes: [
+          { type: "mdxJsxAttribute", name: "value", value: idx.toString() },
+          { type: "mdxJsxAttribute", name: "label", value: capitalize(level) },
+        ],
+        children: [
+          {
+            type: "code",
+            lang: "javascript",
+            value: code[level],
+          },
+        ],
+      };
+    }),
+  };
 }
 
-const isImport = (node) => node.type === "import";
-const nodeForImport = {
-  type: "import",
-  value:
-    "import Tabs from '@theme/Tabs';\nimport TabItem from '@theme/TabItem';",
-};
-
-const LEVELS = ["global", "model", "attribute"];
-
-module.exports = function remarkRhinoConfigTabs() {
+export default function remarkRhinoConfigTabs() {
   return (tree) => {
     let transformed = false;
     let alreadyImported = false;
@@ -75,37 +66,75 @@ module.exports = function remarkRhinoConfigTabs() {
         return;
       }
 
-      if (isImport(node) && node.value.includes("@theme/Tabs")) {
+      if (isTabsImport(node)) {
         alreadyImported = true;
       }
       transformed = true;
 
-      let levels = LEVELS;
-      const levelMatch = node.meta.match(/levels=([\w,]+)/);
+      let levels = ["global", "model", "attribute"];
+      const levelMatch = node.meta?.match(/levels=([\w,]+)/);
       if (levelMatch) {
         levels = levelMatch[1].split(",");
       }
 
       let model = "blog";
-      const modelMatch = node.meta.match(/model=(\w+)/);
+      const modelMatch = node.meta?.match(/model=(\w+)/);
       if (modelMatch) {
         model = modelMatch[1];
       }
 
-      // If node.meta includes "attribute=" then we want to use that as the attribute
-      // name instead of the default "title".
       let attribute = "title";
-      const attributeMatch = node.meta.match(/attribute=(\w+)/);
+      const attributeMatch = node.meta?.match(/attribute=(\w+)/);
       if (attributeMatch) {
         attribute = attributeMatch[1];
       }
 
       const newNodes = createRhinoConfigTabs(node, levels, model, attribute);
-      parent.children.splice(index, 1, ...newNodes);
+      parent.children.splice(index, 1, newNodes);
     });
 
     if (transformed && !alreadyImported) {
-      tree.children.unshift(nodeForImport);
+      tree.children.unshift({
+        type: "mdxjsEsm",
+        value:
+          "import Tabs from '@theme/Tabs'\nimport TabItem from '@theme/TabItem'",
+        data: {
+          estree: {
+            type: "Program",
+            body: [
+              {
+                type: "ImportDeclaration",
+                specifiers: [
+                  {
+                    type: "ImportDefaultSpecifier",
+                    local: { type: "Identifier", name: "Tabs" },
+                  },
+                ],
+                source: {
+                  type: "Literal",
+                  value: "@theme/Tabs",
+                  raw: "'@theme/Tabs'",
+                },
+              },
+              {
+                type: "ImportDeclaration",
+                specifiers: [
+                  {
+                    type: "ImportDefaultSpecifier",
+                    local: { type: "Identifier", name: "TabItem" },
+                  },
+                ],
+                source: {
+                  type: "Literal",
+                  value: "@theme/TabItem",
+                  raw: "'@theme/TabItem'",
+                },
+              },
+            ],
+            sourceType: "module",
+          },
+        },
+      });
     }
   };
-};
+}
