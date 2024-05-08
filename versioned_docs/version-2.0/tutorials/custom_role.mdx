@@ -57,12 +57,7 @@ end
 
 Create an additional organization and role for testing.
 
-```diff title="db/seeds.rb"
-# Generate sample categories
-3.times do
-  Category.create!(name: FFaker::Book.unique.genre)
-end
-
+```ruby title="db/seeds.rb"
 # Function to generate sample blogs and blog posts
 def generate_blogs(user, org)
   5.times do
@@ -73,9 +68,19 @@ def generate_blogs(user, org)
   end
 end
 
+AdminUser.find_or_create_by(email: "admin@example.com") do |u|
+  u.password = "password"
+end
+
 # Create two sample users
-user = User.create!(email: 'test@example.com', password: 'password', password_confirmation: 'password')
-user_other = User.create!(email: 'other@example.com', password: 'password', password_confirmation: 'password')
+user = User.find_or_create_by(email: "test@example.com") do |u|
+  u.password = "password"
+  u.confirmed_at = DateTime.now
+end
+user_other = User.find_or_create_by(email: "other@example.com") do |u|
+  u.password = "password"
+  u.confirmed_at = DateTime.now
+end
 
 # Create sample organizations
 # highlight-next-line

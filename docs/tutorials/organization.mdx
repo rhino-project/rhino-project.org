@@ -108,13 +108,62 @@ end
 
 ## Seed the database
 
-Create two users and several organizations along with sample to use in the blog and a user to login with.
+Create two users and several organizations along with sample blogs and blog posts for each organization.
 
-```ruby title="db/seeds.rb"
-# Generate sample categories
-3.times do
-  Category.create!(name: FFaker::Book.unique.genre)
+```ruby title="db/seeds/development/users.rb"
+require_relative "categories"
+
+AdminUser.find_or_create_by(email: "admin@example.com") do |u|
+  u.password = "password"
 end
+
+# Create two sample users
+user = User.find_or_create_by(email: "test@example.com") do |u|
+  u.password = "password"
+  u.confirmed_at = DateTime.now
+end
+
+user_other = User.find_or_create_by(email: "other@example.com") do |u|
+  u.password = "password"
+  u.confirmed_at = DateTime.now
+end
+```
+
+```ruby title="db/seeds/development/organizations.rb"
+require_relative "users"
+
+user = User.find_by(email: "test@example.com")
+user_other = User.find_by(email: "other@example.com")
+
+# Create sample organizations
+org = ["Single User Org", "Multi User Org", "Viewer Org", "Editor Org"].map do |name|
+  Organization.find_or_create_by!(name:)
+end
+
+role_admin = Role.find_or_create_by!(name: "admin")
+role_viewer = Role.find_or_create_by!(name: "viewer")
+role_editor = Role.find_or_create_by!(name: "editor")
+
+# The test@example.com user is the only user and admin of the "Single User Org" organization
+UsersRole.find_or_create_by!(user:, organization: org[0], role: role_admin)
+
+# The test@example.com and other@example.com are both users and admins of the "Multi User Org" organization
+UsersRole.find_or_create_by!(user:, organization: org[1], role: role_admin)
+
+# The test@example.com is a viewer and other@example.com is an admin of the "Viewer Org" organization
+UsersRole.find_or_create_by!(user:, organization: org[2], role: role_viewer)
+UsersRole.find_or_create_by!(user: user_other, organization: org[2], role: role_admin)
+
+# The test@example.com is an editor and other@example.com is an admin of the "Editor Org" organization
+UsersRole.find_or_create_by!(user:, organization: org[3], role: role_editor)
+UsersRole.find_or_create_by!(user: user_other, organization: org[3], role: role_admin)
+```
+
+```ruby title="db/seeds/development/blogs.rb"
+require_relative "organizations"
+
+user = User.find_by(email: "test@example.com")
+user_other = User.find_by(email: "other@example.com")
 
 # Function to generate sample blogs and blog posts
 def generate_blogs(user, org)
@@ -126,41 +175,22 @@ def generate_blogs(user, org)
   end
 end
 
-# Create two sample users
-user = User.create!(email: 'test@example.com', password: 'password', password_confirmation: 'password')
-user_other = User.create!(email: 'other@example.com', password: 'password', password_confirmation: 'password')
+# Only test@example.com authors blogs in the "Single User Org" organization
+org = Organization.find_by(name: "Single User Org")
+generate_blogs(user, org)
 
-# Create sample organizations
-org = ["Single User Org", "Multi User Org", "Viewer Org", "Editor Org"].map do |name|
-  Organization.create!(name:)
-end
-
-role_admin = Role.create!(name: "admin")
-role_viewer = Role.create!(name: "viewer")
-role_editor = Role.create!(name: "editor")
-
-# The test@example.com user is the only user and admin of the "Single User Org" organization
-UsersRole.create!(user: user, organization: org[0], role: role_admin)
-# Only test@example.com authors blogs in the "MuSinglelti User Org" organization
-generate_blogs(user, org[0])
-
-# The test@example.com and other@example.com are both users and admins of the "Multi User Org" organization
-UsersRole.create!(user: user, organization: org[1], role: role_admin)
 # Both users author blogs in the "Multi User Org" organization
-generate_blogs(user, org[1])
-generate_blogs(user_other, org[1])
+org = Organization.find_by(name: "Multi User Org")
+generate_blogs(user, org)
+generate_blogs(user_other, org)
 
-# The test@example.com is a viewer and other@example.com is an admin of the "Viewer Org" organization
-UsersRole.create!(user: user, organization: org[2], role: role_viewer)
-UsersRole.create!(user: user_other, organization: org[2], role: role_admin)
 # Only other@example.com authors blogs in the "Viewer Org" organization
-generate_blogs(user_other, org[3])
+org = Organization.find_by(name: "Viewer Org")
+generate_blogs(user_other, org)
 
-# The test@example.com is an editor and other@example.com is an admin of the "Editor Org" organization
-UsersRole.create!(user: user, organization: org[3], role: role_editor)
-UsersRole.create!(user: user_other, organization: org[3], role: role_admin)
 # Only other@example.com authors blogs in the "Editor Org" organization
-generate_blogs(user_other, org[3])
+org = Organization.find_by(name: "Editor Org")
+generate_blogs(user_other, org)
 ```
 
 And add the seed data to the database

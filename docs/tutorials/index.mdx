@@ -140,12 +140,9 @@ If you don't add the models to the `config.resources` array, they will not be av
 
 ## Seed the database
 
-Rails provides a way to seed the database with data using the `db/seeds.rb` file. This is useful for testing and development. Create a few categories to use in the blog and a user to login with.
+Rhino provides a [per environment way to seed the database](../guides/importing/seeding.mdx). Create a few categories in development to use for blogs (a user was already created in `db/seeds/development/users.rb`).
 
-```ruby title="db/seeds.rb"
-# Generate sample user
-User.create!(email: "test@example.com", password: "password")
-
+```ruby title="db/seeds/development/categories.rb"
 # Generate sample categories
 3.times do
   Category.create!(name: FFaker::Book.unique.genre)
