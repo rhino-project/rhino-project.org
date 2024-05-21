@@ -18,6 +18,7 @@ const sidebars = {
 
   tutorialSidebar: [
     "index",
+    "getting_started",
     {
       type: "category",
       label: "Tutorial",
