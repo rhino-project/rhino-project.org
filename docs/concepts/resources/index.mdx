@@ -74,7 +74,7 @@ Properties can be designated as read only, write only or both. Write properties 
 
 ### Reference properties
 
-Reference properties link to related resources and must be explicitly configured to be included in the API response in order to proect against infinite recursion and performance issues. The REST API will include the full referenced object as part of the referenced response. Both 'one' and 'many' relationships can be included.
+Reference properties link to related resources and must be explicitly configured to be included in the API response in order to protect against infinite recursion and performance issues. The REST API will include the full referenced object as part of the referenced response. Both 'one' and 'many' relationships can be included.
 
 ```ruby
 class BlogPost < ApplicationRecord
