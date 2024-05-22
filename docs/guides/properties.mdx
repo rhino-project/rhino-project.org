@@ -281,7 +281,7 @@ Generated columns are similar to synthetic attributes but are stored in the data
 ```ruby
 def change
   create_table :temps do |t|
-    t.numeric :celcius
+    t.numeric :celsius
     t.virtual :fahrenheit, type: :numeric, as: 'celsius * 9 / 5 + 32', stored: true
   end
 end
