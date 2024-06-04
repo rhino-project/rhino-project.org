@@ -84,6 +84,7 @@ const sidebars = {
       },
       items: [
         "guides/ui/general",
+        "guides/ui/sidebar",
         {
           type: "category",
           label: "Index page",
