@@ -1,0 +1,23 @@
+# Sidebar
+
+## Displayed Models
+
+The sidebar displays a list of models that are available to the user. The list is generated from the `models` property of the PrimaryNavigation component.
+
+```rhinoconfig title="src/rhino.config.js" levels=global
+PrimaryNavigation: { props: { models: ['blog', 'blog_post'] } }
+```
+
+You can also organize by roles.
+
+```rhinoconfig title="src/rhino.config.js" levels=global
+PrimaryNavigation: { props: { models: { admin: ['blog', 'blog_post'], viewer: ['blog'] } } }
+```
+
+Or you can provide a function that returns the models either as an array or an object if you need to dynamically determine the models.
+
+```rhinoconfig title="src/rhino.config.js" levels=global
+const getModels = () => ['blog', 'blog_post']
+
+PrimaryNavigation: { props: { models: getModels } }
+```
