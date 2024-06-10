@@ -69,7 +69,7 @@ Rhino Client's authentication system is based on httponly cookies, issued by the
 
 ### First-party vs Third-party cookies
 
-Browsers differentiate these two types of cookies by analyzing who issued the cookie. Basically, if the cookie was issued by a server in the same domain, it's considered to be a first-party cookie, even if client and server live in different subdomains. For instance, a browser running `client.nubinary.com` would treat cookies issued by the server at `server.nubinary.com` as a first-party cookie. [See reference.](https://www.cookiepro.com/knowledge/whats-the-difference-between-first-and-third-party-cookies/#:~:text=The%20main%20differences%20between%20first,loaded%20on%20the%20publisher's%20website.)
+Browsers differentiate these two types of cookies by analyzing who issued the cookie. Basically, if the cookie was issued by a server in the same domain, it's considered to be a first-party cookie, even if client and server live in different subdomains. For instance, a browser running `client.rhino-project.org` would treat cookies issued by the server at `server.rhino-project.org` as a first-party cookie. [See reference.](https://www.cookiepro.com/knowledge/whats-the-difference-between-first-and-third-party-cookies/#:~:text=The%20main%20differences%20between%20first,loaded%20on%20the%20publisher's%20website.)
 
 Third-party cookie are often used for advertisement purposes and are related to many privacy issues, so browsers are constantly restricting their use. [Chrome's Incognito mode and Brave now just block them completely.](https://venturebeat.com/2020/05/19/google-chrome-83/#:~:text=In%20Incognito%20mode%2C%20Chrome%20doesn,icon%20in%20the%20address%20bar.)
 
@@ -89,4 +89,4 @@ In a regular API backend + SPA frontend setup, client and server often live in d
 
 ### WARNING: Special domains
 
-[Some domains](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/base/registry_controlled_domains/effective_tld_names.dat#12130) have a special treatment by browsers - cookies are always treated as 3rd-party when issued by a different subdomain, even though the domain is the same. For instance, a browser running `client.nubinary.com.herokuapp` would treat as 3rd-party any cookies emitted by `server.nubinary.herokuapp.com`, because the domain is `herokuapp.com` and it has a special treatment as per the link.
+[Some domains](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/net/base/registry_controlled_domains/effective_tld_names.dat#12130) have a special treatment by browsers - cookies are always treated as 3rd-party when issued by a different subdomain, even though the domain is the same. For instance, a browser running `client-test.herokuapp.com` would treat as 3rd-party any cookies emitted by `server-test.herokuapp.com`, because the domain is `herokuapp.com` and it has a special treatment as per the link.
