@@ -18,7 +18,15 @@ const sidebars = {
 
   tutorialSidebar: [
     "index",
-    "getting_started",
+    {
+      type: "category",
+      label: "Getting Started",
+      link: {
+        type: "doc",
+        id: "getting_started/index",
+      },
+      items: ["getting_started/manual"],
+    },
     {
       type: "category",
       label: "Tutorial",

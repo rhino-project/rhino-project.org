@@ -1,0 +1,108 @@
+# Manual Installation
+
+## Prerequisites
+
+### Versions
+
+- Ruby version: 3.1.4
+- Bundler 2.3.26
+- Rails: 7.0.4
+- PostgreSQL: 12 or newer
+- Node 20.10.0
+
+### OSX
+
+This assumes you have Homebrew installed.
+
+1. Install postgres `brew install postgresql`
+
+2. Install redis `brew install redis-server`
+
+### WSL2 on Windows
+
+This assumes you are using Ubuntu 20
+
+1. Install postgres `sudo apt install postgresql postgresql-contrib libpq-dev`
+
+2. Start postgres `sudo service postgresql start`
+
+3. Setup postgres user
+
+`sudo -u postgres createuser -s -i -d -r -l -w <<username>>`
+`sudo -u postgres psql -c "ALTER ROLE <<username>> WITH PASSWORD '<<password>>';"`
+
+4. Install redis `sudo apt install redis-server`
+
+5. Start redis `sudo service redis-server start`
+
+### Ruby
+
+1. Install rvm `\curl -sSL https://get.rvm.io | bash -s stable --ruby=3.1.4`
+
+2. As per rvm instructions on completion to start using RVM you need to run `source $HOME/.rvm/scripts/rvm`
+
+3. Run `gem install bundler:2.3.26`
+
+### Node
+
+1. Install nvm: https://github.com/nvm-sh/nvm#installing-and-updating
+
+`curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash`
+
+Install node 20.10.0, `nvm install v20.10.0`
+
+## Clone the repo
+
+1. Clone the repo `git clone https://github.com/rhino-project/rhino-project-template.git`
+
+## Launch the server application
+
+1. `cd rhino-project-template/server`
+
+2. copy `env.sample` to `.env` and modify env vars. Pay attention to DB_NAME, DB_USERNAME, DB_PASSWORD. They should be good defaults for MacOS with postgres install on OSX with homebrew. On WSL insert the username and password created in the prequisites.
+
+3. Install gem dependencies `bundle install`
+
+4. Create and load the database `rails db:setup`
+
+5. Run the server `rails s`
+
+## Launch the client application
+
+1. `cd rhino-project-template/client`
+
+2. Install dependencies: `npm install`
+
+3. Copy `env.sample` to `.env` and modify env vars
+
+- PORT: Port to run the app. By default to not conflict with the rhino template server this would be 3001.
+
+- VITE_API_ROOT_PATH: url of the api to which this client will send requests. By default with the rhino template server this would be `VITE_API_ROOT_PATH=http://localhost:3000`
+
+4. Run the application client: `npm start`
+
+## Debug information
+
+http://localhost:3000/api/info/openapi
+http://localhost:3000/api/info/graph
+
+## ERD
+
+`rails diagram:all` and look at doc/\*.svg
+
+## Updating the production model data
+
+Data model can be updated for production with:
+
+```
+rails rhino:open_api_export
+```
+
+## Developing the front end against remote server
+
+Because of CORS by default you will not be able to work against a deployed production server. However if you set `FRONT_END_LOCAL_URL=http://localhost:3001` you can.
+
+## Customization
+
+The data model driving the UI is loaded from src/models/index.js in production or or dynamically from the server at /api/info/openapi in development (by default http://localhost:3000/api/info/openapi). See [Updating the production models](#updating-the-production-model-data) for
+further instructions on export.
