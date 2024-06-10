@@ -132,7 +132,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Nubinary, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Codalio, Inc. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,
