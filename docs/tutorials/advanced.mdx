@@ -1,5 +1,10 @@
 # Search, attachments and tags
 
+```mdx-code-block
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+```
+
 This tutorial will walk you through extending the [Tutorial](./) to add more advanced features:
 
 - Search
@@ -61,7 +66,7 @@ class Blog < ApplicationRecord
 end
 ```
 
-You will now have a search box in the UI to search for blogs by title.
+You will now have a search box in the UI to search for blogs by title if you refresh the browser.
 
 ![](/img/tutorial_advanced_search.png)
 
@@ -104,9 +109,33 @@ You will now be able to upload a file when creating or editing a blog.
 
 Add tagging to the BlogPost model so that the user can add tags to blog posts. Install the tagging migrations:
 
+```mdx-code-block
+<Tabs>
+<TabItem value="Docker">
+```
+
+From the root of the project
+
+```bash
+docker compose run --rm backend "rails acts_as_taggable_on_engine:install:migrations"
+docker compose run --rm backend "rails db:migrate"
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="Local">
+```
+
+From the `server` directory
+
 ```bash
 rails acts_as_taggable_on_engine:install:migrations
 rails db:migrate
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
 ```
 
 And add tagging to the BlogPost model.

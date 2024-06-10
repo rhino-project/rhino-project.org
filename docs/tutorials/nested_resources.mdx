@@ -1,5 +1,10 @@
 # Using nested resources
 
+```mdx-code-block
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+```
+
 This tutorial will walk you through extending the [Search, attachments and tags Tutorial](./advanced) to support nested resources.
 
 ## Prerequisites
@@ -41,11 +46,35 @@ Each blog post can have 1 or more Open Graph meta tags.
 
 ## Create the model and database schema
 
-Generate the models and database schema for the application using the following commands from the `server` directory.
+Generate the models and database schema for the application using the following commands
+
+```mdx-code-block
+<Tabs>
+<TabItem value="Docker">
+```
+
+From the root of the project
+
+```bash
+docker compose run --rm backend "rails g model og_meta_tag blog_post:references tag_name:string value:string"
+docker compose run --rm backend "rails db:migrate"
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="Local">
+```
+
+From the `server` directory.
 
 ```bash
 rails g model og_meta_tag blog_post:references tag_name:string value:string
 rails db:migrate
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
 ```
 
 ## Configure the models
@@ -85,21 +114,21 @@ By default Rhino will use the `name` or `title` attribute of the model, but this
 
 ### BlogPost
 
-```diff title="app/models/blog_post.rb"
+```ruby title="app/models/blog_post.rb"
 class BlogPost < ApplicationRecord
   belongs_to :blog
   # highlight-next-line
-+  has_many :og_meta_tags, dependent: :destroy
+  has_many :og_meta_tags, dependent: :destroy
 
   # highlight-next-line
-+  accepts_nested_attributes_for :og_meta_tags, allow_destroy: true
+  accepts_nested_attributes_for :og_meta_tags, allow_destroy: true
 
   acts_as_taggable_on :tags
 
   # Rhino specific code
   rhino_owner :blog
--  rhino_references [:blog]
-+  rhino_references [:blog, :og_meta_tags]
+  # highlight-next-line
+  rhino_references [:blog, :og_meta_tags]
 
   validates :title, presence: true
   validates :body, presence: true
@@ -121,8 +150,31 @@ Update the Rhino configuration so that OgMetaTag is available through the Rest A
 
 ## Restart the server
 
+```mdx-code-block
+<Tabs>
+<TabItem value="Docker">
+```
+
+From the root of the project
+
+```bash
+docker compose restart backend
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="Local">
+```
+
+`Ctrl-C` to stop the backend and
+
 ```bash
 rails s
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
 ```
 
 ## Attach OpenGraph meta tags to a blog post

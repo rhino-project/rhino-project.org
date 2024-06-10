@@ -1,5 +1,10 @@
 # Adding organizations and roles
 
+```mdx-code-block
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+```
+
 This tutorial will walk you through adding organization support to your application with users and roles.
 
 ## Prerequisites
@@ -48,11 +53,35 @@ The user, users role, role and organization models are provided by Rhino.
 
 ## Install the organizations module
 
-Rhino provides a module to add organization support to your application. Drop the current sample data and install the module with the following commands from the `server` directory:
+Rhino provides a module to add organization support to your application. Drop the current sample data and install the module with the following commands:
+
+```mdx-code-block
+<Tabs>
+<TabItem value="Docker">
+```
+
+From the root of the project
 
 ```bash
-rails db:reset
+docker compose run --rm backend "rails db:seed:replant"
+docker compose run --rm backend "rails rhino_organizations:install"
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="Local">
+```
+
+From the `server` directory
+
+```bash
+rails db:seed:replant
 rails rhino_organizations:install
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
 ```
 
 :::caution
@@ -61,23 +90,43 @@ rails rhino_organizations:install
 
 ## Update the data model
 
-Add an organization reference to the blog model with the following commands from the `server` directory:
+Add an organization reference to the blog model with the following commands:
+
+```mdx-code-block
+<Tabs>
+<TabItem value="Docker">
+```
+
+From the root of the project
+
+```bash
+docker compose run --rm backend "rails g migration add_organization_to_blog organization:references"
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="Local">
+```
+
+From the `server` directory
 
 ```bash
 rails g migration add_organization_to_blog organization:references
-rails db:migrate
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
 ```
 
 Update the Blog model to use the new organization reference and add a new author reference as highlighted below.
 
-```diff title="app/models/blog.rb"
+```ruby title="app/models/blog.rb"
 class Blog < ApplicationRecord
   # highlight-next-line
-- belongs_to :user
+  belongs_to :organization
   # highlight-next-line
-+ belongs_to :organization
-  # highlight-next-line
-+ belongs_to :author, default: -> { Rhino::Current.user }, class_name: 'User', foreign_key: :user_id
+  belongs_to :author, default: -> { Rhino::Current.user }, class_name: 'User', foreign_key: :user_id
 
   belongs_to :category, optional: true
   has_many :blog_posts, dependent: :destroy
@@ -87,11 +136,9 @@ class Blog < ApplicationRecord
   # Rhino specific code
   rhino_owner_base
   # highlight-next-line
-- rhino_references [:user, :category, :banner_attachment]
+  rhino_references [:organization, :author, :category, :banner_attachment]
   # highlight-next-line
-+ rhino_references [:organization, :author, :category, :banner_attachment]
-  # highlight-next-line
-+ rhino_properties_write except: :author
+  rhino_properties_write except: :author
   rhino_search [:title]
 
   validates :title, presence: true
@@ -106,6 +153,35 @@ end
 `Rhino::Current.user` provides the authenticated user accessing the API. Here it is used as the default value for the author reference.
 :::
 
+and migrate the database
+
+```mdx-code-block
+<Tabs>
+<TabItem value="Docker">
+```
+
+From the root of the project
+
+```bash
+docker compose run --rm backend "rails db:migrate"
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="Local">
+```
+
+From the `server` directory
+
+```bash
+rails db:migrate
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
+
 ## Seed the database
 
 Create two users and several organizations along with sample blogs and blog posts for each organization.
@@ -118,12 +194,12 @@ AdminUser.find_or_create_by(email: "admin@example.com") do |u|
 end
 
 # Create two sample users
-user = User.find_or_create_by(email: "test@example.com") do |u|
+User.find_or_create_by(email: "test@example.com") do |u|
   u.password = "password"
   u.confirmed_at = DateTime.now
 end
 
-user_other = User.find_or_create_by(email: "other@example.com") do |u|
+User.find_or_create_by(email: "other@example.com") do |u|
   u.password = "password"
   u.confirmed_at = DateTime.now
 end
@@ -195,19 +271,65 @@ generate_blogs(user_other, org)
 
 And add the seed data to the database
 
+```mdx-code-block
+<Tabs>
+<TabItem value="Docker">
+```
+
+From the root of the project
+
 ```bash
-rails db:seed
+docker compose run --rm backend "rails db:seed:replant"
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="Local">
+```
+
+From the `server` directory
+
+```bash
+rails db:seed:replant
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
 ```
 
 ## Restart the server
+
+```mdx-code-block
+<Tabs>
+<TabItem value="Docker">
+```
+
+From the root of the project
+
+```bash
+docker compose restart backend
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="Local">
+```
+
+`Ctrl-C` to stop the backend and
 
 ```bash
 rails s
 ```
 
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
+
 ## Explore multiple organizations
 
-Login to the application with `test@example.com` and `password` or `other@example.com` and `password`. All organizations with be accessible with the switcher in the top right corner of the screen.
+Login to the application with `test@example.com` and `password` or `other@example.com` and `password`. All organizations with be accessible with the switcher in the bottom left corner of the screen.
 
 ![](/img/tutorial_organization_switcher.png)
 

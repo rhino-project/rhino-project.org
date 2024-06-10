@@ -1,5 +1,10 @@
 # Creating a custom role
 
+```mdx-code-block
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+```
+
 This tutorial will walk you through adding a custom author role to your application.
 
 ## Prerequisites
@@ -12,10 +17,31 @@ The data model for this tutorial is the same as the [Organization and Roles Tuto
 
 ## Generate a new policy
 
-From the `server` directory run the following command:
+```mdx-code-block
+<Tabs>
+<TabItem value="Docker">
+```
+
+From the root of the project
+
+```bash
+docker compose run --rm backend "rails generate rhino:policy Author"
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="Local">
+```
+
+From the `server` directory
 
 ```bash
 rails generate rhino:policy Author
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
 ```
 
 :::info
@@ -59,7 +85,52 @@ end
 
 Create an additional organization and role for testing.
 
-```diff title="db/seeds/development/users.rb"
+```ruby title="db/seeds/development/organizations.rb"
+require_relative "users"
+
+user = User.find_by(email: "test@example.com")
+user_other = User.find_by(email: "other@example.com")
+
+# Create sample organizations
+# highlight-next-line
+org = ["Single User Org", "Multi User Org", "Viewer Org", "Editor Org", "Author Org"].map do |name|
+  Organization.find_or_create_by!(name:)
+end
+
+role_admin = Role.find_or_create_by!(name: "admin")
+role_viewer = Role.find_or_create_by!(name: "viewer")
+role_editor = Role.find_or_create_by!(name: "editor")
+# highlight-next-line
+role_author = Role.find_or_create_by!(name: "author")
+
+# The test@example.com user is the only user and admin of the "Single User Org" organization
+UsersRole.find_or_create_by!(user:, organization: org[0], role: role_admin)
+
+# The test@example.com and other@example.com are both users and admins of the "Multi User Org" organization
+UsersRole.find_or_create_by!(user:, organization: org[1], role: role_admin)
+
+# The test@example.com is a viewer and other@example.com is an admin of the "Viewer Org" organization
+UsersRole.find_or_create_by!(user:, organization: org[2], role: role_viewer)
+UsersRole.find_or_create_by!(user: user_other, organization: org[2], role: role_admin)
+
+# The test@example.com is an editor and other@example.com is an admin of the "Editor Org" organization
+UsersRole.find_or_create_by!(user:, organization: org[3], role: role_editor)
+UsersRole.find_or_create_by!(user: user_other, organization: org[3], role: role_admin)
+
+# highlight-next-line
+# The test@example.com is an author and other@example.com is an admin of the "Author Org" organization
+# highlight-next-line
+UsersRole.create!(user: user, organization: org[4], role: role_author)
+# highlight-next-line
+UsersRole.create!(user: user_other, organization: org[4], role: role_admin)
+```
+
+```ruby title="db/seeds/development/blogs.rb"
+require_relative "organizations"
+
+user = User.find_by(email: "test@example.com")
+user_other = User.find_by(email: "other@example.com")
+
 # Function to generate sample blogs and blog posts
 def generate_blogs(user, org)
   5.times do
@@ -70,81 +141,89 @@ def generate_blogs(user, org)
   end
 end
 
-AdminUser.find_or_create_by(email: "admin@example.com") do |u|
-  u.password = "password"
-end
+# Only test@example.com authors blogs in the "Single User Org" organization
+org = Organization.find_by(name: "Single User Org")
+generate_blogs(user, org)
 
-# Create two sample users
-user = User.find_or_create_by(email: "test@example.com") do |u|
-  u.password = "password"
-  u.confirmed_at = DateTime.now
-end
-user_other = User.find_or_create_by(email: "other@example.com") do |u|
-  u.password = "password"
-  u.confirmed_at = DateTime.now
-end
-
-# Create sample organizations
-# highlight-next-line
--org = ["Single User Org", "Multi User Org", "Viewer Org", "Editor Org"].map do |name|
-# highlight-next-line
-+org = ["Single User Org", "Multi User Org", "Viewer Org", "Editor Org", "Author Org"].map do |name|
-  Organization.create!(name:)
-end
-
-role_admin = Role.create!(name: "admin")
-role_viewer = Role.create!(name: "viewer")
-role_editor = Role.create!(name: "editor")
-# highlight-next-line
-+role_author = Role.create!(name: "author")
-
-# The test@example.com user is the only user and admin of the "Single User Org" organization
-UsersRole.create!(user: user, organization: org[0], role: role_admin)
-# Only test@example.com authors blogs in the "MuSinglelti User Org" organization
-generate_blogs(user, org[0])
-
-# The test@example.com and other@example.com are both users and admins of the "Multi User Org" organization
-UsersRole.create!(user: user, organization: org[1], role: role_admin)
 # Both users author blogs in the "Multi User Org" organization
-generate_blogs(user, org[1])
-generate_blogs(user_other, org[1])
+org = Organization.find_by(name: "Multi User Org")
+generate_blogs(user, org)
+generate_blogs(user_other, org)
 
-# The test@example.com is a viewer and other@example.com is an admin of the "Viewer Org" organization
-UsersRole.create!(user: user, organization: org[2], role: role_viewer)
-UsersRole.create!(user: user_other, organization: org[2], role: role_admin)
 # Only other@example.com authors blogs in the "Viewer Org" organization
-generate_blogs(user_other, org[3])
+org = Organization.find_by(name: "Viewer Org")
+generate_blogs(user_other, org)
 
-# The test@example.com is an editor and other@example.com is an admin of the "Editor Org" organization
-UsersRole.create!(user: user, organization: org[3], role: role_editor)
-UsersRole.create!(user: user_other, organization: org[3], role: role_admin)
 # Only other@example.com authors blogs in the "Editor Org" organization
-generate_blogs(user_other, org[3])
+org = Organization.find_by(name: "Editor Org")
+generate_blogs(user_other, org)
 
 # highlight-next-line
-+# The test@example.com is an author and other@example.com is an admin of the "Author Org" organization
+# Both test@example.com author blogs in the "Author Org" organization
 # highlight-next-line
-+UsersRole.create!(user: user, organization: org[4], role: role_author)
+org = Organization.find_by(name: "Author Org")
 # highlight-next-line
-+UsersRole.create!(user: user_other, organization: org[4], role: role_admin)
+generate_blogs(user, org)
 # highlight-next-line
-+# Only other@example.com authors blogs in the "Editor Org" organization
-# highlight-next-line
-+generate_blogs(user, org[4])
-# highlight-next-line
-+generate_blogs(user_other, org[4])
+generate_blogs(user_other, org)
 ```
 
 And add the seed data to the database
+
+```mdx-code-block
+<Tabs>
+<TabItem value="Docker">
+```
+
+From the root of the project
+
+```bash
+docker compose run --rm backend "rails db:seed"
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="Local">
+```
+
+From the `server` directory
 
 ```bash
 rails db:seed
 ```
 
+```mdx-code-block
+</TabItem>
+</Tabs>
+```
+
 ## Restart the server
+
+```mdx-code-block
+<Tabs>
+<TabItem value="Docker">
+```
+
+From the root of the project
+
+```bash
+docker compose restart backend
+```
+
+```mdx-code-block
+</TabItem>
+<TabItem value="Local">
+```
+
+`Ctrl-C` to stop the backend and
 
 ```bash
 rails s
+```
+
+```mdx-code-block
+</TabItem>
+</Tabs>
 ```
 
 ## Try the Author Org
