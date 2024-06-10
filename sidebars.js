@@ -47,12 +47,22 @@ const sidebars = {
   guide: [
     {
       type: "category",
-      label: "Upgrading",
+      label: "Development",
       link: {
-        type: "doc",
-        id: "guides/updating",
+        type: "generated-index",
+        title: "Development",
+        description: "Learn more about developing with Rhino",
+        slug: "/guides/development",
+        keywords: ["guides", "development"],
       },
-      items: ["guides/release_notes"],
+      items: [
+        "guides/development/debugging",
+        "guides/testing",
+        "guides/development/ides",
+        "guides/updating",
+        "guides/release_notes",
+        "guides/maintenance",
+      ],
     },
     {
       type: "category",
@@ -178,23 +188,6 @@ const sidebars = {
         "guides/importing/importing_google_sheets",
         "guides/importing/importing_excel_csv",
         "guides/importing/importing_scraping",
-      ],
-    },
-    {
-      type: "category",
-      label: "Development",
-      link: {
-        type: "generated-index",
-        title: "Development",
-        description: "Learn more about developing with Rhino",
-        slug: "/guides/development",
-        keywords: ["guides", "development"],
-      },
-      items: [
-        "guides/dev_environment",
-        "guides/testing",
-        "guides/maintenance",
-        "guides/development/dev_tool",
       ],
     },
     "guides/faq",
