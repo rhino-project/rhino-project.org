@@ -21,11 +21,12 @@ const sidebars = {
     {
       type: "category",
       label: "Getting Started",
+      collapsed: false,
       link: {
         type: "doc",
         id: "getting_started/index",
       },
-      items: ["getting_started/manual"],
+      items: ["getting_started/docker", "getting_started/manual"],
     },
     {
       type: "category",
