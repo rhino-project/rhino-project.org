@@ -1,4 +1,29 @@
-# Dev Tool
+# Debugging
+
+## Backend
+
+All standard rails debugging tools are available https://guides.rubyonrails.org/debugging_rails_applications.html
+
+### Debug information
+
+The OpenAPI description of the API is available at http://localhost:3000/api/info/openapi
+
+A graph of the ownership is available at http://localhost:3000/api/info/graph
+
+### Entity Relationship Diagram
+
+To generate an Entity Relationship Diagram, run
+
+```bash
+cd server
+rails diagram:all
+```
+
+and look at the files in doc/\*.svg
+
+## Frontend
+
+### Dev Tool
 
 Rhino provides a dev tool to help you develop and debug your application. It is available at in the upper right corner of the application. When you click on the icon, it will open the dev tool on top of the application. You can close it by clicking on the close icon in the upper right corner of the dev tool.
 
@@ -8,6 +33,6 @@ You are provided with information on the model being displayed and context speci
 
 ![](/img/dev_tool_open.png)
 
-## Production
+#### Production
 
 The dev tool is compiled out of the production build. It is not available in production.
