@@ -37,6 +37,10 @@ git checkout -b task/PROJ-777
 
 #### Merge the updated `rhino-project-template-v3.0.0-beta.27` into the newly created branch:
 
+:::danger
+Remove `client/node_modules` before merging otherwise you may encounter https://github.com/npm/cli/issues/4828
+:::
+
 ```
 git merge rhino-project-template-v3.0.0-beta.27
 ```
