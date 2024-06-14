@@ -1,8 +1,10 @@
-# Resources & Properties
+# Properties
+
+Properties are generated from attributes on an ActiveRecord model. They are used to define the data model for a resource and are used to generate the API schema, validation, and serialization.
 
 ## Restricting properties
 
-Properties on a resource can be restricted for reading and or writing
+Properties on a model can be restricted for reading and or writing in the API.
 
 ### Including specific properties
 
@@ -51,17 +53,6 @@ A specific format can be set for a property. For example, a phone number can be 
 
 ```ruby
 rhino_properties_formats phone: :phone, blog_categories: :join_table_simple
-```
-
-### Setting resource display name
-
-Rhino uses ActiveModel::Naming to determine the display name for a model. This can be overridden by setting the translation for the model name in the locale file. See [ActiveModel::Naming](https://api.rubyonrails.org/classes/ActiveModel/Naming.html) for and [I18n](https://guides.rubyonrails.org/i18n.html#translations-for-active-record-models) for more information.
-
-```yaml title=config/locales/en.yml
-en:
-  activerecord:
-    models:
-      store_account: Account
 ```
 
 ### Setting property display name
