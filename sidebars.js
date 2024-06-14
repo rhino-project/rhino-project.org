@@ -99,7 +99,7 @@ const sidebars = {
         slug: "/guides/api",
         keywords: ["guides", "api"],
       },
-      items: ["guides/models", "guides/properties"],
+      items: ["guides/models", "guides/properties", "guides/routes"],
     },
     {
       type: "category",
