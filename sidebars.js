@@ -89,7 +89,18 @@ const sidebars = {
         "guides/production/apm",
       ],
     },
-    "guides/properties",
+    {
+      type: "category",
+      label: "API",
+      link: {
+        type: "generated-index",
+        title: "API",
+        description: "Learn more about using the Rhino API features",
+        slug: "/guides/api",
+        keywords: ["guides", "api"],
+      },
+      items: ["guides/models", "guides/properties"],
+    },
     {
       type: "category",
       label: "UI Customization",

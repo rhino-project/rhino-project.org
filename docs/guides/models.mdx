@@ -1,0 +1,36 @@
+# Models
+
+Models in Rhino are standard Rails models that are exposed automatically via REST API when added as resources to `server/config/rhino.rb`.
+
+In development the OpenAPI schema is generated from the models and can be accessed at `/api/info/openapi`.
+
+## Generating Models
+
+The Rhino model generator allows you to generate models and their associated files with rhino information included. It is similar to the Rails model generator with the addition of the owner option.
+
+```bash
+rails generate rhino:model ModelName field1:type field2:type --owner myowner
+```
+
+if the model is [globally owned](../concepts/resources#global-owner) you can optionally use the `--global-owner` flag.
+
+```bash
+rails generate rhino:model ModelName field1:type field2:type --global-owner
+```
+
+if the model is owned by the [base owner](../concepts/resources#base-owner) you can optionally use the `--base-owner` flag.
+
+```bash
+rails generate rhino:model ModelName field1:type field2:type --base-owner
+```
+
+## Changing model display name
+
+Rhino uses ActiveModel::Naming to determine the display name for a model. This can be overridden by setting the translation for the model name in the locale file. See [ActiveModel::Naming](https://api.rubyonrails.org/classes/ActiveModel/Naming.html) for and [I18n](https://guides.rubyonrails.org/i18n.html#translations-for-active-record-models) for more information.
+
+```yaml title=config/locales/en.yml
+en:
+  activerecord:
+    models:
+      blog: Super Blog
+```
