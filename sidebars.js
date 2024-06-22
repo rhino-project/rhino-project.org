@@ -174,9 +174,9 @@ const sidebars = {
       collapsed: false,
       items: [
         "guides/audit_trail",
+        "guides/jobs",
         "guides/file_storage",
         "guides/geocoding",
-        "guides/jobs",
         "guides/notifications",
         "guides/search",
         "guides/subscription",
