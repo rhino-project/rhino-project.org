@@ -173,6 +173,7 @@ const sidebars = {
       },
       collapsed: false,
       items: [
+        "guides/analytics",
         "guides/audit_trail",
         "guides/jobs",
         "guides/file_storage",

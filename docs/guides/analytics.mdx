@@ -1,0 +1,28 @@
+# Analytics
+
+Analtyics are a powerful tool to understand how your application is being used. Rhino provides a simple way to integrate analytics into your application using
+
+There are many available services that provide analytics. [Segment](https://segment.com/) is the chosen one by default as it can connect multiple sources of analytics data to multiple destinations (Google Analytics, Mixpanel, Intercom, etc).
+
+## Events
+
+Rhino as best as possible follows the [Segment B2B Saas Spec](https://segment.com/docs/connections/spec/b2b-saas/) for both the front end and the back end.
+
+### Back End User Events
+
+The following events are sent to Segment from the back end:
+
+- Account Created
+- Account Deleted
+- Signed Up
+- Signed In
+- Signed Out
+- Invite Sent
+- Account Added User
+- Account Removed User
+
+Custom events can be added by calling `Rhino::SegmentHelper.track`
+
+### Front End User Events
+
+Page and identify events are sent to Segment from the front end automatically via the `<PageAnalytics>` component.
