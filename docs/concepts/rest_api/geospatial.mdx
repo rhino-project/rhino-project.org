@@ -1,0 +1,41 @@
+# Geospatial
+
+This guide demonstrates use cases for the Geospatial Sieve. This sieve is used when a `geospatial` parameter is found in the query parameters, _e.g._ `?geospatial[near][location][latitude]=41.2565&geospatial[near][location][longitude]=-95.9345&geospatial[near][location][max_distance]=10`.
+
+:::tip
+Turn on geocoding for a model for the Geospatial Sieve to work. See the [Geocoding guide](../../guides/geocoding) for more information.
+:::
+
+## General usage
+
+The canonical use case for the geospaile sieve is to query for results within a certain distance of a location. For example, if it is needed to fetch contacts within 10 miles of Omaha NE:
+
+```
+?geospatial[near][location]='Omaha NE US'&geospatial[near][location][max_distance]=10`
+```
+
+### Location
+
+The `location` parameter is required and is the location to search around. It can be a string with an address:
+
+```
+?geospatial[near][location]='Omaha NE US'&geospatial[near][location][max_distance]=10`
+```
+
+or an object with `latitude` and `longitude` keys:
+
+```
+?geospatial[near][location][latitude]=41.2565&geospatial[near][location][longitude]=-95.9345&geospatial[near][location][max_distance]=10`
+```
+
+### Max Distance
+
+The `max_distance` parameter is required and is the maximum distance in miles from the location to search for results. Pass units as `km` or change the default in `server/config/initializers/geocoder.rb`.
+
+### Units
+
+The `units` parameter is optional and is the unit of distance to use. The default is `mi` for miles. Pass `km` for kilometers:
+
+```
+?geospatial[near][location][latitude]=41.2565&geospatial[near][location][longitude]=-95.9345&geospatial[near][location][max_distance]=10&geospatial[near][location][units]=km`
+```

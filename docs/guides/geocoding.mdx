@@ -1,10 +1,24 @@
 # Geocoding
 
-Geocoding capabilities can be added to Rhino with the [geocoder](https://github.com/alexreisner/geocoder) gem
+Geocoding capabilities can be utilized to Rhino with the already included [geocoder](https://github.com/alexreisner/geocoder) gem. Models should be geocoded with the `geocoded_by` method and the `after_validation` callback. The `geocode` method can be used to trigger the geocoding process.
 
-```bash
-bundle add geocoder
-rails generate geocoder:config
+```ruby title="app/models/location.rb"
+class Location < ApplicationRecord
+  geocoded_by :address
+  after_validation :geocode, if: :will_save_change_to_address?
+end
+```
+
+:::tip
+The `will_save_change_to_address?` method is used to trigger the geocoding process only if the address has changed - this can help to avoid unnecessary API calls.
+:::
+
+and reverse geocoding can be done with the `reverse_geocoded_by` method if latitude and longitude columns are already in the model:
+
+```ruby title="app/models/location.rb"
+class Location < ApplicationRecord
+  reverse_geocoded_by :latitude, :longitude
+end
 ```
 
 ## API Access
@@ -49,45 +63,23 @@ Geocoder.configure(
 
 ## Testing
 
-To test geocoding in development, you can configure the geocoder to use test mode with a default stub in `test/test_helper.rb`:
+`test/test_helper.rb` contains a default stub for the geocoder:
 
 ```ruby title="test/test_helper.rb"
-class ActiveSupport::TestCase
-  # Run tests in parallel with specified workers
-  parallelize(workers: :number_of_processors)
-
-  parallelize_setup do |worker|
-    SimpleCov.command_name "#{SimpleCov.command_name}-#{worker}"
-
-    ActiveStorage::Blob.service.root = "#{ActiveStorage::Blob.service.root}-#{worker}"
-
-    # Set the geocoder to test mode and give it a default stub
-    # highlight-next-line
-    Geocoder.configure(lookup: :test, ip_lookup: :test)
-    # highlight-next-line
-    Geocoder::Lookup::Test.set_default_stub(
-    # highlight-next-line
-      [
-    # highlight-next-line
-        {
-    # highlight-next-line
-          "coordinates" => [40.7143528, -74.0059731],
-    # highlight-next-line
-          "address" => "New York, NY, USA",
-    # highlight-next-line
-          "state" => "New York",
-    # highlight-next-line
-          "state_code" => "NY",
-    # highlight-next-line
-          "country" => "United States",
-    # highlight-next-line
-          "country_code" => "US"
-    # highlight-next-line
-        }
-    # highlight-next-line
-      ]
-    # highlight-next-line
-    )
-  end
-end
+# Set the geocoder to test mode and give it a default stub
+Geocoder.configure(lookup: :test, ip_lookup: :test)
+Geocoder::Lookup::Test.set_default_stub(
+  [
+    {
+      "coordinates" => [41.2565, -95.9345],
+      "address" => "Omaha, NE, US",
+      "state" => "Nebraska",
+      "state_code" => "NE",
+      "country" => "United States",
+      "country_code" => "US"
+    }
+  ]
+)
 ```
+
+Add additional stubs for testing as needed.
