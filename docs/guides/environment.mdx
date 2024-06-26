@@ -1,0 +1,55 @@
+# Environment Variables
+
+## .env Files
+
+Rhino uses dotenv to load environment variables from `.env` files. The `.env` files are located in the root of the server or client directory. The `.env` file is not checked into source control.
+
+The server uses the [dotenv-rails](https://github.com/bkeepers/dotenv) gem to load the `.env` file. The client uses the built in [Vite env support](https://vitejs.dev/guide/env-and-mode) to load the `.env` file.
+
+## Client Environment Variables
+
+The client environment variables are prefixed with `VITE_`. The client environment variables are loaded into the client at build time. useRhinoConfig will load the client environment variables into the client without the prefix.
+
+```jsx
+import { useRhinoConfig } from "@rhino-project/config";
+
+const MyWidget = {
+const {
+  env: { API_ROOT_PATH },
+} = useRhinoConfig();
+
+return <div>{API_ROOT_PATH}</div>;
+};
+```
+
+or you can directly access the the unprefixed environment variables.
+
+```jsx
+import env from "@rhino-project/config/env";
+
+const MY_API_ENDPOINT = new URL("my-api", env.API_ROOT_PATH).toString();
+```
+
+The environment variables are also available via the `import.meta.env` object from Vite.
+
+### IntelliSense for TypeScript
+
+By default, Rhino provides type definitions for the Rhino environment in `@rhino-project/config/rhino-env`. While you can define more custom env variables in .env files, you may want to get TypeScript IntelliSense for user-defined env variables that are prefixed with VITE\_ and made available in Rhino Config. To achieve this, you can edit `client/src/rhino-env.d.ts` , then augment RhinoEnv like this:
+
+```jsx
+/// <reference types="@rhino-project/config/rhino-env" />
+
+interface RhinoEnv {
+  MY_CUSTOM_ENV: string;
+}
+```
+
+:::tip
+VITE_MY_CUSTOM_ENV can also be added to `client/src/vite-env.d.ts` if you want to use it directly from `import.meta.env`.
+:::
+
+:::warning
+Imports will break type augmentation
+
+If the RhinoEnv augmentation does not work, make sure you do not have any import statements in rhino-env.d.ts. See the TypeScript documentation for more information.
+:::
