@@ -1,0 +1,22 @@
+# Shell
+
+## Custom Shell
+
+The sidebar displays a list of models that are available to the user. The list is generated from the `models` property of the PrimaryNavigation component.
+
+```rhinoconfig title="src/rhino.config.js" levels=global
+ApplicationShell: MyCustomShell
+```
+
+The new shell should take and display children:
+
+```jsx title="src/MyCustomShell.js"
+export const MyCustomShell = ({ children }) => {
+  return (
+    <div>
+      <h1>My Custom Shell</h1>
+      {children}
+    </div>
+  );
+};
+```

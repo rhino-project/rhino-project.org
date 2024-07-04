@@ -14,16 +14,16 @@ The idea behind this process is to have a branch set up to track Rhino repositor
 git remote add rhino-project-template git@github.com:rhino-project/rhino-project-template.git
 ```
 
-#### Fetch the `v3.0.0-beta.28` tag from Rhino and name it `rhino-project-template-v3.0.0-beta.28` locally:
+#### Fetch the `v3.0.0-beta.29` tag from Rhino and name it `rhino-project-template-v3.0.0-beta.29` locally:
 
 ```
-git fetch rhino-project-template v3.0.0-beta.28:rhino-project-template-v3.0.0-beta.28
+git fetch rhino-project-template v3.0.0-beta.29:rhino-project-template-v3.0.0-beta.29
 ```
 
 #### Get the latest updates from Rhino's repository
 
 ```
-git checkout rhino-project-template-v3.0.0-beta.28
+git checkout rhino-project-template-v3.0.0-beta.29
 ```
 
 #### Create a ticket (in Jira, Trello, etc.) just for the update, e.g. `[PROJ-777] Update from rhino-project-template`
@@ -35,14 +35,14 @@ git checkout main
 git checkout -b task/PROJ-777
 ```
 
-#### Merge the updated `rhino-project-template-v3.0.0-beta.28` into the newly created branch:
+#### Merge the updated `rhino-project-template-v3.0.0-beta.29` into the newly created branch:
 
 :::danger
 Remove `client/node_modules` before merging otherwise you may encounter https://github.com/npm/cli/issues/4828
 :::
 
 ```
-git merge rhino-project-template-v3.0.0-beta.28
+git merge rhino-project-template-v3.0.0-beta.29
 ```
 
 Review the [release notes](release_notes) and to test the application to make sure nothing was broken.
@@ -80,7 +80,7 @@ Merge: fa486dd6 62bab999
 Author: Person <person@rhion-project.org>
 Date:   Mon Jan 10 20:29:39 2022 -0300
 
-    Merge branch 'rhino-project-template-v3.0.0-beta.28' into task/PROJ-777
+    Merge branch 'rhino-project-template-v3.0.0-beta.29' into task/PROJ-777
 ```
 
 If that is the state of `git log`, then there isn't anything else to be done and it is recommended to open the PR just like this. However, in case there are more commits and you want to rebase and squash them, you might find the state of `git log` like this:
@@ -109,7 +109,7 @@ Merge: fa486dd6 62bab999
 Author: Person <person@rhino-project.org>
 Date:   Mon Jan 10 20:29:39 2022 -0300
 
-    Merge branch 'rhino-project-template-v3.0.0-beta.28' into task/PROJ-777
+    Merge branch 'rhino-project-template-v3.0.0-beta.29' into task/PROJ-777
 ```
 
 Then, you're probably going to need to squash the last 3 commits (i.e. `6feb48197a71742803a04af5dac2a2338012356b`, `abc8a2ba2112f5e03f3ece20c9e35c76c2717196` and `36676eab4e68e8d3959aee4a8a66a5265882f09f`) into one single commit with the message being `[PROJ-777] Update from rhino-project-template`. **It's really important that you keep the merge commit intact**, so you will have to rebase from `1b4134524d465b02a795d57c3c06de29960352a7` (merge commit) and up:
@@ -134,7 +134,7 @@ Merge: fa486dd6 62bab999
 Author: Person <person@rhino-project.org>
 Date:   Mon Jan 10 20:29:39 2022 -0300
 
-    Merge branch 'rhino-project-template-v3.0.0-beta.28' into task/PROJ-777
+    Merge branch 'rhino-project-template-v3.0.0-beta.29' into task/PROJ-777
 ```
 
 It is expected that the commit hash from `[PROJ-777] Update from rhino-project-template` just changes, as that's exactly what `git rebase` does - re-writes the history.

@@ -114,6 +114,7 @@ const sidebars = {
       },
       items: [
         "guides/ui/general",
+        "guides/ui/shell",
         "guides/ui/sidebar",
         {
           type: "category",
@@ -202,6 +203,7 @@ const sidebars = {
         "guides/importing/importing_scraping",
       ],
     },
+    "guides/environment",
     "guides/faq",
   ],
 
@@ -216,6 +218,7 @@ const sidebars = {
       },
       items: [
         "concepts/rest_api/filtering",
+        "concepts/rest_api/geospatial",
         "concepts/rest_api/sorting",
         "concepts/rest_api/pagination",
         "concepts/rest_api/searching",
