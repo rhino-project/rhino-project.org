@@ -107,6 +107,7 @@ const config = {
             type: "docsVersionDropdown",
             position: "right",
           },
+          { to: "blog", label: "Blog", position: "left" },
           {
             href: "https://github.com/rhino-project",
             label: "GitHub",
