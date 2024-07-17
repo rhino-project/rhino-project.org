@@ -208,6 +208,7 @@ const sidebars = {
   ],
 
   concept: [
+    "concepts/principles",
     "concepts/resources/index",
     {
       type: "category",
@@ -243,6 +244,7 @@ const sidebars = {
   ],
 
   reference: [
+    "reference/tech_stack",
     {
       type: "link",
       label: "Backend API",
