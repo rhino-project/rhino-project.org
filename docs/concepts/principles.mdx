@@ -1,0 +1,52 @@
+# Principles & Philosophy
+
+Overall Rhino is intended to make it easier to build applications by providing "commoditized" features authentication, authorization, super admin, file storage, geocoding, and more out of the box and to provide a set of tools and best practices to do so.
+
+## Open Source & Open Standards Based
+
+Open source allows for transparency, collaboration, and innovation, and reduces the need to reinvent the wheel. Open source has a key benefit of being able to "debug" all the way down to the metal if necessary to understand how something works and solve problems. Open standards allow for interoperability and future-proofing.
+
+## Reasonable Base Architecture
+
+Start with a reasonable base architecture that is well understood:
+
+- Modular Monolith
+- Backend
+  - Relational Database
+  - REST API
+- Frontend
+  - SPA
+- Mobile
+  - Responsive and then Cross Platform
+
+## Composable Layers
+
+We should use abstraction layers that compose to "break out of the box" incrementally, and allow for the creation of new abstractions and falling back to to the original libraries and tools (React, Rails) when necessary.
+
+## Make technology choices
+
+There are a set of decisions that have little impact on the outcome most projects, what matters is that the are made. Narrowing the chosen tech stacks reduces combinatorial explosion of support and testing and enables deep integration to build higher level abstractions.
+
+Open source and open standards should be the default choice. When there are exceptions for regulatory concerns, lack of suitable open source options, or the technology is too far from commoditization, we should select best in class, accounting for cost and implementation time.
+
+Supporting multiple alternatives should be done only when there is a clear user case for it, such as integrating with existing tools that are broadly used or migration to a new technology choice. This is because supporting multiple alternatives increases the complexity of the system, and the cost of maintenance and support. It is better to migrate to a new technology choice when the time is right.
+
+## Build Higher Level Abstractions and Deep Integration
+
+Build higher level abstractions like "payments" and "subscriptions" that are built on top of the base architecture and can be used across multiple projects.
+
+## Target Developer Experience
+
+Look to provide low effort development environments and good developer experience out of the box. This includes:
+
+- Continuous Integration for [Unit/Integration and E2E](../guides/testing)
+- Linting
+- Static Analysis
+- IDE Configuration
+
+## Provide a Path to Production
+
+- Continuous Deployment
+- Monitoring
+  - APM
+  - Error Trapping
