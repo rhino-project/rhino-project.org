@@ -1,6 +1,27 @@
 # Super Admin
 
-This guide describes how to set up a super admin in Rhino.
+By default Rhino includes an admin dashboard that allows you to manage your application. This dashboard is built using the [ActiveAdmin](https://activeadmin.info/) gem.
+
+## Security
+
+ActiveAdmin 3+ requires ransack 4 which has a system for [whitelisting attributes and scopes](https://activerecord-hackery.github.io/ransack/going-further/other-notes/#authorization-allowlistingdenylisting) for searching. Rhino by default allows the same attributes and associations for viewing and for filtering as for reading.
+
+To customize the attributes and associations that can be searched, you can override the `ransackable_attributes`, `ransackable_associations`, and `ransackable_filters` methods in your model.
+
+```ruby
+    def ransackable_attributes(_auth_object = nil)
+      super + ['my_special_attribute']
+    end
+
+    def ransackable_associations(_auth_object = nil)
+      super + ['my_special_scope']
+    end
+
+    def ransackable_filters(auth_object = nil)
+      super + ['my_special_filter']
+    end
+  end
+```
 
 ## Dashboard
 
