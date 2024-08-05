@@ -1,5 +1,29 @@
 # Release Notes
 
+## 3.0.0-beta.30
+
+The key changes in this release are:
+
+- Merge overrides in order of specificity
+- [ActiveAdmin 3.2.2](../guides/super_admin#security)
+- Vitest 2
+
+### Merge overrides in order of specificity
+
+Overrides are now merged in order of specificity. This means that global overrides are applied first, then model overrides and finally attribute overrides. This allows for more fine grained control over the overrides. Previously more specific overrides would completely override the less specifc override.
+
+```jsx rhino.config.js
+const rhinoConfig = {
+  version: 1,
+  components: {
+    ModelIndex: { props: { defaultLimit: 20 } },
+    // highlight-next-line
+    // This would not inherit defaultLimit of 20 previously, now it does
+    blog: { ModelIndex: { props: { defaultSort: "updated_at" } } },
+  },
+};
+```
+
 ## 3.0.0-beta.29
 
 The key changes in this release are:
