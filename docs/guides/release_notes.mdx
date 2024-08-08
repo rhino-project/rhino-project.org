@@ -1,12 +1,45 @@
 # Release Notes
 
+## 3.0.0-beta.31
+
+The key changes in this release are:
+
+- Default to no js in jsx
+- Vitest 2
+- Drop CircleCI support (Github Actions only)
+
+### Default to no js in jsx
+
+Previously for `create-react-app` project compatibility, the jsx tranform was used for all .js files. Files can be renamed to .jsx to use the jsx transform. This is now the default for new projects. `enableJsxInJs` can be set to `true` for the RhinoVitePlugin to use the jsx transform for .js files.
+
+From the root of the project run the following script to rename all .js files to .jsx:
+
+```bash
+#!/bin/bash
+
+# Navigate to the client/src directory
+cd client/src
+
+# Find and rename all .js files to .jsx, excluding client/src/models/static.js
+find . -type f -name "*.js" ! -path "./models/static.js" | while read file; do
+  git mv "$file" "${file%.js}.jsx"
+done
+
+# Find and rename all .spec.js.snap files to .spec.jsx.snap
+find . -type f -name "*.spec.js.snap" | while read file; do
+  git mv "$file" "${file%.spec.js.snap}.spec.jsx.snap"
+done
+
+# Navigate back to the original directory
+cd -
+```
+
 ## 3.0.0-beta.30
 
 The key changes in this release are:
 
 - Merge overrides in order of specificity
 - [ActiveAdmin 3.2.2](../guides/super_admin#security)
-- Vitest 2
 
 ### Merge overrides in order of specificity
 
