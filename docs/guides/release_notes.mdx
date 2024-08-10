@@ -1,5 +1,28 @@
 # Release Notes
 
+## 3.0.0-beta.32
+
+The key changes in this release are:
+
+- Ruby 3.3.4 and Rails 7.1.3.4
+
+:::info
+It is recommended to update to v3.0.0-beta.31 before updating to v3.0.0-beta.32
+:::
+
+### Ruby 3.3.4 and Rails
+
+General guidance about the upgrade is at [upgrading Ruby on Rails](https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#upgrading-from-rails-7-0-to-rails-7-1)
+
+- Please review the [the new config defaults](https://github.com/rails/rails/blob/7-1-stable/railties/lib/rails/generators/rails/app/templates/config/initializers/new_framework_defaults_7_1.rb.tt) that are enabled
+- [Library code is now autoloaded](https://github.com/rhino-project/rhino-project-template/pull/73/files#diff-861b299234b0d927800607a4d3017acf00ddc0ec361111adb4c41f0bd72b10faR17) as per [7.1 defaults](https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#config-autoload-lib-and-config-autoload-lib-once)
+- [RAILS_SERVE_STATIC_FILES](https://github.com/rails/rails/pull/49852) and [RAILS_LOG_TO_STDOUT](https://github.com/rails/rails/pull/47138) are no longer required in production, they are enabled by default
+- Removed the following initializers that were not used and no longer included by default in new projects
+  - server/config/initializers/application_controller_renderer.rb
+  - server/config/initializers/backtrace_silencers.rb
+  - server/config/initializers/mime_types.rb
+- Ensured that if SECRET_KEY_BASE is not properly set in production, the server will not start
+
 ## 3.0.0-beta.31
 
 The key changes in this release are:
