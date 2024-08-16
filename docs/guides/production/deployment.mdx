@@ -27,10 +27,7 @@ The server requires the following environment variables to be set:
     APP_BASE=server
     FRONT_END_URL=https://<client-host-name>,
     LANG=en_US.UTF-8
-    RACK_ENV=production
     RAILS_ENV=production
-    RAILS_LOG_TO_STDOUT=enabled
-    RAILS_SERVE_STATIC_FILES=enabled
     ROOT_URL=https://<server-host-name>
     SECRET_KEY_BASE=<generated-secret-key>
     SENDGRID_API_KEY=<sendgrid-api-key>
@@ -54,7 +51,7 @@ Any additional environment variables that need to be passed into that app should
 
 Rhino comes with default support for deploying to Heroku with docker for server only. This is useful if you need to deploy custom tools to the image, for instance an SDK that needs to be built and called from ActiveJob.
 
-Rhino does _not_ directly support Heroku for the client because of https://devcenter.heroku.com/articles/build-docker-images-heroku-yml#set-build-time-environment-variables - build time variables cannot be sourced from environment variables.  The Dockerfile must altered to provide VITE_API_ROOT_PATH directly.
+Rhino does _not_ directly support Heroku for the client because of https://devcenter.heroku.com/articles/build-docker-images-heroku-yml#set-build-time-environment-variables - build time variables cannot be sourced from environment variables. The Dockerfile must altered to provide VITE_API_ROOT_PATH directly.
 
 Rhino uses the heroku.yml method of building and deploying docker images. https://devcenter.heroku.com/articles/build-docker-images-heroku-yml
 
