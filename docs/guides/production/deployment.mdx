@@ -14,10 +14,10 @@ For both client and server the default Heroku stack `heroku-22` is recommended.
 
 The server needs the `https://github.com/lstoll/heroku-buildpack-monorepo` and `heroku/ruby` buildpack. Along with the following add-ons:
 
-    heroku-postgresql:mini
+    heroku-postgresql:essential-0
     heroku-redis:mini
     papertrail:choklad
-    rollbar:free
+    rollbar:trial-5k
 
 Redis is required only for [rhino_jobs](/docs/guides/jobs) support and rollbar is required for [error trapping](error_reporting).
 
