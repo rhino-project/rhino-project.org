@@ -12,8 +12,8 @@ git clone https://github.com/rhino-project/rhino-project-template.git
 
 Versions:
 
-- PostgreSQL: 12 or newer
-- Redis: 6 or newer
+- PostgreSQL: 15 or newer
+- Redis: 7
 
 ### OSX
 
@@ -70,15 +70,15 @@ sudo service redis-server start
 
 Versions:
 
-- Ruby: 3.1.4
-- Node: 20.10.0
+- Ruby: 3.3.4
+- Node: 20.14.0
 
 ### RVM (Ruby) and NVM (Node)
 
 1. Install rvm
 
 ```bash
- curl -sSL https://get.rvm.io | bash -s stable --ruby=3.1.4
+ curl -sSL https://get.rvm.io | bash -s stable --ruby=3.3.4
 ```
 
 2. As per rvm instructions on completion to start using RVM you need to run
@@ -93,10 +93,10 @@ source $HOME/.rvm/scripts/rvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 ```
 
-4. Install node 20.10.0,
+4. Install node 20.14.0,
 
 ```bash
-nvm install v20.10.0
+nvm install v20.14.0
 ```
 
 ### Asdf (Ruby and Node)
