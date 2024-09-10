@@ -1,6 +1,6 @@
 # Routes
 
-Routes for Rhino models listed as resources in `server/config/rhino.rb` are automatically generated. The routes are based on the model name and the owner of the model. The routes are generated for the standard CRUD actions except for globally owned models which only have the index and show actions. The base scope for the API routes is `/api`.
+Routes for Rhino models listed as resources in `config/rhino.rb` are automatically generated. The routes are based on the model name and the owner of the model. The routes are generated for the standard CRUD actions except for globally owned models which only have the index and show actions. The base scope for the API routes is `/api`.
 
 ## Adding and Removing specific API routes
 
@@ -34,20 +34,26 @@ end
 
 ## Adding custom API routes
 
-Custom API routes can be added to the Rhino API by adding them to the `server/config/routes.rb` file. The routes can be added in the standard Rails way.
+Custom API routes can be added to the Rhino API by adding them to the `config/routes.rb` file. The routes can be added in the standard Rails way.
 
-```ruby title="server/config/routes.rb"
+```ruby title="config/routes.rb"
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
+  # We introspect the models to create the admin interface
+  # https://github.com/activeadmin/activeadmin/issues/783#issuecomment-244587442
+  ActiveAdmin.routes(self) rescue ActiveAdmin::DatabaseHitDuringLoad
 
   scope Rhino.namespace do
     # highlight-next-line
     get 'api/mycustom_endpoint', to: 'mycustomcontroller#index'
-
-    devise_for :admin_users, ActiveAdmin::Devise.config
-    ActiveAdmin.routes(self)
   end
 
-  root to: redirect(ENV["FRONT_END_URL"] || "/"), via: :all
+  constraints lambda { |req| !req.path.starts_with?("/api/") && !req.path.starts_with?("/rails/") && !req.path.starts_with?("/jobs")} do
+    match "*path", to: "frontend#root", via: :get
+  end
+  root to: "frontend#root", via: :get
+end
 end
 ```
 
@@ -55,7 +61,7 @@ end
 
 The `namespace` configuration option can be used to change the base scope for the API routes. For example, setting `config.namespace = :my_api` would change the base scope for the API routes to `/my_api`.
 
-```ruby title="server/config/rhino.rb"
+```ruby title="config/rhino.rb"
 Rhino.setup do |config|
   # ==> Owner configuration
   # The auth owner class

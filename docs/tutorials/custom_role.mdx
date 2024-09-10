@@ -22,8 +22,6 @@ The data model for this tutorial is the same as the [Organization and Roles Tuto
 <TabItem value="Docker">
 ```
 
-From the root of the project
-
 ```bash
 docker compose run --rm backend "rails generate rhino:policy Author"
 ```
@@ -32,8 +30,6 @@ docker compose run --rm backend "rails generate rhino:policy Author"
 </TabItem>
 <TabItem value="Local">
 ```
-
-From the `server` directory
 
 ```bash
 rails generate rhino:policy Author
@@ -175,8 +171,6 @@ And add the seed data to the database
 <TabItem value="Docker">
 ```
 
-From the root of the project
-
 ```bash
 docker compose run --rm backend "rails db:seed"
 ```
@@ -185,8 +179,6 @@ docker compose run --rm backend "rails db:seed"
 </TabItem>
 <TabItem value="Local">
 ```
-
-From the `server` directory
 
 ```bash
 rails db:seed
@@ -203,8 +195,6 @@ rails db:seed
 <Tabs>
 <TabItem value="Docker">
 ```
-
-From the root of the project
 
 ```bash
 docker compose restart backend

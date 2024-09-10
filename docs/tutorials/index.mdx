@@ -53,8 +53,6 @@ Generate the models and database schema for the application
 <TabItem value="Docker">
 ```
 
-From the root of the project
-
 ```bash
 docker compose run --rm backend "rails g model category name:string"
 docker compose run --rm backend "rails g model blog user:references title:string published_at:datetime category:references"
@@ -66,8 +64,6 @@ docker compose run --rm backend "rails db:migrate"
 </TabItem>
 <TabItem value="Local">
 ```
-
-From the `server` directory
 
 ```bash
 rails g model category name:string
@@ -191,8 +187,6 @@ And add the seed data to the database
 <TabItem value="Docker">
 ```
 
-From the root of the project
-
 ```bash
 docker compose run --rm backend "rails db:seed"
 ```
@@ -201,8 +195,6 @@ docker compose run --rm backend "rails db:seed"
 </TabItem>
 <TabItem value="Local">
 ```
-
-From the `server` directory
 
 ```bash
 rails db:seed
@@ -220,11 +212,9 @@ rails db:seed
 <TabItem value="Docker">
 ```
 
-From the root of the project
-
 ```bash
 docker compose restart backend
-docker compose restart frontend
+docker compose restart vite
 ```
 
 ```mdx-code-block
@@ -251,7 +241,7 @@ npm start
 
 ## Create blogs and blog posts
 
-Go to [http://localhost:3001](http://localhost:3001) in your browser and login to the application with `test@example.com` and `password`.
+Go to [http://localhost:3000](http://localhost:3000) in your browser and login to the application with `test@example.com` and `password`.
 
 ![](/img/tutorial_login.png)
 

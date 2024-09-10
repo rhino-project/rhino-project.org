@@ -8,11 +8,7 @@ Rhino uses server side cookies for auth, so you must have [domains that meet the
 
 ## Heroku
 
-For both client and server the default Heroku stack `heroku-22` is recommended.
-
-### Server
-
-The server needs the `https://github.com/lstoll/heroku-buildpack-monorepo` and `heroku/ruby` buildpack. Along with the following add-ons:
+The default Heroku stack `heroku-24` is recommended. The deployment needs the `heroku/nodejs` and `heroku/ruby` buildpack. Along with the following add-ons:
 
     heroku-postgresql:essential-0
     heroku-redis:mini
@@ -24,28 +20,16 @@ Redis is required only for [rhino_jobs](/docs/guides/jobs) support and rollbar i
 The server requires the following environment variables to be set:
 
 ```env
-    APP_BASE=server
-    FRONT_END_URL=https://<client-host-name>,
+    FRONT_END_URL=https://<host-name>,
     LANG=en_US.UTF-8
     RAILS_ENV=production
-    ROOT_URL=https://<server-host-name>
+    ROOT_URL=https://<host-name>
     SECRET_KEY_BASE=<generated-secret-key>
     SENDGRID_API_KEY=<sendgrid-api-key>
-```
-
-### Client
-
-The client needs the `https://github.com/lstoll/heroku-buildpack-monorepo`, `heroku/nodejs` and `heroku-community/nginx` buildpacks
-
-The client requires the following environment variables to be set:
-
-```env
-    APP_BASE=client
     VITE_API_ROOT_PATH=https://<server-host-name>
-    NODE_ENV=production
 ```
 
-Any additional environment variables that need to be passed into that app should be prefixed with `VITE_`
+Any additional environment variables that need to be passed to the frontend should be prefixed with `VITE_`
 
 ## Heroku Docker
 
@@ -59,14 +43,12 @@ The buildpack for docker should be set to the container type `heroku stack:set c
 
 ## Docker
 
-### Server
-
 ```bash
-$ docker build -t server .
-$ docker run -it --rm -p 3002:3002 -e FRONT_END_URL="http://localhost:3003" -e PORT=3002 -e DISABLE_SSL=1 -e ROOT_URL=http://localhost:3002 server
+$ docker build -t .
+$ docker run -it --rm -p 3002:3002 -e FRONT_END_URL="http://localhost:3002" --build-arg VITE_API_ROOT_PATH=http://localhost:3002  -e PORT=3002 -e DISABLE_SSL=1 -e ROOT_URL=http://localhost:3002
 ```
 
-FRONT_END_URL will default to `http://localhost:3001` if not specified.
+FRONT_END_URL will default to `http://localhost:3000` if not specified.
 
 PORT will default to `3000` if not specified.
 
@@ -78,13 +60,4 @@ DB_NAME, DB_HOST, DB_USERNAME, DB_PASSWORD are also required for the postgres db
 
 DEFAULT_EMAIL_SENDER defaults to `from@example.com` if not specified.
 
-### Client
-
-```bash
-$ docker build --build-arg VITE_API_ROOT_PATH=http://localhost:3002 -t frontend .
-$ docker run --rm -p 3003:3003 -e PORT=3003 frontend
-```
-
 `VITE_API_ROOT_PATH` is _required_ at build time.
-
-PORT will default to `3001` if not overridden.

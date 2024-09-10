@@ -6,7 +6,7 @@ The core rhino repo `rhino-project/rhino-project-template` is configured to use 
 
 ### Frontend
 
-In the `client` sub directory, if the package is not a top level package in `package.json`, then find top level package and update that version. Use `npm ls` to find the top level package.
+If the package is not a top level package in `package.json`, then find top level package and update that version. Use `npm ls` to find the top level package.
 
 ```bash
 npm ls <lower-level-package>
@@ -14,7 +14,7 @@ npm ls <lower-level-package>
 
 ### Backend
 
-In the `server` sub directory, if the gem is not a top level gem in `Gemfile`, then find top level gem and update the version there. Use `bundle list` to find the top level gem.
+If the gem is not a top level gem in `Gemfile`, then find top level gem and update the version there. Use `bundle list` to find the top level gem.
 
 ```bash
 gem dependency <lower-level-gem> --reverse-dependencies
