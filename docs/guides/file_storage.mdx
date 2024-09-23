@@ -37,10 +37,46 @@ bucket: <%= ENV['AWS_S3_BUCKET'] %>
 ```
 
 And finally, change the active storage service from `:local` to `:amazon` in `config/environments/production.rb` file:
+
 ```ruby
 config.active_storage.service = :amazon
 ```
 
 :::warning
 You must set up CORS for the bucket you are using to allow uploads from your domain. See [this sample](https://guides.rubyonrails.org/active_storage_overview.html#example-s3-cors-configuration) for more information.
+:::
+
+## Google Cloud Storage
+
+To use Google Cloud Storage as your cloud provider, add the `google-cloud-storage` gem to your Gemfile:
+
+```bash
+bundle add google-cloud-storage
+```
+
+Then configure your storage service in with the environment variables `GOOGLE_ACCOUNT_TYPE`, `GOOGLE_PROJECT_ID`, `GOOGLE_PRIVATE_KEY_ID`, `GOOGLE_PRIVATE_KEY`, `GOOGLE_CLIENT_EMAIL`, `GOOGLE_CLIENT_ID` and `GOOGLE_BUCKET` which are used by default in `config/storage.yml`:
+
+```yaml title="config/storage.yml"
+google:
+  service: GCS
+  credentials:
+    type: <%= ENV.fetch('GOOGLE_ACCOUNT_TYPE') %>
+    project_id: <%= ENV.fetch('GOOGLE_PROJECT_ID') %>
+    private_key_id: <%= ENV.fetch('GOOGLE_PRIVATE_KEY_ID') %>
+    private_key: |
+      <%=  ENV.fetch('GOOGLE_PRIVATE_KEY').lines.map.with_index { |l, i| i == 0 ? l : "      #{l}" }.join %>
+    client_email: <%= ENV.fetch('GOOGLE_CLIENT_EMAIL') %>
+    client_id: <%= ENV.fetch('GOOGLE_CLIENT_ID') %>
+  project: <%= ENV.fetch('GOOGLE_PROJECT_ID') %>
+  bucket: <%= ENV.fetch('GOOGLE_BUCKET') %>
+```
+
+And finally, change the active storage service from `:local` to `:google` in `config/environments/production.rb` file:
+
+```ruby
+config.active_storage.service = :google
+```
+
+:::warning
+You must set up CORS for the bucket you are using to allow uploads from your domain. See [this sample](https://guides.rubyonrails.org/active_storage_overview.html#example-google-cloud-storage-cors-configuration) for more information.
 :::
