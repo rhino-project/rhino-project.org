@@ -2,9 +2,9 @@
 
 ## .env Files
 
-Rhino uses dotenv to load environment variables from `.env` files. The `.env` files are located in the root of the server or client directory. The `.env` file is not checked into source control.
+Rhino uses dotenv to load environment variables from `.env` files. The `.env` files are located in the root directory. The `.env` file is not checked into source control.
 
-The server uses the [dotenv-rails](https://github.com/bkeepers/dotenv) gem to load the `.env` file. The client uses the built in [Vite env support](https://vitejs.dev/guide/env-and-mode) to load the `.env` file.
+The rails application uses the [dotenv-rails](https://github.com/bkeepers/dotenv) gem to load the `.env` file. The `ruby_vite` gem uses the built in [Vite env support](https://vitejs.dev/guide/env-and-mode) to load the `.env` file.
 
 ## Client Environment Variables
 
@@ -34,7 +34,7 @@ The environment variables are also available via the `import.meta.env` object fr
 
 ### IntelliSense for TypeScript
 
-By default, Rhino provides type definitions for the Rhino environment in `@rhino-project/config/rhino-env`. While you can define more custom env variables in .env files, you may want to get TypeScript IntelliSense for user-defined env variables that are prefixed with VITE\_ and made available in Rhino Config. To achieve this, you can edit `client/src/rhino-env.d.ts` , then augment RhinoEnv like this:
+By default, Rhino provides type definitions for the Rhino environment in `@rhino-project/config/rhino-env`. While you can define more custom env variables in .env files, you may want to get TypeScript IntelliSense for user-defined env variables that are prefixed with VITE\_ and made available in Rhino Config. To achieve this, you can edit `app/frontend/rhino-env.d.ts` , then augment RhinoEnv like this:
 
 ```jsx
 /// <reference types="@rhino-project/config/rhino-env" />
@@ -45,7 +45,7 @@ interface RhinoEnv {
 ```
 
 :::tip
-VITE_MY_CUSTOM_ENV can also be added to `client/src/vite-env.d.ts` if you want to use it directly from `import.meta.env`.
+VITE_MY_CUSTOM_ENV can also be added to `app/frontend/src/vite-env.d.ts` if you want to use it directly from `import.meta.env`.
 :::
 
 :::warning

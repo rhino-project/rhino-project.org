@@ -109,15 +109,9 @@ nvm install v20.14.0
 asdf install
 ```
 
-## Launch the server application
+## Launch the application
 
-1. Change to the server directory
-
-```bash
-cd rhino-project-template/server
-```
-
-2. Create environment files (for both server and client)
+1. Create the environment file
 
 ```bash
 rails rhino:dev:setup
@@ -126,13 +120,14 @@ rails rhino:dev:setup
 and select 'n' when asked if you are installing for docker.
 
 :::info
-`server/env.sample` and `client/env.sample` are provided as examples. You can manually copy these to `.env` and modify the values as needed
+`env.sample` is provided as an example. You can manually copy this to `.env` and modify the values as needed
 :::
 
-3. Install gem dependencies
+3. Install gem and node dependencies
 
 ```bash
 bundle install
+npm install
 ```
 
 4. Create and load the database
@@ -141,27 +136,13 @@ bundle install
 rails db:setup
 ```
 
-5. Run the server
+5. Run the rails server
 
 ```bash
 rails s
 ```
 
-## Launch the client application
-
-1. Change to the client directory
-
-```bash
-cd rhino-project-template/client
-```
-
-2. Install dependencies:
-
-```bash
-npm install
-```
-
-3. Run the application client:
+6. Run the client development server
 
 ```bash
 npm start
@@ -169,15 +150,11 @@ npm start
 
 ## Updating the production model data
 
-Data model can be updated for production with:
+The static copy of the data model is automatically updated with the rhino vite plugin. The data model can be manually updated with:
 
 ```
 rails rhino:open_api_export
 ```
-
-## Developing the front end against remote server
-
-Because of CORS by default you will not be able to work against a deployed production server. However if you set `FRONT_END_LOCAL_URL=http://localhost:3001` you can.
 
 ## Customization
 

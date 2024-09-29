@@ -114,8 +114,6 @@ Add tagging to the BlogPost model so that the user can add tags to blog posts. I
 <TabItem value="Docker">
 ```
 
-From the root of the project
-
 ```bash
 docker compose run --rm backend "rails acts_as_taggable_on_engine:install:migrations"
 docker compose run --rm backend "rails db:migrate"
@@ -125,8 +123,6 @@ docker compose run --rm backend "rails db:migrate"
 </TabItem>
 <TabItem value="Local">
 ```
-
-From the `server` directory
 
 ```bash
 rails acts_as_taggable_on_engine:install:migrations

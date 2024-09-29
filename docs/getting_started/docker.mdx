@@ -18,25 +18,19 @@ git clone https://github.com/rhino-project/rhino-project-template.git`
 docker compose up
 ```
 
-That will start all dependencies and the backend and frontend servers. The backend server will be available at `http://localhost:3000` and the frontend server at `http://localhost:3001`.
+That will start all dependencies and the rails and frontend development server. The ui will be available at `http://localhost:3000`.
 
 ## Running commands in the containers
 
-Launch a bash shell in the backend container:
+Launch a bash shell in the rails container:
 
 ```bash
  docker compose exec backend bash
 ```
 
-or in the frontend container:
-
-```bash
- docker compose exec frontend bash
-```
-
 ### Running one-off commands in the containers
 
-You can run one-off commands in the container without launching a shell. For example, to run a rails command in the backend container:
+You can run one-off commands in the container without launching a shell. For example, to run a rails command:
 
 ```bash
 docker compose run --rm backend [your_rails_or_rhino_command_here]
@@ -72,14 +66,14 @@ This will run db and redis separately in the background. If you now run `docker 
 
 ## Troubleshooting
 
-Docker compose configuration is provided for: `postgres`, `redis`, `backend` and `frontend`. All have beend configured with named volumes. Docker containers don't persist data, any data is deleted when the container is removed. The volumes make sure we don't lose any data and speed up starting the containers.
+Docker compose configuration is provided for: `postgres`, `redis`, `backend` and `vite`. All have beend configured with named volumes. Docker containers don't persist data, any data is deleted when the container is removed. The volumes make sure we don't lose any data and speed up starting the containers.
 
 With docker compose, the volume names follow a convention: `parent_folder_name_in_lower_case` followed by `the_volume_name_in_the_docker_compose_file`. For `rhino-project_template`, the volume will be
 
 - `rhino_project_template_db_data` postgres data
 - `rhino_project_template_redis_data` redis data
 - `rhino_project_template_gem_cache` bundler cache
-- `rhino_project_template_npm_cache` node modules cache
+- `rhino_project_template_node_cache` node modules cache
 - `rhino_project_template_shared_data` other shared data
 
 Where possible the containers are isolated to a specific network to prevent conflicts with other services running on the host machine, `rhino-project-template_development`.

@@ -1,5 +1,39 @@
 # Release Notes
 
+## 3.0.0-beta.34
+
+The key changes in this release are:
+
+- Unified Rails and Ruby Vite repo
+
+:::info
+It is recommended to update to v3.0.0-beta.33 before updating to v3.0.0-beta.34
+:::
+
+### Unified Rails and Ruby Vite repo
+
+In order to transform your repo, you will need to do the following:
+
+- Run the `combined-ruby-vite-mono.sh` from https://github.com/rhino-project/mono-repo-scripts
+- Follow the [standard update](updating.mdx) instructions for beta 34
+
+#### Routing
+
+- Make sure routes are ordered correctly and that all custome routes come before the catch all front end route
+
+#### Deployment
+
+- Set build packs to nodejs and ruby for heroku
+
+```bash
+heroku buildpacks:clear -a <APP-NAME>
+heroku buildpacks:add heroku/nodejs -a <APP-NAME>
+heroku buildpacks:add heroku/ruby -a <APP-NAME>
+```
+
+- Set VITE_API_ROOT_PATH to the server
+- Remove APP_BASE
+
 ## 3.0.0-beta.33
 
 The key changes in this release are:

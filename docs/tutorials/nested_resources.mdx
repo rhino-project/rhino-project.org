@@ -53,8 +53,6 @@ Generate the models and database schema for the application using the following 
 <TabItem value="Docker">
 ```
 
-From the root of the project
-
 ```bash
 docker compose run --rm backend "rails g model og_meta_tag blog_post:references tag_name:string value:string"
 docker compose run --rm backend "rails db:migrate"
@@ -64,8 +62,6 @@ docker compose run --rm backend "rails db:migrate"
 </TabItem>
 <TabItem value="Local">
 ```
-
-From the `server` directory.
 
 ```bash
 rails g model og_meta_tag blog_post:references tag_name:string value:string
@@ -154,8 +150,6 @@ Update the Rhino configuration so that OgMetaTag is available through the Rest A
 <Tabs>
 <TabItem value="Docker">
 ```
-
-From the root of the project
 
 ```bash
 docker compose restart backend

@@ -60,8 +60,6 @@ Rhino provides a module to add organization support to your application. Drop th
 <TabItem value="Docker">
 ```
 
-From the root of the project
-
 ```bash
 docker compose run --rm backend "rails db:seed:replant"
 docker compose run --rm backend "rails rhino_organizations:install"
@@ -71,8 +69,6 @@ docker compose run --rm backend "rails rhino_organizations:install"
 </TabItem>
 <TabItem value="Local">
 ```
-
-From the `server` directory
 
 ```bash
 rails db:seed:replant
@@ -97,8 +93,6 @@ Add an organization reference to the blog model with the following commands:
 <TabItem value="Docker">
 ```
 
-From the root of the project
-
 ```bash
 docker compose run --rm backend "rails g migration add_organization_to_blog organization:references"
 ```
@@ -107,8 +101,6 @@ docker compose run --rm backend "rails g migration add_organization_to_blog orga
 </TabItem>
 <TabItem value="Local">
 ```
-
-From the `server` directory
 
 ```bash
 rails g migration add_organization_to_blog organization:references
@@ -160,8 +152,6 @@ and migrate the database
 <TabItem value="Docker">
 ```
 
-From the root of the project
-
 ```bash
 docker compose run --rm backend "rails db:migrate"
 ```
@@ -170,8 +160,6 @@ docker compose run --rm backend "rails db:migrate"
 </TabItem>
 <TabItem value="Local">
 ```
-
-From the `server` directory
 
 ```bash
 rails db:migrate
@@ -276,8 +264,6 @@ And add the seed data to the database
 <TabItem value="Docker">
 ```
 
-From the root of the project
-
 ```bash
 docker compose run --rm backend "rails db:seed:replant"
 ```
@@ -286,8 +272,6 @@ docker compose run --rm backend "rails db:seed:replant"
 </TabItem>
 <TabItem value="Local">
 ```
-
-From the `server` directory
 
 ```bash
 rails db:seed:replant
@@ -304,8 +288,6 @@ rails db:seed:replant
 <Tabs>
 <TabItem value="Docker">
 ```
-
-From the root of the project
 
 ```bash
 docker compose restart backend
