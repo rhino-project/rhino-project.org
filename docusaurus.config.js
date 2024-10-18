@@ -43,7 +43,7 @@ const config = {
 
   presets: [
     [
-      "classic",
+      "@docusaurus/preset-classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
@@ -61,6 +61,10 @@ const config = {
             },
           },
           remarkPlugins: [rhinoconfig, [npm2yarn, { sync: true }]],
+        },
+        gtag: {
+          trackingID: "G-S3EHPYWEYV",
+          anonymizeIP: true,
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
