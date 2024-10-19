@@ -8,22 +8,32 @@ Authentication in Rhino uses devise_token_auth which itself is built on devise. 
 
 ### OmniAuth OAuth2 Providers
 
-OmniAuth providers can be add with the following steps
+By default, Rhino comes with the following OmniAuth OAuth2 providers:
 
-- Add `gem 'omniauth-facebook'` to Gemfile
-- `bundle install`
-- Add environment variables for the strategy, `AUTH_<UPPER CASE STRATEGY>_CLIENT_ID`, `AUTH_<UPPER CASE STRATEGY>_SECRET_KEY`, for example
-  `AUTH_FACEBOOK_CLIENT_ID`, `AUTH_FACEBOOK_SECRET_KEY`
-- For Microsoft Azure, you still need a third env variable: AUTH_AZURE_OAUTH2_TENANT_ID
+- Microsoft - [omniauth-azure-activedirectory-v2](https://github.com/RIPAGlobal/omniauth-azure-activedirectory-v2)
+- Auth0 - [omniauth-auth0](https://github.com/auth0/omniauth-auth0)
+- Facebook - [omniauth-facebook](https://github.com/simi/omniauth-facebook)
+- Github - [omniauth-github](https://github.com/omniauth/omniauth)
+- Google -[omniauth-google-oauth2](https://github.com/zquestz/omniauth-google-oauth2)
+- Developer - for testing purposes
+
+Configure the specific provider with the callback: `<host>/api/auth/omniauth/google_oauth2/callback` for instance `http://localhost:3000/api/auth/omniauth/google_oauth2/callback` in developent.
+
+Add environment variables for the strategy, `AUTH_<UPPER CASE STRATEGY>_CLIENT_ID`, `AUTH_<UPPER CASE STRATEGY>_SECRET_KEY`, for example:
+
+```
+AUTH_FACEBOOK_CLIENT_ID=your_client_id
+AUTH_FACEBOOK_SECRET_KEY=your_secret_key
+```
 
 The oauth modules will then be advertised as part of the rhino open api response.
 
 ```json
 "info": {
-  "title": "BoilerPlate API",
+  "title": "Rhino Template",
   "version": "0.0.0",
   "x-rhino-info": {
-    "version": "0.2.0",
+    "version": "0.21.0.beta.17",
     "authOwner": "user",
     "baseOwner": "user",
     "oauth": [
@@ -38,30 +48,47 @@ The oauth modules will then be advertised as part of the rhino open api response
 
 #### Google
 
-https://console.developers.google.com/apis/credentials and set up "OAuth 2.0 Client IDs" call back will be `http://localhost:3000/api/auth/omniauth/google_oauth2/callback` for development
+https://console.developers.google.com/apis/credentials and set up "OAuth 2.0 Client IDs".
+
+Callback will be `http://localhost:3000/api/auth/omniauth/google_oauth2/callback` for development.
+
+Environment variables:
+
+```
+AUTH_GOOGLE_OAUTH2_CLIENT_ID=your_client_id
+AUTH_GOOGLE_OAUTH2_SECRET_KEY=your_secret_key
+```
 
 #### Github
 
-https://github.com/settings/developers and do "New OAuth App" callback will be `http://localhost:3000/api/auth/omniauth/github/callback`
+https://github.com/settings/developers and do "New OAuth App"
+
+Callback will be `http://localhost:3000/api/auth/omniauth/github/callback` for development.
 
 #### Microsoft Azure
-
-First add gem 'omniauth-azure-oauth2' to Gemfile
 
 You need to register a new app in your tenant Azure Active Directory. For this go to your [Azure portal](https://portal.azure.com/?quickstart=True#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps) and click on “App registration” and on “New registration”.
 
 Then you may fill 4 things and click to Register:
 
-- your Rails app name
-- the Supported account types option to “Single tenant”
+- Your app name
+- Set Supported account types option to “Single tenant”
 - Redirect URI to “Web” and callback to `http://localhost:3000/api/auth/omniauth/azure_oauth2/callback`
-- Frontend-channel logout URL to `https://localhost:3002/api/auth/sign_out`
+- Frontend-channel logout URL to `https://localhost:3000/api/auth/sign_out`
 
 From this setup you can retrieve the .env variable values for:
 
-- AUTH_AZURE_OAUTH2_CLIENT_ID
-- AUTH_AZURE_OAUTH2_TENANT_ID
-- AUTH_AZURE_OAUTH2_SECRET_KEY (to this one, grab the 'value' field instead of SECRET_ID in 'Credentials & secrets.')
+Environment variables:
+
+```
+AUTH_AZURE_OAUTH2_CLIENT_ID=your_client_id
+AUTH_AZURE_OAUTH2_TENANT_ID=your_tenant_id
+AUTH_AZURE_OAUTH2_SECRET_KEY=(to find this one, grab the 'value' field instead of SECRET_ID in 'Credentials & secrets.')
+```
+
+:::tip
+For Microsoft Azure, you still need a third env variable: AUTH_AZURE_OAUTH2_TENANT_ID
+:::
 
 ## Cookies
 
