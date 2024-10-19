@@ -16,6 +16,16 @@ class BlogPost < ApplicationRecord
 end
 ```
 
+Always use the name of association as the owner.
+
+```ruby
+class BlogPost < ApplicationRecord
+  belongs_to :author, class_name: 'User'
+
+  rhino_owner :author
+end
+```
+
 The resource owner must be explicitly specified for every resource.
 
 ### Base Owner
