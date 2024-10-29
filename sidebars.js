@@ -26,7 +26,11 @@ const sidebars = {
         type: "doc",
         id: "getting_started/index",
       },
-      items: ["getting_started/docker", "getting_started/manual"],
+      items: [
+        "getting_started/docker",
+        "getting_started/manual",
+        "getting_started/cli",
+      ],
     },
     {
       type: "category",
