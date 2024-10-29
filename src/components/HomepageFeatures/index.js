@@ -18,7 +18,7 @@ const FeatureList = [
   {
     title: "Solid foundation",
     Svg: require("@site/static/img/undraw_secure_server_re_8wsq.svg").default,
-    description: <>Best practicues for testing and deployment.</>,
+    description: <>Best practices for testing and deployment.</>,
   },
 ];
 
