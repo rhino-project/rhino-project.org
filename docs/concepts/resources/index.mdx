@@ -4,6 +4,18 @@ A resource is an object with member properties that is intended to be exposed an
 
 A resource implements the Rhino::Resource interface. Most common is an ActiveRecord based resource, but Rhino also provides other [built in resources](#built-in-resources).
 
+The list of resources is contained in `config/initializers/rhino.rb` and is used to generate the OpenAPI spec and the front end. Additional resources
+can be added to the `config/initializers/rhino.rb` file by adding a new line with the resource name and the class name.
+
+```ruby title="config/initializers/rhino.rb"
+Rhino.setup do |config|
+  # highlight-next-line
+  # Add Blog and BlogPost resources
+  # highlight-next-line
+  config.resources += ["Blog", "BlogPost"]
+end
+```
+
 ## Ownership
 
 Every resource must have an owner. Ownership allows for the creation of a hierarchy of resources. For instance a blog post may be owned by a blog. In the case of an Active Record based resource, ownership is usually a belongs_to relationship.
