@@ -19,7 +19,7 @@ In order to transform your repo, you will need to do the following:
 
 #### Routing
 
-- Make sure routes are ordered correctly and that all custome routes come before the catch all front end route
+- Make sure routes are ordered correctly and that all custom routes come before the catch all front end route
 
 #### Deployment
 
@@ -39,7 +39,7 @@ heroku buildpacks:add heroku/ruby -a <APP-NAME>
 The key changes in this release are:
 
 - Automatic static.js updating via Vite plugin
-- General tidying in prepartion for unified rails and ruby_vite repo
+- General tidying in preparation for unified rails and ruby_vite repo
 
 ## 3.0.0-beta.32
 
@@ -74,7 +74,7 @@ The key changes in this release are:
 
 ### Default to no js in jsx
 
-Previously for `create-react-app` project compatibility, the jsx tranform was used for all .js files. Files can be renamed to .jsx to use the jsx transform. This is now the default for new projects. `enableJsxInJs` can be set to `true` for the RhinoVitePlugin to use the jsx transform for .js files.
+Previously for `create-react-app` project compatibility, the jsx transform was used for all .js files. Files can be renamed to .jsx to use the jsx transform. This is now the default for new projects. `enableJsxInJs` can be set to `true` for the RhinoVitePlugin to use the jsx transform for .js files.
 
 From the root of the project run the following script to rename all .js files to .jsx:
 
@@ -107,7 +107,7 @@ The key changes in this release are:
 
 ### Merge overrides in order of specificity
 
-Overrides are now merged in order of specificity. This means that global overrides are applied first, then model overrides and finally attribute overrides. This allows for more fine grained control over the overrides. Previously more specific overrides would completely override the less specifc override.
+Overrides are now merged in order of specificity. This means that global overrides are applied first, then model overrides and finally attribute overrides. This allows for more fine grained control over the overrides. Previously more specific overrides would completely override the less specific override.
 
 ```jsx rhino.config.js
 const rhinoConfig = {
