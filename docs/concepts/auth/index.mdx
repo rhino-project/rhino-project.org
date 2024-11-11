@@ -72,7 +72,7 @@ You need to register a new app in your tenant Azure Active Directory. For this g
 Then you may fill 4 things and click to Register:
 
 - Your app name
-- Set Supported account types option to “Single tenant”
+- Set supported account types option to "Multi tenant”
 - Redirect URI to “Web” and callback to `http://localhost:3000/api/auth/omniauth/azure_oauth2/callback`
 - Frontend-channel logout URL to `https://localhost:3000/api/auth/sign_out`
 
@@ -82,12 +82,16 @@ Environment variables:
 
 ```
 AUTH_AZURE_OAUTH2_CLIENT_ID=your_client_id
-AUTH_AZURE_OAUTH2_TENANT_ID=your_tenant_id
 AUTH_AZURE_OAUTH2_SECRET_KEY=(to find this one, grab the 'value' field instead of SECRET_ID in 'Credentials & secrets.')
 ```
 
 :::tip
-For Microsoft Azure, you still need a third env variable: AUTH_AZURE_OAUTH2_TENANT_ID
+You can support a single tenant by setting the supported account types option to "Ssingle tenant” and setting
+
+```
+AUTH_AZURE_OAUTH2_TENANT_ID=your_tenant_id
+```
+
 :::
 
 ## Cookies
