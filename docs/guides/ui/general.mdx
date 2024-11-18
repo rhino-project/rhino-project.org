@@ -1,21 +1,27 @@
 # General Configuration
 
-General configuration options for the Rhino UI as well as global overrides for the Rhino UI components can be configured in the `rhino.config.js` file.
+## Theming
 
-## Root configuration
+Dark mode is supported and can be enabled by setting the `dark` class on the `html` element in the `app/views/layouts/application.html.erb` file. The Rhino UI components will automatically adjust their appearance based on the presence of this class.
 
-### `appName`
+## rhino.config.js
+
+General configuration options for much of the Rhino UI as well as global overrides for the Rhino UI components can be configured in the `rhino.config.js` file.
+
+### Root configuration
+
+#### `appName`
 
 A string that is used as the name of the application. This is used in the title of the pages and in the authentication pages.
 
-### `enableModelRoutes`
+#### `enableModelRoutes`
 
 A boolean that determines whether the model routes are enabled. If this is set to `false`, the default model routes will not be registered.
 
-### `darkLogo` and `lightLogo`
+#### `darkLogo` and `lightLogo`
 
 Paths relative to the `src/assets` directory for the dark and light logos. Defaults to `images/logo-dark.svg` and `images/logo-light.svg` respectively.
 
-## Component configuration
+### Component configuration
 
 See other guides in the [UI Customization](../ui_customization) section for component specific configuration options.
