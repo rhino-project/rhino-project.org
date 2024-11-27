@@ -142,11 +142,11 @@ const config = {
       metadata: [
         {
           property: "og:image",
-          content: "https://www.rhino-project.org/img/rhino-red.svg",
+          content: "https://www.rhino-project.org/img/red-logo.png",
         },
         {
           name: "twitter:image",
-          content: "https://www.rhino-project.org/img/rhino-red.svg",
+          content: "https://www.rhino-project.org/img/red-logo.png",
         },
       ],
       prism: {
