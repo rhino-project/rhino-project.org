@@ -139,6 +139,16 @@ const config = {
         ],
         copyright: `Copyright © ${new Date().getFullYear()} Codalio, Inc. Built with Docusaurus.`,
       },
+      metadata: [
+        {
+          property: "og:image",
+          content: "https://www.rhino-project.org/img/rhino-red.svg",
+        },
+        {
+          name: "twitter:image",
+          content: "https://www.rhino-project.org/img/rhino-red.svg",
+        },
+      ],
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
