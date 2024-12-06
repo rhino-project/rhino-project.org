@@ -1,5 +1,43 @@
 # Release Notes
 
+## 3.0.0-beta.35
+
+The key changes in this release are:
+
+- Ruby 3.3.6 and Rails 7.2.2
+- Simplified navigation with PrimaryNavigation and SecondaryNavigation
+- [Dark mode support](../guides/ui/general#theming)
+- Support namespaced models in the API
+- Support class_named owners in the API
+
+### Rails 7.2.2
+
+Notes about upgrading to Rails 7.2 from Rails 7.1
+
+- apply_rubocop_autocorrect_after_generate! is enabled by default
+- brakeman and rubocop are now included by default in the bin/ dir
+  - `bin/rubocop` and `bin/brakeman` to directly run
+- `app/controllers/application_controller.rb` now enforces modern browsers for loading (406 if now)
+  - https://api.rubyonrails.org/classes/ActionController/AllowBrowser/ClassMethods.html#method-i-allow_browser
+- Use the new default [rubocop-rails-omakase](https://github.com/rails/rubocop-rails-omakase)
+  - With some additional rules enabled
+  - `bin/rubocop -A` to clean up after
+- Active Job will automatically defer the enqueuing to after the transaction is committed, and drop the job if the transaction is rolled back. See [https://github.com/rails/rails/blob/7-2-stable/activejob/CHANGELOG.md] for more details
+
+### Simplified navigation with PrimaryNavigation and SecondaryNavigation
+
+CustomPrimaryNavigation and CustomSecondaryNavigation have been removed and combined with PrimaryNavigation and SecondaryNavigation. Simply edit `PrimaryNavigation.jsx` and `SecondaryNavigation.jsx` to customize the navigation.
+
+The `<ModelNavSection />` element can also be passed except or only props to filter the models shown in the navigation.
+
+```
+<ModelNavSection models={['model1', 'model2']} />
+```
+
+```
+<ModelNavSection models={['model1', 'model2']} />
+```
+
 ## 3.0.0-beta.34
 
 The key changes in this release are:
