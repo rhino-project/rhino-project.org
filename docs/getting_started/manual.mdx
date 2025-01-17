@@ -8,12 +8,11 @@
 git clone https://github.com/rhino-project/rhino-project-template.git
 ```
 
-## Postgres and Redis
+## Postgres
 
 Versions:
 
 - PostgreSQL: 15 or newer
-- Redis: 7
 
 ### OSX
 
@@ -23,12 +22,6 @@ This assumes you have Homebrew installed.
 
 ```bash
 brew install postgresql
-```
-
-2. Install redis
-
-```bash
-brew install redis-server
 ```
 
 ### WSL2 on Windows
@@ -52,18 +45,6 @@ sudo service postgresql start
 ```bash
 sudo -u postgres createuser -s -i -d -r -l -w <<username>>
 sudo -u postgres psql -c "ALTER ROLE <<username>> WITH PASSWORD '<<password>>';"
-```
-
-4. Install redis
-
-```bash
-sudo apt install redis-server
-```
-
-5. Start redis
-
-```bash
-sudo service redis-server start
 ```
 
 ## Ruby and Node

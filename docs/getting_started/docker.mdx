@@ -1,6 +1,6 @@
 # Docker & Docker Compose
 
-Docker compose configuration is to load all the dependencies for the rhino project template. This includes the database, redis, backend and frontend servers. The source code is mounted as a volume in the containers, so any changes you make to the code will be reflected in the running containers.
+Docker compose configuration is to load all the dependencies for the rhino project template. This includes the database, backend and frontend (vite) servers. The source code is mounted as a volume in the containers, so any changes you make to the code will be reflected in the running containers.
 
 ## Prerequisites
 
@@ -59,28 +59,27 @@ It is also useful when you just want to run the server but don't see the logs in
 To do so, you need to run `docker compose up` with the names of the container dependencies as arguments, and the `-d` flag.
 
 ```bash
-docker compose run -d db redis
+docker compose run -d db
 ```
 
-This will run db and redis separately in the background. If you now run `docker compose up`, it will use the background containers for `db` and `redis` and only start the `backend` container in the foreground.
+This will run db separately in the background. If you now run `docker compose up`, it will use the background containers for `db` and only start the `backend` container in the foreground.
 
 ## Troubleshooting
 
-Docker compose configuration is provided for: `postgres`, `redis`, `backend` and `vite`. All have beend configured with named volumes. Docker containers don't persist data, any data is deleted when the container is removed. The volumes make sure we don't lose any data and speed up starting the containers.
+Docker compose configuration is provided for: `db`, `backend` and `vite`. All have beend configured with named volumes. Docker containers don't persist data, any data is deleted when the container is removed. The volumes make sure we don't lose any data and speed up starting the containers.
 
 With docker compose, the volume names follow a convention: `parent_folder_name_in_lower_case` followed by `the_volume_name_in_the_docker_compose_file`. For `rhino-project_template`, the volume will be
 
 - `rhino_project_template_db_data` postgres data
-- `rhino_project_template_redis_data` redis data
 - `rhino_project_template_gem_cache` bundler cache
 - `rhino_project_template_node_cache` node modules cache
 - `rhino_project_template_shared_data` other shared data
 
 Where possible the containers are isolated to a specific network to prevent conflicts with other services running on the host machine, `rhino-project-template_development`.
 
-### I cannot connect to the database or redis
+### I cannot connect to the database
 
-Make sure the database and redis containers are running.
+Make sure the db container is running.
 
 ```bash
 docker container ls
@@ -88,11 +87,10 @@ docker container ls
 
 ```
 CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS          PORTS                    NAMES
-5ac2b9717382   postgres:12.5-alpine   "docker-entrypoint.s…"   58 seconds ago   Up 54 seconds   0.0.0.0:5432->5432/tcp   db
-414d22548a08   redis:6.2-alpine       "docker-entrypoint.s…"   58 seconds ago   Up 55 seconds   0.0.0.0:6379->6379/tcp   redis
+5ac2b9717382   postgres:15.1-alpine   "docker-entrypoint.s…"   58 seconds ago   Up 54 seconds   0.0.0.0:5432->5432/tcp   db
 ```
 
-If you don't see any of them on that list, use `docker compose up -d redis db` to start them in the background.
+If you don't see any of them on that list, use `docker compose up -d db` to start them in the background.
 
 ### Database permission / migration issues
 

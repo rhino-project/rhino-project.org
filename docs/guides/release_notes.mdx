@@ -1,5 +1,32 @@
 # Release Notes
 
+## 3.0.0-beta.36
+
+The key changes in this release are:
+
+- Rails 7.2.2.1
+- Solid Queue, Solid Cable and Solid Cache to provide a more robust and performant queuing, websockets and caching solution in production.
+- Rhino ActiveAdmin for Super Admin integration simplification
+- ActiveStorage [representations, variants and previews](../guides/file_storage.mdx#variants-previews-and-representations) in API responses
+
+### Solid Queue
+
+See [Background Jobs](../guides/jobs.mdx) for more information.
+
+- Resque can be continued to be used for existing apps, but it is fairly simple to switch to Solid Queue
+
+### Solid Cable
+
+See [Websockets](../guides/websockets.mdx) for more information.
+
+### ActiveAdmin and Super Admin
+
+The `app/admin/rhino.rb` file has been removed active admin models must be generated individually for performance and correctness.
+
+See the updated [Super Admin](../guides/super_admin.mdx#generating-an-admin-resource) guide for more information.
+
+Copy `https://github.com/rhino-project/rhino-project-template/blob/v3.0.0-beta.35/app/admin/rhino.rb` to `app/admin` to keep the old functionality.
+
 ## 3.0.0-beta.35
 
 The key changes in this release are:
