@@ -1,6 +1,43 @@
 # Super Admin
 
-By default Rhino includes an admin dashboard that allows you to manage your application. This dashboard is built using the [ActiveAdmin](https://activeadmin.info/) gem.
+By default Rhino includes an admin dashboard that allows you to manage your application. This dashboard is built using the [ActiveAdmin](https://activeadmin.info/) gem and themed with [arctic_admin](https://github.com/cprodhomme/arctic_admin) and installs [activeadmin_addons](https://github.com/platanus/activeadmin_addons) gem to add some extra functionality.
+
+The dashboard is accessible at `/admin` and requires an admin user to log in.
+
+## Configuration
+
+The admin dashboard configuration is in `config/initializers/active_admin.rb` and can be altered to the project needs.
+
+## Generating an admin resource
+
+To generate an admin resource with Rhino defaults, use the following command:
+
+```bash
+rails g rhino:resource ModelName
+```
+
+:::info
+This generator is included by default if you run `rails g rhino:model`.
+:::
+
+This will generate a model in the `app/admin` folder with the default Rhino configuration for the model, like so:
+
+```ruby
+ActiveAdmin.register ModelName do
+  rhino_filters
+  rhino_permit_params
+end
+```
+
+That provides the default filters and permit params for the model and `index` and other configuration options can be added as needed.
+
+### Generating an admin resource with ActiveAdmin defaults
+
+If more control is needed over the resource, generate or replace an ActiveAdmin resource with the following command:
+
+```bash
+rails g admin:resource ModelName
+```
 
 ## Security
 
@@ -22,35 +59,6 @@ To customize the attributes and associations that can be searched, you can overr
     end
   end
 ```
-
-## Dashboard
-
-Rhino uses the [ActiveAdmin](https://activeadmin.info/) gem to create an admin dashboard. It is a powerful tool that allows you to create a custom admin dashboard for your application.
-
-By default Rhino comes with a basic dashboard that displays all [resources](../concepts/resources/) and allows editing based on the configuration.
-
-### Configuration
-
-The admin dashboard configuration is in `config/initializers/active_admin.rb` and can be altered to the project needs.
-
-## Extending
-
-When the admin dashboard is generated, it will create a model for each resource. You can override the default behavior by creating a new model in the `app/admin` folder. For example, if you want to change the default filters for the `Blog` resource, you can create `app/admin/blog.rb`:
-
-```ruby title="app/admin/blog.rb"
-ActiveAdmin.register Blog do
-  filter :title
-  filter :published
-end
-```
-
-## Theming
-
-Rhino includes the [arctic_admin](https://github.com/cprodhomme/arctic_admin) theme.
-
-## ActiveAdmin Addons
-
-Rhino include the [activeadmin_addons](https://github.com/platanus/activeadmin_addons) gem to add some extra functionality to ActiveAdmin.
 
 ### Optimizing select filters
 

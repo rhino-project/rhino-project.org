@@ -11,11 +11,10 @@ Rhino uses server side cookies for auth, so you must have [domains that meet the
 The default Heroku stack `heroku-24` is recommended. The deployment needs the `heroku/nodejs` and `heroku/ruby` buildpack. Along with the following add-ons:
 
     heroku-postgresql:essential-0
-    heroku-redis:mini
     papertrail:choklad
     rollbar:trial-5k
 
-Redis is required only for [rhino_jobs](/docs/guides/jobs) support and rollbar is required for [error trapping](error_reporting).
+Rollbar is required for [error trapping](error_reporting).
 
 The server requires the following environment variables to be set:
 

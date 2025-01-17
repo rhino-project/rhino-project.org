@@ -1,14 +1,14 @@
 # Background Jobs
 
-[ActiveJob](https://guides.rubyonrails.org/active_job_basics.html) backed by [Resque](https://github.com/resque/resque) is the basis for background and scheduled jobs in Rhino Jobs.
+[ActiveJob](https://guides.rubyonrails.org/active_job_basics.html) backed by [Solid Queue](https://github.com/rails/solid_queue) is the basis for background and scheduled jobs in Rhino Jobs.
 
-## Installation
+By default Rhino configures Solid Queue to run in [single database form](https://github.com/rails/solid_queue?tab=readme-ov-file#single-database-configuration) for ease of deployment, but does not use Solid Queue in development or test environments by default.
 
-```bash
-rails rhino_jobs:install
-```
+The queues can be configured in `config/queue.yml` and recurring tasks in `config/recurring.yml`.
 
 ## Creating a job
+
+Create a job with standard rails generator:
 
 ```bash
 rails g job Test
@@ -20,24 +20,22 @@ rails g job Test
 TestJob.perform_later
 ```
 
-## Scheduling a job
-
-Edit resque_schedule.yml. See https://github.com/JustinAiken/active_scheduler for more details.
-
 ## Processing the queue
 
-A worker for the queued jobs can be executed with:
+Setting the environment variable `SOLID_QUEUE_IN_PUMA` or running `bin/jobs` will have the puma web server process the queue, including scheduled jobs.
 
-```bash
-COUNT=1 QUEUE=* bundle exec rails resque:workers
-```
+## Monitoring jobs
 
-A worker to queue scheduled jobs can be executed with:
+Rhino installs and configures [Mission Control Jobs](https://github.com/rails/mission_control-jobs) to monitor jobs. The dashboard is available at `/jobs` with an admin user.
 
-```bash
-bundle exec rails resque:scheduler
-```
+### Scaling
 
-### Heroku
+The first step in scaling is to run the workers outside of the web server with `bin/jobs`. The Heroku `Procfile` and `heroku.yml` is already configured to run `bin/jobs`. Simply enable the
 
-On Heroku, Procfile is already updated to launch both a worker and a scheduler.
+:::tip
+Make sure to remove the SOLID_QUEUE_IN_PUMA environment variable from the web server if you run `bin/jobs` in a separate process.
+:::
+
+Next is to run multiple workers. This can be done by running `bin/jobs` on multiple servers.
+
+If performance continues to be a bottleneck, the move the Solid Queue database to a separate database - revert the`QueueSchema` migration and reinstall the Solid Queue database with `bin/rails solid_queue:install` - see https://github.com/rails/solid_queue?tab=readme-ov-file#installation for more information.

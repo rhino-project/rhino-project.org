@@ -1,16 +1,12 @@
 # Websockets
 
-Websocket support in Rhino is provided by [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html). By default websockets are authenticated by not authorized (you must ensure the user has access to the data they are requesting).
+Websocket support in Rhino is provided by [ActionCable](https://guides.rubyonrails.org/action_cable_overview.html) and [Solid Cable](https://github.com/rails/solid_cable) and is configured by default.
 
-## Installation
-
-Websockets are supported out of the box as long as Redis is available in your environment. You will need to set the allowed origins in your environment configuration.
-
-```ruby title="config/environments/production.rb"
-config.action_cable.allowed_request_origins = ['https://example.com']
-```
+Rhino provides websocket authentication by default, but NOT authorization - ensure the user has access to the data they are requesting.
 
 ### Creating a channel
+
+Create a channel with standard rails generator:
 
 ```bash
 rails g channel Test

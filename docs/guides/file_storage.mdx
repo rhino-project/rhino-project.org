@@ -15,8 +15,48 @@ class Blog < ApplicationRecord
   # highlight-next-line
   rhino_references [:banner_attachment]
 end
-
 ```
+
+or for multiple attachments:
+
+```ruby
+class BlogPost < ApplicationRecord
+  belongs_to :blog
+
+  # highlight-next-line
+  has_many_attached :images
+
+  rhino_owner :blog
+
+  # highlight-next-line
+  rhino_references [:images_attachments]
+end
+```
+
+## Variants, Previews, and Representations
+
+ActiveStorage provides a number of ways to manipulate and display images and other files. Variants are used to resize images and previews are used to generate thumbnails. Representations are used to generate different formats of the file.
+
+```ruby
+class BlogPost < ApplicationRecord
+  belongs_to :blog
+
+  # highlight-next-line
+  has_many_attached :images do |attachable|
+    attachable.variant :thumb, resize_and_pad: [ 100, 100 ], preprocessed: true
+  end
+
+  rhino_owner :blog
+  # highlight-next-line
+  rhino_references [:images_attachments]
+end
+```
+
+:::tip
+The `preprocessed: true` option is used to generate the variant when the file is uploaded. This is useful for generating thumbnails and other variants when the file is uploaded in the background.
+:::
+
+The Rhino API returns the URL for the variant, preview, or representation in the API response. The URL can be used to display the image or preview in the frontend.
 
 ## S3
 
