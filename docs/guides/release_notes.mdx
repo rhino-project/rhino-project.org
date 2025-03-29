@@ -1,5 +1,19 @@
 # Release Notes
 
+## 3.0.0-beta.37
+
+The key changes in this release are:
+
+- Rails 8.0.2 and Ruby 3.4.1
+- Vite 6, Vitest 3
+- RHINO_APP_URL replaces ROOT_URL, FRONT_END_URL and VITE_API_ROOT_PATH
+
+### RHINO_APP_URL
+
+ROOT_URL and FRONT_END_URL have been the same thing for the last couple of releases so they need not be different. RHINO_APP_URL is now the only URL that needs to be set in the environment, following the pattern coming in Rails 8.1 https://github.com/rails/rails/pull/42520
+
+VITE_API_ROOT_PATH is no longer required, its assumed that the client is served from the same domain as the server.
+
 ## 3.0.0-beta.36
 
 The key changes in this release are:

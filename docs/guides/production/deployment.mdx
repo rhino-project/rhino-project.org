@@ -19,22 +19,16 @@ Rollbar is required for [error trapping](error_reporting).
 The server requires the following environment variables to be set:
 
 ```env
-    FRONT_END_URL=https://<host-name>,
     LANG=en_US.UTF-8
     RAILS_ENV=production
-    ROOT_URL=https://<host-name>
+    RHINO_APP_URL=https://<host-name>
     SECRET_KEY_BASE=<generated-secret-key>
     SENDGRID_API_KEY=<sendgrid-api-key>
-    VITE_API_ROOT_PATH=https://<server-host-name>
 ```
 
 Any additional environment variables that need to be passed to the frontend should be prefixed with `VITE_`
 
 ## Heroku Docker
-
-Rhino comes with default support for deploying to Heroku with docker for server only. This is useful if you need to deploy custom tools to the image, for instance an SDK that needs to be built and called from ActiveJob.
-
-Rhino does _not_ directly support Heroku for the client because of https://devcenter.heroku.com/articles/build-docker-images-heroku-yml#set-build-time-environment-variables - build time variables cannot be sourced from environment variables. The Dockerfile must altered to provide VITE_API_ROOT_PATH directly.
 
 Rhino uses the heroku.yml method of building and deploying docker images. https://devcenter.heroku.com/articles/build-docker-images-heroku-yml
 
@@ -44,19 +38,15 @@ The buildpack for docker should be set to the container type `heroku stack:set c
 
 ```bash
 $ docker build -t .
-$ docker run -it --rm -p 3002:3002 -e FRONT_END_URL="http://localhost:3002" --build-arg VITE_API_ROOT_PATH=http://localhost:3002  -e PORT=3002 -e DISABLE_SSL=1 -e ROOT_URL=http://localhost:3002
+$ docker run -it --rm -p 3002:3002 -e PORT=3002 -e DISABLE_SSL=1 -e RHINO_APP_URL=http://localhost:3002
 ```
-
-FRONT_END_URL will default to `http://localhost:3000` if not specified.
 
 PORT will default to `3000` if not specified.
 
 DISABLE_SSL=1 is necessary for SSL termination earlier in the process.
 
-ROOT_URL defaults to `http://localhost:3000` if not specified.
+RHINO_APP_URL defaults to `http://localhost:3000` if not specified.
 
 DB_NAME, DB_HOST, DB_USERNAME, DB_PASSWORD are also required for the postgres db.
 
 DEFAULT_EMAIL_SENDER defaults to `from@example.com` if not specified.
-
-`VITE_API_ROOT_PATH` is _required_ at build time.
