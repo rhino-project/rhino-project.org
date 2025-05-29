@@ -1,9 +1,9 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
-const rhinoconfig = require("./plugins/remark-rhino-config-tabs");
-const npm2yarn = require("@docusaurus/remark-plugin-npm2yarn");
+import rhinoconfig from "./plugins/remark-rhino-config-tabs";
+import npm2yarn from "@docusaurus/remark-plugin-npm2yarn";
 
-const { themes } = require("prism-react-renderer");
+import { themes } from "prism-react-renderer";
 const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
 
@@ -157,4 +157,4 @@ const config = {
     }),
 };
 
-module.exports = config;
+export default config;
