@@ -1,6 +1,6 @@
 # View Controllers
 
-The `ModelShow`, `ModelIndex`, `ModelCreate` and `ModelEdit` top level view components are driven by view controllers that provide the data to power a React context wi These controllers are created with hooks. The basic pattern for the components is:
+The `ModelShow`, `ModelIndex`, `ModelCreate` and `ModelEdit` top level view components are driven by view controllers that provide the data to power a React context. These controllers are created with hooks. The basic pattern for the components is:
 
 ```mermaid
 graph TB
@@ -13,12 +13,12 @@ The `Base` version of the component will take the arguments for the controller a
 ```jsx
 const MyCustomComponent = () => {
   const { resource } = useModelIndexContext();
-  return <div>{resource.name}</div>
-}
+  return <div>{resource.name}</div>;
+};
 
-<ModelIndexBase defaultFilter={{category: 6}}>
-  <MyCustomComponent/>
-<ModelIndexBase>
+<ModelIndexBase defaultFilter={{ category: 6 }}>
+  <MyCustomComponent />
+</ModelIndexBase>;
 ```
 
 ## useModelShowController
@@ -56,10 +56,10 @@ Injects the results of the model show controller into the context.
 
 ## useModelIndexController
 
-useModelIndex takes an options object for configuration.
+useModelIndexController takes an options object for configuration.
 
 ```jsx
-const { page, resources } = useModelIndex(options);
+const { page, resources } = useModelIndexController(options);
 ```
 
 - `model` a string for the model name or an already existing model object (from useModel or getModel) **_(required)_**
@@ -130,7 +130,7 @@ const {
 - `disabled` a boolean indicating whether the form elements in the view should be disabled (default: false)
 - `extraDefaultValues` values to augment the default values for the create view
 - `paths` the paths to render for the create view (default: all creatable paths except for the parent)
-- `queryOptions` options to pass to the query for the parent mo
+- `queryOptions` options to pass to the query for the parent model
 
 and in addition to the [useModelCreate](api_hooks#usemodelcreate) returns, useModelCreateController returns:
 
@@ -143,7 +143,7 @@ and in addition to the [useModelCreate](api_hooks#usemodelcreate) returns, useMo
 
 ### useModelCreateContext
 
-Returns the context for the model edit view.
+Returns the context for the model create view.
 
 ### ModelCreateContext
 
