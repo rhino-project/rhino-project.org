@@ -1,6 +1,6 @@
 # Actions
 
-The show page actions by default include an edit button which transfers to the edit page and a delete button which prompts the user to delete. You can add alter actions on the index page by manipulating the `ModelShowActions` component.
+The show page actions by default include an edit button which transfers to the edit page and a delete button which prompts the user to delete. You can add or alter actions on the index page by manipulating the `ModelShowActions` component.
 
 ```mermaid
 graph TB
@@ -23,7 +23,7 @@ ModelShowActions: <ModelShowActionsBase overrides={{ ModelShowActionEdit: (<Mode
 The icon of the edit button can be changed by passing in an icon name.
 
 ```rhinoconfig title="src/rhino.config.js" levels=global,model
-ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelShowActionEdit: <ModelShowActionEdit icon="pen"/>}} />
+ModelShowActions: <ModelShowActionsBase overrides={{ ModelShowActionEdit: <ModelShowActionEdit icon="pen"/>}} />
 ```
 
 ## Change the text of the delete button
@@ -39,7 +39,7 @@ ModelShowActions: <ModelShowActionsBase overrides={{ ModelShowActionDelete: (<Mo
 The icon of the delete button can be changed by passing in an icon name.
 
 ```rhinoconfig title="src/rhino.config.js" levels=global,model
-ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelShowActionDelete: <ModelShowActionDelete icon="trash2" />}} />
+ModelShowActions: <ModelShowActionsBase overrides={{ ModelShowActionDelete: <ModelShowActionDelete icon="trash2" />}} />
 ```
 
 ## Remove the edit button
@@ -47,7 +47,7 @@ ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelShowActionDelete: <M
 The edit button can be removed entirely
 
 ```rhinoconfig title="src/rhino.config.js" levels=global,model
-ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelShowActionEdit: null}} />
+ModelShowActions: <ModelShowActionsBase overrides={{ ModelShowActionEdit: null}} />
 ```
 
 ## Remove the delete button
@@ -55,7 +55,7 @@ ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelShowActionEdit: null
 The delete button can be removed entirely
 
 ```rhinoconfig title="src/rhino.config.js" levels=global,model
-ModelIndexActions: <ModelIndexActionsBase overrides={{ ModelShowActionDelete: null}} />
+ModelShowActions: <ModelShowActionsBase overrides={{ ModelShowActionDelete: null}} />
 ```
 
 ## Replace the default actions
