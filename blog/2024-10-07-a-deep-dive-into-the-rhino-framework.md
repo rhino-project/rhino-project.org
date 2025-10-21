@@ -1,7 +1,7 @@
 ---
 title: A Deep Dive into the Rhino Framework
 description: Welcome to our engineering blog series on Rhino, a framework that truly embodies the principles of Model-Driven Development (MDD). As a vibe-coding friendly framework, Rhino is perfect for developers who want to focus on their application's core logic and bring ideas to life with minimal friction.
-authors: jprosevear
+authors: Ehsan
 tags: [rhino-project, webdev, ruby, rails, opensource, mdd, model-driven-development]
 image: https://www.rhino-project.org/img/rhino-red.svg
 hide_table_of_contents: false
