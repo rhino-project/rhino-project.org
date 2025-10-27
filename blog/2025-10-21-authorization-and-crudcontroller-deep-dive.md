@@ -1,8 +1,19 @@
 ---
-title: A Deep Dive into the Rhino Framework: Part 2 (Authorization and the CrudController)
+title\: A Deep Dive into the Rhino Framework\: Part 2 (Authorization and the CrudController)
 description: In this second part of our Rhino framework series, we explore how Rhino handles authentication and authorization through its secure-by-default architecture. We'll examine the CrudController and CrudPolicy system that provides robust security foundations for all your API resources.
 authors: Ehsan
-tags: [rhino-project, webdev, ruby, rails, opensource, authorization, security, pundit, devise]
+tags:
+    [
+        rhino-project,
+        webdev,
+        ruby,
+        rails,
+        opensource,
+        authorization,
+        security,
+        pundit,
+        devise,
+    ]
 image: https://www.rhino-project.org/img/rhino-red.svg
 hide_table_of_contents: false
 ---
