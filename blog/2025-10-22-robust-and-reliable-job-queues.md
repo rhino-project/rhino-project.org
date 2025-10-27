@@ -1,5 +1,5 @@
 ---
-title: Robust and Reliable: Understanding Job Queues in the Rhino Framework
+title: "Robust and Reliable: Understanding Job Queues in the Rhino Framework"
 description: In modern web applications, offloading time-consuming tasks to background jobs is essential for maintaining responsiveness and a smooth user experience. The Rhino framework provides a robust, built-in system for handling these asynchronous operations through ActiveJob and Solid Queue.
 authors: Ehsan
 tags: [rhino-project, webdev, ruby, rails, opensource, background-jobs, activejob, solid-queue]
